@@ -135,7 +135,7 @@ class _QuestionItemState extends State<QuestionItem> {
                     ),
                   ),
                   child: Text(
-                    "( ${ widget.questionNumber } ) : " + this.question.Body,
+                    "(${ widget.questionNumber }) : " + this.question.Body,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       //  fontFamily: FontFamily.,

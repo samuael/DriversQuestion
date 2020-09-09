@@ -28,7 +28,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+    with WidgetsBindingObserver {
   String lang = "";
   Category category;
   Group group;
@@ -47,16 +47,9 @@ class _QuestionScreenState extends State<QuestionScreen>
   bool skip = false;
   // TodaysDataHolder mahder;
   // bool once = true;
-
-  AnimationController animationController;
-
   @override
   void initState() {
-    animationController = new AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    animationController.repeat();
+
     databaseManager = DatabaseManager.getInstance();
     WidgetsBinding.instance.addObserver(this);
 
@@ -75,7 +68,6 @@ class _QuestionScreenState extends State<QuestionScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.detached) {
-      animationController.stop();
     }
   }
 
@@ -429,14 +421,6 @@ class _QuestionScreenState extends State<QuestionScreen>
     );
   }
 
-  void stopAnimation() {
-    animationController.stop();
-  }
-
-  void startAnimation() {
-    animationController.repeat();
-  }
-
   @override
   Widget build(BuildContext context) {
     final Map<String, Object> arguments =
@@ -578,27 +562,27 @@ class _QuestionScreenState extends State<QuestionScreen>
                     height: 100,
                     child: Row(
                       children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            child: new AnimatedBuilder(
-                              builder: (BuildContext context, Widget _widget) {
-                                return Transform.rotate(
-                                  angle: animationController.value * 6.3,
-                                  child: _widget,
-                                );
-                              },
-                              key: UniqueKey(),
-                              animation: animationController,
-                              child: CircleAvatar(
-                                child: Image.asset("assets/images/tyrePng.png"),
-                                backgroundColor: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 1,
+                        //   child: Container(
+                        //     height: 100,
+                        //     width: 100,
+                        //     child: new AnimatedBuilder(
+                        //       builder: (BuildContext context, Widget _widget) {
+                        //         return Transform.rotate(
+                        //           angle: animationController.value * 6.3,
+                        //           child: _widget,
+                        //         );
+                        //       },
+                        //       key: UniqueKey(),
+                        //       animation: animationController,
+                        //       child: CircleAvatar(
+                        //         child: Image.asset("assets/images/tyrePng.png"),
+                        //         backgroundColor: Colors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
                           flex: 3,
                           child: Column(

@@ -28,6 +28,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   UserData userdata;
   String username;
   TextEditingController usernameController = new TextEditingController();
+
+  Color usernameTextColor=Colors.green;
+  String usernameText="";
+
   @override
   Widget build(BuildContext context) {
     if (userdata == null) {
@@ -36,24 +40,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       this.lang = userdata.Lang;
       this.username = userdata.Username;
     }
-    return MaterialApp(
-      title: Translation.translate(this.lang, "Settings") == null
-          ? "Settings"
-          : Translation.translate(this.lang, "Settings"),
-      home: Scaffold(
+    return Scaffold(
         drawer: NavigationDrawer(
           containerContext: context,
           key: UniqueKey(),
           userdata: userdata,
         ),
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             Translation.translate(this.lang, "Settings") == null
                 ? "Settings"
                 : Translation.translate(this.lang, "Settings"),
           ),
         ),
-        body: Column(
+        body:SingleChildScrollView( child : Column(
           children: [
             Container(
               width: double.infinity,
@@ -206,32 +207,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     Text(
-                      "username ",
+                      usernameText ,
                       style: TextStyle(
-                        color: Colors.green,
+                        color: usernameTextColor ,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
-                    CupertinoTextField(
-                      autofocus: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
+                    Container(
+                      height: 40,
+                      constraints: const BoxConstraints(
+                        maxWidth: 500,
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: CupertinoTextField(
+                        autofocus: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
                           border: Border.all(color: Colors.blue),
                           color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10))),
-                      controller: usernameController,
-                      keyboardType: TextInputType.phone,
-                      maxLines: 1,
-                      placeholder: 'Name : samuael ',
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        controller: usernameController,
+                        // keyboardType: TextInputType.passwords,
+                        maxLines: 1,
+                        placeholder: Translation.translate(
+                            this.lang, ' Username ') !=
+                            null
+                            ? Translation.translate(
+                            this.lang, ' Username ')
+                            : " Username ",
+                      ),
                     ),
                     RaisedButton(
                       textColor: Colors.white,
                       padding: EdgeInsets.all(5),
                       color: Theme.of(context).primaryColor,
                       splashColor: Colors.white24,
-                      onPressed: () => print("Change User Name Action"),
+                      onPressed: changeUsername,
                       child: Text(
                           Translation.translate(this.lang, "Submit") != null
                               ? Translation.translate(this.lang, "Submit")
@@ -246,7 +262,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             )
           ],
         ),
-      ),
+        ),
     );
+  }
+
+
+  void changeUsername() {
+    setState(() {
+      this.usernameText = usernameController.text;
+      if(this.usernameText.length <= 2 ){
+        this.usernameText= Translation.translate(this.lang, "Invalid Character Length \n Character Length Has to be greater than 2") != null ? Translation.translate(this.lang, "Invalid Character Length \n Character Length Has to be greater than 2") : "Invalid Character Length \n Character Length Has to be greater than 2" ;
+        this.usernameTextColor = Colors.red;
+      }else {
+        this.userdata.SetUsername(this.usernameText);
+        this.userdata.initialize();
+        /*
+      * *
+      * *
+      */
+        this.usernameText = Translation.translate(this.lang , "Username Changed Succesfully ") != null ? Translation.translate(this.lang , "Username Changed Succesfully ") : "Username Changed Succesfully ";
+        this.usernameTextColor = Colors.green;
+      }
+    });
+
   }
 }

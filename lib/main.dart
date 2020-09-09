@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import './screens/SettingsScreen.dart';
 import './screens/QuestionScreen.dart';
 import './screens/ResultScreen.dart';
+import './screens/AboutScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,9 @@ class MainApp extends StatelessWidget {
         },
         QuestionScreen.RouteName: (BuildContext context) {
           return QuestionScreen.getInstance();
+        },
+        AboutScreen.RouteName : (BuildContext context ){
+          return AboutScreen();
         }
       },
     );

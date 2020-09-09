@@ -61,6 +61,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
             Translation.translate(lang, "Categories ") != null
                 ? Translation.translate(lang, "Categories ")

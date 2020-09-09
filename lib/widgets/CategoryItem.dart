@@ -145,11 +145,11 @@ class CategoryItem extends StatelessWidget {
                                   ),
                                   title: Text(
                                     (Translation.translate(
-                                                    lang, "Group Number : ") !=
+                                                    lang, "Group Number ") !=
                                                 null
                                             ? Translation.translate(
-                                                lang, "Group Number : ")
-                                            : "Group Number : ") +
+                                                lang, "Group Number ")
+                                            : "Group Number ") + " : "+
                                         "${group.GroupNumber}",
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,

@@ -65,13 +65,17 @@ class TodaysDataHolder {
     if (gradeResult == null) {
       return false;
     }
-    print("Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
-    for (var id in gradeResult.Questions) {
-      print("$id ");
-      if( int.parse(id) == null  ){
-        continue;
+    // print("Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
+    try {
+      for (var id in gradeResult.Questions) {
+        // print("$id ");
+        if (int.parse(id) == null) {
+          continue;
+        }
+        this.questionDatas[int.parse(id)] = QuestionData();
       }
-      this.questionDatas[int.parse(id)] = QuestionData();
+    }catch(s , e){
+      return false;
     }
     return true;
   }

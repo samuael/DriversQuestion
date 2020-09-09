@@ -8,6 +8,7 @@ import '../screens/SettingsScreen.dart';
 import '../handlers/sharedPreference.dart';
 import '../screens/ResultScreen.dart';
 import '../screens/QuestionScreen.dart';
+import "../screens/AboutScreen.dart";
 
 class NavigationDrawer extends StatelessWidget {
   final BuildContext containerContext;
@@ -68,7 +69,7 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                 ),
                 // alignment: Alignment.center,
-                color: Theme.of(context).primaryColor,
+                // color: Theme.of(context).primaryColor,
                 child: Column(
                   children: [
                     Container(
@@ -78,21 +79,17 @@ class NavigationDrawer extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ])),
-                    Card(
-                        // padding : EdgeInsets.all(10) ,
-                        child: Text(
+                     Text(
                       username,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.body1.color,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
-                        backgroundColor: Colors.blue,
-                        // fontStyle : FontStyle.
                       ),
                       softWrap: true,
                       overflow: TextOverflow.fade,
-                    )),
+                    ),
                   ],
                 ),
               ),
@@ -167,6 +164,19 @@ class NavigationDrawer extends StatelessWidget {
                   },
                 ),
               ),
+              tileElement(
+                theTitle: Translation.translate(lang, 'About Us') != null
+                    ? Translation.translate(lang, 'About Us')
+                    : 'About Us',
+                icondata: Icons.people_outline,
+                onClick: () =>
+                    Navigator.of(containerContext).pushNamedAndRemoveUntil(
+                  AboutScreen.RouteName,
+                  (_) {
+                    return false;
+                  },
+                ),
+              ),
               SizedBox(
                 height: 1,
               ),
@@ -179,7 +189,7 @@ class NavigationDrawer extends StatelessWidget {
                   child: Column(children: [
                     Text(
                       // Translation.translate(
-                      "Question And Answer For Driving Trainers ",
+                      Translation.translate(lang, "Question And Answer For Driving Trainees ") != null ? Translation.translate(lang, "Question And Answer For Driving Trainees ") :"Question And Answer For Driving Trainees " ,
                     ),
                     Text(
                       "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
