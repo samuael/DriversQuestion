@@ -8,6 +8,7 @@ import '../widgets/QuestionItem.dart';
 import 'Categories.dart';
 import '../datas/datas.dart';
 import "ResultScreen.dart";
+import '../actions/actions.dart';
 
 class QuestionScreen extends StatefulWidget {
   static const RouteName = "/questions/";
@@ -42,9 +43,10 @@ class _QuestionScreenState extends State<QuestionScreen>
   int index = 0;
   bool showQuestion = false;
   bool goToCategoriesPage = false;
-  bool next = true;
+  bool next = false;
   bool prev = false;
   bool skip = false;
+  bool result = false ;
   // TodaysDataHolder mahder;
   // bool once = true;
   @override
@@ -440,6 +442,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       // print("Saving the Category and the Group to the Shared Preferences ...");
       this.userdata.SetCategory(category.ID);
       this.userdata.SetGroup(group.ID);
+      this.userdata.initialize();
     }
    
     if (!goToCategoriesPage) {
@@ -451,6 +454,15 @@ class _QuestionScreenState extends State<QuestionScreen>
           this.gradeResult = value;
         });
       });
+      if(gradeResult != null ){
+        setState(() {
+          result = true;
+          next=true;
+        });
+      }
+
+
+
     }
     // databaseManager.printAllQuestions(category.ID , group.ID);
     return Scaffold(
@@ -487,9 +499,13 @@ class _QuestionScreenState extends State<QuestionScreen>
             if (index == 0) {
               previousQuestion(context);
             } else if (index == 1) {
-              skipQuestion();
+              if(result){
+                ShowResult(this.lang  , gradeResult , context);
+              }
             } else {
-              nextQuestion();
+              if(gradeResult != null ) {
+                nextQuestion();
+              }
             }
           });
           // print("selected Index is : $selectedIndex");
@@ -515,11 +531,11 @@ class _QuestionScreenState extends State<QuestionScreen>
             ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.ac_unit,
-                color: skip ? Colors.white : Colors.black26),
-            title: Text(Translation.translate(lang, "Skip") != null
-                ? Translation.translate(lang, "Skip")
-                : "Skip"),
+            icon: Icon(Icons.assessment,
+                color: result ? Colors.white : Colors.black26),
+            title: Text(Translation.translate(lang, "Result") != null
+                ? Translation.translate(lang, "Result")
+                : "Result"),
           ),
           BottomNavigationBarItem(
             icon: Icon(

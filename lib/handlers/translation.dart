@@ -83,6 +83,8 @@ class Translation {
     "f":"ረ",
     "g":"ሠ",
     "question and answer for driving trainees" : "የተሽከርካሪ ሰልጣኞች መለማመጃ ጥያቄ እና መልስ ።",
+    "grade result" : "የፈተና ውጤት" ,
+    "group":"ፈተና",
   };
 
   static String translate(String lang, String sentence) {

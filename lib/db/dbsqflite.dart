@@ -57,20 +57,6 @@ class DatabaseManager {
       });
     }
   }
-
-  Future<void> printAllQuestions(int categoryID, int groupID) async {
-    OpenDatabase();
-    database.query(
-      "questions",
-      where: "categoryid=? AND groupid=?",
-      whereArgs: [categoryID, groupID],
-    ).then((rows) {
-      for (var row in rows) {
-        print(row);
-      }
-    });
-  }
-
   Future<Group> GetGroupByID(int groupID) async {
     OpenDatabase();
     Group group;

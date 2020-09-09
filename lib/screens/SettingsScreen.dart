@@ -29,8 +29,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String username;
   TextEditingController usernameController = new TextEditingController();
 
-  Color usernameTextColor=Colors.green;
-  String usernameText="";
+  Color usernameTextColor = Colors.green;
+  String usernameText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +41,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       this.username = userdata.Username;
     }
     return Scaffold(
-        drawer: NavigationDrawer(
-          containerContext: context,
-          key: UniqueKey(),
-          userdata: userdata,
+      drawer: NavigationDrawer(
+        containerContext: context,
+        key: UniqueKey(),
+        userdata: userdata,
+      ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          Translation.translate(this.lang, "Settings") == null
+              ? "Settings"
+              : Translation.translate(this.lang, "Settings"),
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            Translation.translate(this.lang, "Settings") == null
-                ? "Settings"
-                : Translation.translate(this.lang, "Settings"),
-          ),
-        ),
-        body:SingleChildScrollView( child : Column(
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Container(
               width: double.infinity,
@@ -207,15 +208,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     Text(
-                      usernameText ,
+                      usernameText,
                       style: TextStyle(
-                        color: usernameTextColor ,
+                        color: usernameTextColor,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
                     Container(
                       height: 40,
+                      padding: EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom+10 ),
                       constraints: const BoxConstraints(
                         maxWidth: 500,
                       ),
@@ -234,12 +236,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         controller: usernameController,
                         // keyboardType: TextInputType.passwords,
                         maxLines: 1,
-                        placeholder: Translation.translate(
-                            this.lang, ' Username ') !=
-                            null
-                            ? Translation.translate(
-                            this.lang, ' Username ')
-                            : " Username ",
+                        placeholder:
+                            Translation.translate(this.lang, ' Username ') !=
+                                    null
+                                ? Translation.translate(this.lang, ' Username ')
+                                : " Username ",
                       ),
                     ),
                     RaisedButton(
@@ -262,28 +263,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
             )
           ],
         ),
-        ),
+      ),
     );
   }
-
 
   void changeUsername() {
     setState(() {
       this.usernameText = usernameController.text;
-      if(this.usernameText.length <= 2 ){
-        this.usernameText= Translation.translate(this.lang, "Invalid Character Length \n Character Length Has to be greater than 2") != null ? Translation.translate(this.lang, "Invalid Character Length \n Character Length Has to be greater than 2") : "Invalid Character Length \n Character Length Has to be greater than 2" ;
+      if (this.usernameText.length <= 2) {
+        this.usernameText = Translation.translate(this.lang,
+                    "Invalid Character Length \n Character Length Has to be greater than 2") !=
+                null
+            ? Translation.translate(this.lang,
+                "Invalid Character Length \n Character Length Has to be greater than 2")
+            : "Invalid Character Length \n Character Length Has to be greater than 2";
         this.usernameTextColor = Colors.red;
-      }else {
+      } else {
         this.userdata.SetUsername(this.usernameText);
         this.userdata.initialize();
         /*
       * *
       * *
       */
-        this.usernameText = Translation.translate(this.lang , "Username Changed Succesfully ") != null ? Translation.translate(this.lang , "Username Changed Succesfully ") : "Username Changed Succesfully ";
+        this.usernameText = Translation.translate(
+                    this.lang, "Username Changed Succesfully ") !=
+                null
+            ? Translation.translate(this.lang, "Username Changed Succesfully ")
+            : "Username Changed Succesfully ";
         this.usernameTextColor = Colors.green;
       }
     });
-
   }
 }

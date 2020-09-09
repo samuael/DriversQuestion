@@ -19,8 +19,8 @@ Future<void> runMainApp(BuildContext context) async {
   await userdata.GetGroup().then((group) {
     groupID = group;
   });
+  await userdata.initialize();
   userdata.GetUsername().then((username) {
-    print(username);
     if (username == "") {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(RegistrationScreen.RouteName, (_) {
@@ -121,6 +121,7 @@ class _SplashAppState extends State<SplashApp> {
     _initializeAsyncDependencies(context);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
         accentColor: Color(0xFF006699),
