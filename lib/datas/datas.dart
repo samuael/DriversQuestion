@@ -65,7 +65,7 @@ class TodaysDataHolder {
     if (gradeResult == null) {
       return false;
     }
-    // print("Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
+    print(" DATAS PAGE : Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
     try {
       for (var id in gradeResult.Questions) {
         // print("$id ");

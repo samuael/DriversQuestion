@@ -30,7 +30,7 @@ class DatabaseManager {
     Category(
       ID: 2,
       Name: "Others",
-      imageDir: "assets/images/other_vehicles.png",
+      imageDir: "assets/images/newOne.jpeg",
       groups: [],
     ),
   ];
@@ -58,8 +58,9 @@ class DatabaseManager {
     }
   }
   Future<Group> GetGroupByID(int groupID) async {
-    OpenDatabase();
+    await OpenDatabase();
     Group group;
+
     await database
         .query("groups", where: "id=?", whereArgs: [groupID], limit: 1)
         .then((rows) {
@@ -75,7 +76,7 @@ class DatabaseManager {
 
   // InsertQuestion method for saving questions to the database
   Future<int> InsertQuestions(List<Question> questions) async {
-    OpenDatabase();
+    await OpenDatabase();
     int Counter = 0;
     for (var question in questions) {
       int va = await database.insert('questions', question.toMap());
@@ -88,7 +89,7 @@ class DatabaseManager {
   }
 
   Future<int> insertAll(List<Question> questions) async {
-    OpenDatabase();
+    await OpenDatabase();
     final batch = database.batch();
     for (var question in questions) {
       batch.insert("questions", question.toMap());
@@ -166,7 +167,7 @@ class DatabaseManager {
   Future<Question> getQuestion(int category, int group) async {
     await OpenDatabase();
     Question question;
-    print("Grooup : $group   : Category : $category ");
+    // print("Grooup : $group   : Category : $category ");
     final graderesult = await getGradeResult(group, category);
 
     print("Grade Result  ID :${graderesult.ID}  / Questions: ${graderesult.Questions}");
@@ -253,19 +254,13 @@ class DatabaseManager {
     }
     await getQuestionByID(questionID).then((qu) {
       question = qu;
-      print(" Here is the : $question");
     });
     if (question == null) {
       return -2;
     }
     gradeResult.AskedCount++;
-    // print("Now I am Inserting  $questionID to the gradeResults ");
-    print("Grade Result in Answer Question Database Before : ${gradeResult.Questions}");
     List<String> values = [ ...gradeResult.Questions  , "$questionID"];
     gradeResult.Questions =values;
-    // print("The Prepared  Question $lista");
-    print("Grade Result in Answer Question Database After : ${gradeResult.Questions}");
-
     if (question.Answerindex == answerIndex) {
       gradeResult.AnsweredCount++;
     }
@@ -282,7 +277,7 @@ class DatabaseManager {
 
   Future<int> InsertGradeResults(List<GradeResult> gradeResults) async {
     int counter = 0;
-    OpenDatabase();
+    await OpenDatabase();
     for (var gres in gradeResults) {
       database.insert("graderesult", gres.toMap()).then((index) {
         if (index > 0) {
@@ -294,7 +289,7 @@ class DatabaseManager {
   }
 
   Future<List<GradeResult>> resetAllGradeResults() async {
-    OpenDatabase();
+    await OpenDatabase();
     final mapo = {
       "askedcount": 0,
       "answeredcount": 0,
@@ -361,7 +356,7 @@ class DatabaseManager {
   Future<int> UpdateGradeResult(GradeResult gradeResult) async {
     int counter = 0;
     print("Grade Result ID : ${gradeResult.ID}  and Questions : ${gradeResult.Questions}");
-    OpenDatabase();
+    await OpenDatabase();
     database.update(
       "graderesult",
       gradeResult.toMap(),
@@ -377,7 +372,7 @@ class DatabaseManager {
 
   Future<List<GradeResult>> GradeResults() async {
     List<GradeResult> gradeResults = [];
-    OpenDatabase();
+    await OpenDatabase();
     await database
         .query(
       "graderesult",
@@ -385,6 +380,7 @@ class DatabaseManager {
         .then((rows) {
       for (var row in rows) {
         final questionIDs = (row["askedquestions"] as String).split("`");
+        print("Questions of the Grade Result $questionIDs");
         GradeResult gradeResult = GradeResult(
           ID: row["id"] as int,
           Categoryid: row["categoryid"] as int,
@@ -409,6 +405,7 @@ class DatabaseManager {
       if (value.length > 0) {
         print(value);
         final questionsID = (value[0]["askedquestions"] as String != null ? value[0]["askedquestions"] as String : "").split("`");
+        print("Question grade Results  $questionsID");
         graderResult.Categoryid = value[0]["categoryid"] as int;
         graderResult.AnsweredCount = value[0]["answeredcount"] as int;
         graderResult.Groupid = value[0]["groupid"];
@@ -526,7 +523,6 @@ class GradeResult {
   int AskedCount = 0;
   int AnsweredCount = 0;
   List<String> Questions = [];
-
   GradeResult({
     this.ID,
     @required this.Categoryid,
@@ -547,14 +543,13 @@ class GradeResult {
         }
         return false ;
       }catch(s , e ){
-        return false;
+        return true;
       }
     });
-
     int count = 0;
     for (var el in this.Questions) {
       if (count == 0) {
-        // count++;   
+        // count++;
         try{   
           int val = int.tryParse( el );
           if(val != null && val>0){
@@ -572,13 +567,12 @@ class GradeResult {
         valid=true;
       }
       if(valid){
-        ids +=  "`$el";  
+        ids +=  "`$el";
       }
     }
-    print("The ID is : $ids");
+    print("inside to map method te ids variable $ids ");
     return ids;
   }
-
   Map<String, dynamic> toMap() {
     return {
       "categoryid": this.Categoryid,

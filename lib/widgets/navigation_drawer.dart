@@ -75,21 +75,29 @@ class NavigationDrawer extends StatelessWidget {
                     Container(
                         child: Stack(children: [
                       Image.asset(
-                        "assets/images/logo.png",
+                        "assets/images/onewTwo.jpeg",
                         fit: BoxFit.cover,
                       ),
                     ])),
-                     Text(
-                      username,
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.body1.color,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                      ),
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                    ),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Icon(Icons.person)
+                         ,
+                         Text(
+                           username,
+                           style: TextStyle(
+                             color: Colors.black,
+                             fontSize: 17,
+                             fontWeight: FontWeight.bold,
+                             // fontStyle: FontStyle.italic,
+                           ),
+                           softWrap: true,
+                           overflow: TextOverflow.fade,
+                         ),
+                       ],
+                     )
+
                   ],
                 ),
               ),
@@ -192,7 +200,7 @@ class NavigationDrawer extends StatelessWidget {
                       Translation.translate(lang, "Question And Answer For Driving Trainees ") != null ? Translation.translate(lang, "Question And Answer For Driving Trainees ") :"Question And Answer For Driving Trainees " ,
                     ),
                     Text(
-                      "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+                      "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
                     )
                   ]))
             ],

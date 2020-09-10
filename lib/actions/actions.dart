@@ -28,12 +28,12 @@ void showPopup(
                     : "Ok",
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                  backgroundColor: Color(0XFF006699),
+                  backgroundColor: Theme.of(context).primaryColor,
                   color: Colors.white,
                 ),
               ))
         ],
-        backgroundColor: Color(0XFF006699),
+        backgroundColor: Theme.of(context).primaryColor,
         // shape: CircleBorder(),
         contentPadding: EdgeInsets.all(20),
         titlePadding: EdgeInsets.all(10),
@@ -58,8 +58,10 @@ void showPopup(
 void ShowResult( String lang, GradeResult gradeResult, BuildContext context) {
   showDialog(
     context: context,
+
     builder: (conta) {
       return AlertDialog(
+
         title: Text(
           Translation.translate(lang, "Grade Result") != null
               ? Translation.translate(lang, "Grade Result")
@@ -80,12 +82,12 @@ void ShowResult( String lang, GradeResult gradeResult, BuildContext context) {
                     : "Ok",
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                  backgroundColor: Color(0XFF006699),
+                  backgroundColor: Theme.of(context).primaryColor,
                   color: Colors.white,
                 ),
               ))
         ],
-        backgroundColor: Color(0XFF006699),
+        backgroundColor: Theme.of(context).primaryColor,
         // shape: CircleBorder(),
         contentPadding: EdgeInsets.all(20),
         titlePadding: EdgeInsets.all(10),
@@ -121,7 +123,7 @@ void ShowResult( String lang, GradeResult gradeResult, BuildContext context) {
                 margin: EdgeInsets.symmetric(vertical: 20,),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Theme.of(context).canvasColor , ) ,
+                  border: Border.all(color: Colors.white , ) ,
                 ),
                 child : Text(
                   "${gradeResult.AnsweredCount} /${gradeResult.AskedCount}" ,

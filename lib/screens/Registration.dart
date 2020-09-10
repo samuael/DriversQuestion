@@ -50,7 +50,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     databaseManager.OpenDatabase().then((_) {
       print("Database is Ready ...");
     });
+
+    this.Userdata = UserData.getInstance();
+    this.Userdata.initialize();
+
     super.initState();
+
   }
 
   Future<List<List<dynamic>>> LoadXlsx(String path, String sheetName) async {
@@ -67,8 +72,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       row.removeWhere((value) {
         if (value == null ||
             "$value" == "" ||
-            "$value" == "null" ||
-            "$value".length <= 3) {
+            "$value" == "null") {
           return true;
         }
         return false;
@@ -107,9 +111,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       int index = 0;
       bool valid = false;
       if (row.length > 4) {
-        index = int.parse("${row[1]}");
-        if (index != null && index > 0 && index <= (row.length - 2)) {
-          valid = true;
+        try {
+          index = int.tryParse("${row[1]}");
+          if (index != null && index > 0 && index <= (row.length - 2)) {
+            valid = true;
+          }
+        }catch(s , e ){
+          valid = false ;
+          index=0;
         }
       }
 
@@ -139,11 +148,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final argumentsMap =
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
     Userdata = argumentsMap["locald"] as UserData;
+    Userdata.initialize();
+     this.lang = Userdata.Lang ;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
+        // centerTitle: true,
         title: Text(
           Translation.translate(lang, 'Registration') != null
               ? Translation.translate(lang, 'Registration')
@@ -151,8 +162,58 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           // views[selectedIndex]['title'] as String,
           // Translation.translate("Registration") ,
           textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight:FontWeight.bold,
+          )
         ),
+        actions: [
+          Container(
+            // width: double.infinity,
+            color:Colors.white,
+            child: DropdownButton<String>(
+              hint: Text(
+                Translation.translate(lang, "Select Language"),
+                style: TextStyle(
+                  fontFamily:
+                  FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 20,
+                ),
+              ),
+              // value: lang,
+              onChanged: (String language) {
+                setState(() {
+                  this.lang = language;
+                  Userdata.SetLanguage(this.lang);
+                  Userdata.initialize();
+                });
+              },
+              items: Translation.languages.map((String language) {
+                return DropdownMenuItem<String>(
+                  value: language,
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.language),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        Translation.translate(
+                          this.lang,
+                          language.toUpperCase(),
+                        ),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          )
+        ],
       ),
+
       body: SingleChildScrollView(
         child: Column(children: [
           Container(
@@ -171,7 +232,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Container(
                   height: 160,
                   child: Image.asset(
-                    "assets/images/logo.png",
+                    "assets/images/onewTwo.jpeg",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -410,7 +471,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   Questions: [],
                                 );
                                 gradeResultObjects.add(gradeResult);
-                                group.QuestionsCount = questions.length;
+                                group.QuestionsCount = (questions.length + groupIndexedQuestions.length);
                                 GroupObjects.add(group);
                                 // Generating Questios Object for each one of the List element
                                 for (var t = 0; t < questions.length; t++) {
@@ -426,11 +487,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       Groupid: group.ID,
                                       Body: oneQuestion[0],
                                       Answerindex: index,
-                                      Answers: answers);
+                                      Answers: answers,);
                                   QuestObjects.add(quest);
                                 }
                               }
-
                               QuestObjects.shuffle(math.Random.secure());
                               for (var k = 0; k < QuestObjects.length; k++) {
                                 this.questionCounter++;
@@ -474,7 +534,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 Countero = onValue;
                               });
                             });
-
                             await LoadXlsxIndexed(
                                     "assets/file.xlsx", "OthersIndexed")
                                 .then((rows) {
@@ -537,13 +596,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   question.Groupid = this.groutCounter;
                                   QuestObjects.add(question);
                                 }
+
+
                                 final group = Group(
                                   ID: this.groutCounter,
                                   GroupNumber: groupId,
                                   Categoryid: category,
                                 );
                                 final gradeResult = GradeResult(
-                                  // ID: this.groutCounter,
+                                  ID: this.groutCounter,
                                   Categoryid: category,
                                   Groupid: group.ID,
                                   AnsweredCount: 0,
@@ -551,7 +612,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   Questions: [],
                                 );
                                 gradeResultObjects.add(gradeResult);
-                                group.QuestionsCount = questions.length;
+                                group.QuestionsCount = questions.length + groupIndexedQuestions.length;
                                 GroupObjects.add(group);
                                 // Generating Questios Object for each one of the List element
                                 for (var t = 0; t < questions.length; t++) {
@@ -560,24 +621,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   final answers = oneQuestion.sublist(1);
                                   answers.shuffle(math.Random.secure());
                                   int index = answers.indexOf(answer);
-                                  this.questionCounter++;
+                                  // this.questionCounter++;
                                   Question quest = Question(
-                                      // ID: questionCounter,
                                       Categoryid: category,
                                       Groupid: group.ID,
                                       Body: oneQuestion[0],
                                       Answerindex: index,
-                                      Answers: answers);
+                                      Answers: answers,);
                                   QuestObjects.add(quest);
                                 }
                               }
-
                               QuestObjects.shuffle(math.Random.secure());
-                              for (var k = 0; k < QuestObjects.length; k++) {
+                              for (var w = 0; w < QuestObjects.length; w++) {
                                 this.questionCounter++;
-                                final quest = QuestObjects[k];
+                                final quest = QuestObjects[w];
                                 quest.ID = this.questionCounter;
-                                QuestObjects[k] = quest;
+                                QuestObjects[w] = quest;
                               }
 
                               databaseManager.InsertGroups(GroupObjects)
@@ -633,7 +692,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 });
                               });
                             });
-
                             // Load Data to the database
                           } else {
                             setState(() {

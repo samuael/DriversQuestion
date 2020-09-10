@@ -20,6 +20,9 @@ Future<void> runMainApp(BuildContext context) async {
     groupID = group;
   });
   await userdata.initialize();
+
+  categoryID = userdata.category;
+  groupID = userdata.group;
   userdata.GetUsername().then((username) {
     if (username == "") {
       Navigator.of(context)
@@ -29,7 +32,7 @@ Future<void> runMainApp(BuildContext context) async {
         // 'username': username,
         "locald": userdata,
       });
-    } else if ((categoryID != null && groupID != null) &&
+    } else if ((categoryID != null && groupID != null && groupID >0 && categoryID>0 ) &&
         (categoryID > 0 && groupID > 0)) {
       gotoQuestions(categoryID, groupID, context);
     } else {
@@ -51,13 +54,15 @@ Future<void> gotoQuestions(
   Category category;
   final databaseManager = DatabaseManager.getInstance();
   category = DatabaseManager.categories[categoryID - 1];
-  databaseManager.GetGroupByID(groupID).then((group) {
+  print("Group ID In Splash Screen IS L $groupID");
+  await databaseManager.GetGroupByID(groupID).then((group) {
     groupo = group;
   });
   final userdata = UserData.getInstance();
   userdata.initialize();
   if (groupo == null) {
-    Navigator.of(context).pushNamedAndRemoveUntil(CategoryScreen.RouteName,
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        CategoryScreen.RouteName,
         (_) {
       return false;
     }, arguments: {
@@ -65,7 +70,10 @@ Future<void> gotoQuestions(
       "locald": userdata,
     });
   }
-  print("Executing niggaa ...");
+  print("Category ID : $categoryID");
+  print("Group ID : $groupID");
+  print("Userdata  : $userdata");
+  print("Lang ID : ${userdata.Lang}");
   Navigator.of(context).pushNamedAndRemoveUntil(
     QuestionScreen.RouteName,
     (_) {
@@ -109,6 +117,7 @@ class _SplashAppState extends State<SplashApp> {
     //   }  );
     // });
     // print(lists);
+    UserData.getInstance().initialize();
     Future.delayed(
       Duration(milliseconds: 5000),
       () => widget.onInitializationComplete(context),
@@ -120,144 +129,140 @@ class _SplashAppState extends State<SplashApp> {
   Widget build(BuildContext context) {
     _initializeAsyncDependencies(context);
 
-    return MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
-        accentColor: Color(0xFF006699),
-        backgroundColor: Color(0x444),
-        fontFamily: "Raleway",
-        // fontSize : 23 ,
-        // fontWeight: FontWeight.bold  ,
-        textTheme: Theme.of(context).textTheme.copyWith(
-              body1: TextStyle(
-                  // fontFamily: "Raleway",
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic),
-              body2: TextStyle(
-                // fontFamily: "RobotoCondensed",
-                fontWeight: FontWeight.bold,
-              ),
-              title: TextStyle(
-                fontSize: 30,
-                // fontFamily: "RobotoCondensed",
-              ),
-            ),
+        primarySwatch: Colors.blue,
       ),
-      title: 'Splash Screen',
-      home: _buildBody(),
-    );
+      home :_buildBody(),
+    ) ;
   }
 
   Widget _buildBody() {
     return Scaffold(
-        // appBar : AppBar(
-        //   title : Text(
-        //     " Drivers Exercise " ,
-        //   ) ,
-        // ),
-        body: Column(children: [
-      Container(
-        // backgroundColor: Color(0xFF006699),
-        child: Card(
-          elevation: 3,
-          // backgroundColor : Colors.blue  ,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(
-                25,
-              ),
-              bottomRight: Radius.circular(
-                25,
-              ),
-            ),
-          ),
+      // appBar : AppBar(
+      //   title : Text(
+      //     " Drivers Exercise " ,
+      //   ) ,
+      // ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+        ),
+        child: Column(
+          children: [
+            Container(
+              child: Card(
+                elevation: 3,
+                // backgroundColor : Colors.blue  ,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                      25,
+                    ),
+                    bottomRight: Radius.circular(
+                      25,
+                    ),
+                  ),
+                ),
 
-          child: Column(children: [
-            SizedBox(
-              height: 40,
-            ),
-            Container(
-                child: Text(
-                  "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 21,
-                    fontWeight: FontWeight.bold,
+                child: Column(children: [
+                  SizedBox(
+                    height: 40,
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 3,
-                  vertical: 3,
-                )),
-            Container(
-                child: Text(
-                  "Shambel Drivers Training Institute",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 3,
-                  vertical: 3,
-                )),
-            Container(
-                child: Text(
-                  " Drivers Exercise Question ",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 21,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 3,
-                  vertical: 3,
-                )),
-          ]),
-        ),
-      ),
-      Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(
-              25,
-            ),
-            bottomRight: Radius.circular(
-              25,
-            ),
-          ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              child: Center(
-                child: Image.asset(
-                  "assets/images/logo.png",
-                  fit: BoxFit.cover,
-                ),
+                  Container(
+                      child: Text(
+                        "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3,
+                        vertical: 3,
+                      )),
+                  Container(
+                      child: Text(
+                        "Saddle Drivers Training Institute",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3,
+                        vertical: 3,
+                      )),
+                  Container(
+                      child: Text(
+                        " Drivers Exercise Question ",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 3,
+                        vertical: 3,
+                      )),
+                ]),
               ),
             ),
-            Column(children: [
+            Card(
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(
+                    25,
+                  ),
+                  bottomRight: Radius.circular(
+                    25,
+                  ),
+                ),
+              ),
+              child: Stack(
+                overflow: Overflow.clip,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/onewTwo.jpeg",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+                children: [
               SizedBox(
                 height: 30,
               ),
               Center(
-                child: const CircularProgressIndicator(),
+                child: const RefreshProgressIndicator(
+                  backgroundColor: Colors.black,
+                  strokeWidth: 5,
+                  semanticsLabel: "Loading...",
+                ),
               )
             ])
           ],
         ),
-      )
-    ]));
+      ),
+    );
   }
 }

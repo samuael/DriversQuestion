@@ -108,17 +108,19 @@ class _QuestionItemState extends State<QuestionItem> {
     int counter = 0;
     return ClipRRect(
       borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(20),
-        bottomRight: Radius.circular(20),
-        topRight: Radius.circular(30),
-        topLeft: Radius.circular(30),
+        bottomLeft: Radius.circular(30),
+        bottomRight: Radius.circular(30),
+        topRight: Radius.circular(20),
+        topLeft: Radius.circular(20),
       ),
       child: Card(
-        elevation: 5,
+        elevation: 10,
         child: Container(
+          decoration : BoxDecoration(
+            color: Theme.of(context).canvasColor,
+          ),
           padding: EdgeInsets.all(10),
           margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(),
           child: Column(
             children: <Widget>[
               ClipRRect(
@@ -135,7 +137,7 @@ class _QuestionItemState extends State<QuestionItem> {
                     ),
                   ),
                   child: Text(
-                    "(${ widget.questionNumber }) : " + this.question.Body,
+                    "(${ widget.questionNumber }). " + this.question.Body,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       //  fontFamily: FontFamily.,
@@ -185,7 +187,7 @@ class _QuestionItemState extends State<QuestionItem> {
                 return widget;
               }).toList(),
               SizedBox(
-                height: 50,
+                height: 20,
               ),
             ],
           ),

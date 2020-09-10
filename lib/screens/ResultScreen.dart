@@ -242,9 +242,11 @@ class _ResultScreenState extends State<ResultScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
+                          color: Colors.black,
                         ),
                       ),
                       Container(
+
                         decoration: BoxDecoration(
                           color: Colors.white54,
                         ),
@@ -256,6 +258,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize : 17 ,
+                            color: Colors.black,
                           ),
                         ),
                       )
@@ -278,15 +281,19 @@ class _ResultScreenState extends State<ResultScreen> {
                       color: Theme.of(context).primaryColor,
                     ),
                     title: Text(
-                      (Translation.translate(this.lang, "Level") != null
-                              ? Translation.translate(this.lang, "Level")
-                              : "Level") +
+                      (Translation.translate(this.lang, "Test") != null
+                              ? Translation.translate(this.lang, "Test")
+                              : "Test") +
                           " : ${gradeResult.Groupid}",
+                      style: TextStyle(
+                        color:Theme.of(context).textTheme.body1.color,
+                      ),
                     ),
                     subtitle: Text(
                       "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color:Theme.of(context).textTheme.body1.color,
                       ),
                     ),
                     trailing: InkWell(
@@ -329,6 +336,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
+                          color: Colors.black,
                         ),
                       ),
                       Container(
@@ -343,6 +351,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontSize:17,
+                            color: Colors.black,
                           ),
                         ),
                       )
@@ -363,15 +372,19 @@ class _ResultScreenState extends State<ResultScreen> {
                     leading: Icon(Icons.local_car_wash,
                         color: Theme.of(context).primaryColor),
                     title: Text(
-                      (Translation.translate(this.lang, "Level") != null
-                              ? Translation.translate(this.lang, "Level")
-                              : "Level") +
+                      (Translation.translate(this.lang, "Test") != null
+                              ? Translation.translate(this.lang, "Test")
+                              : "Test") +
                           " : ${gradeResult.Groupid}",
+                      style: TextStyle(
+                        color:Theme.of(context).textTheme.body1.color,
+                      ),
                     ),
                     subtitle: Text(
                       "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.body1.color,
                       ),
                     ),
                     trailing: InkWell(

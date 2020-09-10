@@ -15,11 +15,22 @@ class AboutScreen extends StatelessWidget {
   UserData userdata;
   bool once = true;
 
-  final List<String> phones = [
-    "+251 917335555",
-    "+251 933335566",
-    "+251 906682990",
-    "0577754444",
+  // final List<String> phones = [
+  //   "+251 917335555",
+  //   "+251 933335566",
+  //   "+251 906682990",
+  //   "+251-577754444",
+  // ];
+  final List<String > phonesHawassa= [
+    "+251909531439" ,
+    "+251938008050" ,
+    "0942429898" ,
+  ];
+  final List<String > imageNames = [
+        "assets/images/onewTwo.jpeg",
+        "assets/images/photo5967444311891096430.jpg" ,
+        "assets/images/photo5967444311891096429.jpg" ,
+        // "assets/images/logo.png" ,
   ];
 
   @override
@@ -53,7 +64,7 @@ class AboutScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10),
             child: Text(
-              "Shambel Drivers Training Institute \n ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+              "Saddle Dam Drivers Training Institute \n ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -62,26 +73,53 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
+
+
+          // Container(
+          //   height: 150,
+          //   // width: double.infinity,
+          //   child: SingleChildScrollView(
+          //     clipBehavior: Clip.hardEdge,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       children: [
+          //         Container(
+          //           height:160,
+          //           width : 200,
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(10),
+          //
+          //           ),
+          //           child :Image.asset("assets/images/logo.png" , fit: BoxFit.scaleDown ,),
+          //         ),
+          //
+          //
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
+
           Container(
-            height: 150,
-            // width: double.infinity,
-            child: SingleChildScrollView(
-              clipBehavior: Clip.hardEdge,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset("assets/images/logo.png"),
+            width: double.infinity,
+            height:300,
+            child: new ListView.builder(
+              itemCount: imageNames.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  // onTap: ()=>changeTheme(context  , index),
+                  child:Container(
+                    // height: 120,
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    width: 200,
+                    child: Image.asset("${imageNames[index]}"),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Image.asset("assets/images/logo.png"),
-                  ),
-                ],
-              ),
+                );
+              },
+              scrollDirection: Axis.horizontal,
             ),
           ),
+
           ListTile(
             leading: CircleAvatar(
                 child: Icon(
@@ -94,6 +132,7 @@ class AboutScreen extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
+                    color:Theme.of(context).textTheme.body1.color,
                     fontFeatures: [
                       FontFeature.oldstyleFigures(),
                     ])),
@@ -103,14 +142,86 @@ class AboutScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 10,),
             child: Text(
               Translation.translate(this.lang,
-                          "Shambel Drivers Training Institute \n A driver is one of the most influential person in framing a positive opinion of the vehicle. A driver also ensures safety and security of public at large and plays a vital role in economical running of the vehicle. and  . We thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.") !=
+                  // "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge." ) !=
+                          "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.") !=
                       null
                   ? Translation.translate(this.lang,
-                      "Shambel Drivers Training Institute \n A driver is one of the most influential person in framing a positive opinion of the vehicle. A driver also ensures safety and security of public at large and plays a vital role in economical running of the vehicle. and  . We thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.")
-                  : "Shambel Drivers Training Institute \n A driver is one of the most influential person in framing a positive opinion of the vehicle. A driver also ensures safety and security of public at large and plays a vital role in economical running of the vehicle. and  . We thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.",
+                      "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.")
+                  : "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.",
               textAlign: TextAlign.justify,
+              style: TextStyle(
+                color:Theme.of(context).textTheme.body1.color,
+              ),
             ),
           ),
+          // ListTile(
+          //   title: Text(
+          //       Translation.translate(this.lang, "Address") != null
+          //           ? Translation.translate(this.lang, "Address")
+          //           : "Address",
+          //       style: TextStyle(
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //         color:Theme.of(context).textTheme.body1.color,
+          //       )),
+          //   leading: CircleAvatar(
+          //     child: Icon(Icons.add_location),
+          //   ),
+          // ),
+          // Container(
+          //   padding: EdgeInsets.all(10),
+          //   margin: EdgeInsets.symmetric(horizontal: 10),
+          //   child: Text(
+          //     Translation.translate(this.lang,
+          //                 "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ") !=
+          //             null
+          //         ? Translation.translate(this.lang,
+          //             "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ")
+          //         : "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ",
+          //     textAlign: TextAlign.justify,
+          //     style: TextStyle(
+          //       fontStyle: FontStyle.italic,
+          //     ),
+          //   ),
+          // ),
+          // ListTile(
+          //   leading: CircleAvatar(
+          //       child: Icon(
+          //     Icons.phone,
+          //   )),
+          //   title: Text(
+          //     Translation.translate(this.lang, "Phones") != null
+          //         ? Translation.translate(this.lang, "Phones")
+          //         : "Phones",
+          //     style: TextStyle(
+          //       fontWeight: FontWeight.bold,
+          //       color:Theme.of(context).textTheme.body1.color,
+          //     ),
+          //   ),
+          // ),
+          // Column(
+          //   children: [
+          //     ...phones.map((phone) {
+          //       return Container(
+          //         padding: EdgeInsets.all(10),
+          //         // margin: EdgeInsets.symmetric(vertical: 3),
+          //         width: double.infinity,
+          //         child: Text(
+          //             phone,
+          //             textAlign: TextAlign.center,
+          //           ),
+          //       );
+          //     }).toList(),
+          //   ],
+          // ) ,
+
+          Container(
+            color : Theme.of(context).primaryColor,
+            child  : SizedBox(
+
+            ),
+          ),
+
           ListTile(
             title: Text(
                 Translation.translate(this.lang, "Address") != null
@@ -119,6 +230,7 @@ class AboutScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color:Theme.of(context).textTheme.body1.color,
                 )),
             leading: CircleAvatar(
               child: Icon(Icons.add_location),
@@ -129,11 +241,11 @@ class AboutScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Translation.translate(this.lang,
-                          "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ") !=
-                      null
+                  "Hawasa : Ethiopia  , Atotet : Wolde Amanuael Road infront of Hayole School") !=
+                  null
                   ? Translation.translate(this.lang,
-                      "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ")
-                  : "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ",
+                  "Hawasa : Ethiopia  , Atotet : Wolde Amanuael Road infront of Hayole School")
+                  : "Hawasa : Ethiopia  , Atotet : Wolde Amanuael Road infront of Hayole School",
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
@@ -143,32 +255,59 @@ class AboutScreen extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
                 child: Icon(
-              Icons.phone,
-            )),
+                  Icons.phone,
+                )),
             title: Text(
               Translation.translate(this.lang, "Phones") != null
                   ? Translation.translate(this.lang, "Phones")
                   : "Phones",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                color:Theme.of(context).textTheme.body1.color,
               ),
             ),
           ),
           Column(
             children: [
-              ...phones.map((phone) {
+              ...phonesHawassa.map((phone) {
                 return Container(
                   padding: EdgeInsets.all(10),
                   // margin: EdgeInsets.symmetric(vertical: 3),
                   width: double.infinity,
                   child: Text(
-                      phone,
-                      textAlign: TextAlign.center,
-                    ),
+                    phone,
+                    textAlign: TextAlign.center,
+                  ),
                 );
               }).toList(),
             ],
-          ) ,
+          ),
+
+          ListTile(
+              leading : CircleAvatar(
+                  child : Icon(
+                      Icons.code
+                  )
+              ),
+              title : Text(
+                Translation.translate(this.lang , "Email" , ) != null ? Translation.translate(this.lang , "Email" , ) : "Email",
+                style: TextStyle(
+                  color:Theme.of(context).textTheme.body1.color,
+                ),
+              )
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              "shambel1987@gmial.com" ,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+
 
           ListTile(
             leading : CircleAvatar(
@@ -178,6 +317,9 @@ class AboutScreen extends StatelessWidget {
             ),
                 title : Text(
               Translation.translate(this.lang , "App Developer" , ) != null ? Translation.translate(this.lang , "App Developer" , ) : "App Developer",
+                  style: TextStyle(
+                    color:Theme.of(context).textTheme.body1.color,
+                  ),
           )
           ),
           
@@ -187,6 +329,7 @@ class AboutScreen extends StatelessWidget {
                 Translation.translate(this.lang, "Samuael Adnew") != null ? Translation.translate(this.lang, "Samuael Adnew") : "Samuael Adnew" ,
               style: TextStyle(
                 fontWeight : FontWeight.bold ,
+                color:Theme.of(context).textTheme.body1.color,
               ),
             ) ,
             subtitle: Column(
@@ -198,6 +341,7 @@ class AboutScreen extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold  ,
                     fontStyle: FontStyle.italic,
+                    color:Theme.of(context).textTheme.body1.color,
                   ),
                 ) ,
                 Text(
@@ -207,6 +351,7 @@ class AboutScreen extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold  ,
                     fontStyle: FontStyle.italic,
+                    color:Theme.of(context).textTheme.body1.color,
                   ),
                 ) ,
 

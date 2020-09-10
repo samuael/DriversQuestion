@@ -43,7 +43,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   int index = 0;
   bool showQuestion = false;
   bool goToCategoriesPage = false;
-  bool next = false;
+  bool next = true;
   bool prev = false;
   bool skip = false;
   bool result = false ;
@@ -74,7 +74,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   }
 
   void nextQuestion() {
-    if (next) {
+    if (next && this.gradeResult != null) {
       if (index < questions.length - 1) {
         setState(() {
           index++;
@@ -151,22 +151,32 @@ class _QuestionScreenState extends State<QuestionScreen>
                         ? Translation.translate(this.lang, "Ok")
                         : "Ok",
                     style: TextStyle(
-                      backgroundColor: Color(0XFF006699),
+                      backgroundColor: Theme.of(context).primaryColor,
                       color: Colors.white,
                     ),
                   ))
             ],
-            backgroundColor: Color(0XFF006699),
+            backgroundColor: Theme.of(context).primaryColor,
             // shape: CircleBorder(),
             contentPadding: EdgeInsets.all(20),
             titlePadding: EdgeInsets.all(10),
             content: Text(
-              Translation.translate(
-                          this.lang, "First ! Answer this question") !=
-                      null
-                  ? Translation.translate(
-                      this.lang, "First ! Answer this question")
-                  : "First ! Answer this question",
+              this.gradeResult ==null ?
+                (Translation.translate(
+                this.lang, "your are not allowed to access questions\nchoose a group first") !=
+                null
+                ? Translation.translate(
+                this.lang, "your are not allowed to access questions\nchoose a group first")
+                    : "your are not allowed to access questions\nchoose a group first")
+             :
+            (
+                Translation.translate(
+            this.lang, "First ! Answer this question") !=
+            null
+            ? Translation.translate(
+            this.lang, "First ! Answer this question")
+                : "First ! Answer this question"
+            ),
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -205,7 +215,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       setState(() {
         if (answerIndex == answerIn) {
           final was = gradeResult.Questions.indexOf("$questionID");
-          print("Heree  :   ${gradeResult.Questions}");
+          print("Heree  :  ${gradeResult.Questions}");
           if (was < 0) {
             this.gradeResult.Questions.add("$questionID");
             this.gradeResult.AnsweredCount++;
@@ -213,7 +223,7 @@ class _QuestionScreenState extends State<QuestionScreen>
           }
         } else {
           final was = gradeResult.Questions.indexOf("$questionID");
-          print("Heree  :   ${gradeResult.Questions}");
+          print("Heree : ${gradeResult.Questions} and the Length Is ${ gradeResult.Questions.length}");
           if (was < 0) {
             this.gradeResult.Questions.add("$questionID");
             this.gradeResult.AskedCount++;
@@ -288,12 +298,12 @@ class _QuestionScreenState extends State<QuestionScreen>
                           : "Ok",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        backgroundColor: Color(0XFF006699),
+                        backgroundColor: Theme.of(context).primaryColor,
                         color: Colors.white,
                       ),
                     ))
               ],
-              backgroundColor: Color(0XFF006699),
+              backgroundColor: Theme.of(context).primaryColor,
               // shape: CircleBorder(),
               contentPadding: EdgeInsets.all(20),
               titlePadding: EdgeInsets.all(10),
@@ -439,15 +449,14 @@ class _QuestionScreenState extends State<QuestionScreen>
     if (group == null || category == null) {
       this.goToCategoriesPage = true;
     } else {
-      // print("Saving the Category and the Group to the Shared Preferences ...");
+      print("Saving the Category and the Group to the Shared Preferences ...");
       this.userdata.SetCategory(category.ID);
       this.userdata.SetGroup(group.ID);
       this.userdata.initialize();
     }
-   
     if (!goToCategoriesPage) {
       databaseManager.getGradeResult(group.ID, category.ID).then((value) {
-        if (this.gradeResult != null) {
+        if( this.gradeResult != null ) {
           return;
         }
         setState(() {
@@ -457,12 +466,8 @@ class _QuestionScreenState extends State<QuestionScreen>
       if(gradeResult != null ){
         setState(() {
           result = true;
-          next=true;
         });
       }
-
-
-
     }
     // databaseManager.printAllQuestions(category.ID , group.ID);
     return Scaffold(
@@ -481,12 +486,45 @@ class _QuestionScreenState extends State<QuestionScreen>
         ),
         key: UniqueKey(),
         centerTitle: true,
+        actions: [
+          InkWell(
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color:Theme.of(context).canvasColor,),
+                ),
+                child:Row(
+                  children: [
+                    Text(
+                      Translation.translate(this.lang, "Categories") != null ? Translation.translate(this.lang, "Categories") : "Categories",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize:10,
+                      ),
+                    ),
+                    Icon(Icons.arrow_forward_ios  , color: Colors.white,
+                    size: 10,),
+                  ],
+                )
+            ),
+            onTap: (){
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                CategoryScreen.RouteName,
+                    (_) {
+                  return false;
+                },
+              );
+            },
+          )
+        ],
       ),
       drawer: NavigationDrawer(
         key: UniqueKey(),
         containerContext: context,
         userdata: userdata,
       ),
+
       /*
         *
         * Bottom Navigation bar Begins 
@@ -633,11 +671,11 @@ class _QuestionScreenState extends State<QuestionScreen>
                                 ),
                               ),
                               Text(
-                                (Translation.translate(lang, "Group Number ") !=
+                                (Translation.translate(lang, "Test Number ") !=
                                             null
                                         ? Translation.translate(
-                                            lang, "Group Number ")
-                                        : "Group Number  ") +
+                                            lang, "Test Number ")
+                                        : "Test Number  ") +
                                     " : " +
                                     (goToCategoriesPage
                                         ? "?"

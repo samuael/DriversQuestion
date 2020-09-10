@@ -51,9 +51,8 @@ class Translation {
         "ውጤቱን ሲያጠፉ የውስጥ ችግር ተፈጥሯል ፤ እባክዎ በድጋሚ ይሞክሩ ",
     "reset results": "ውጤቶቹን አጥፋ",
     "others": "ሌሎች",
-    'company password ....' : "yedrjitu yilef kal " , 
-    "loading" : "bemechan lay", 
-    'eg. Name : muhammed' : "misale :- sim: mehammed ",
+    'company password ....' : "የድርጅቱ ይለፍ ቃል ... " ,
+    "loading" : "በመጫን ላይ",
     "internal code error. \nplease try again...." : "yewust chigr tefetrual \nebakwo bedgami yimokru" , 
     "incorrect company password" : "yetesasate yedrjit yilef kal" , 
     "please fill the name correctly" : " ebakwo smwon bemigeba yimulu" , 
@@ -72,9 +71,10 @@ class Translation {
     "or" : "ወይም",
     "app developer" :"መተግበሪያ አበልፃጊ",
     "samuael adnew" : "ሳሙኤል አድነው",
-    "gebriel area , o4 kebele  , assosa , benishangul gumz ,ethiopia":"ገብርኤል ሰፈር ፡ ፬ ቀበሌ ፡አሶሳ ፡ ቤንሻንጉል ጉምዝ ፡ ኢትዮጽያ ።",
-    "shambel drivers training institute \n a driver is one of the most influential person in framing a positive opinion of the vehicle. a driver also ensures safety and security of public at large and plays a vital role in economical running of the vehicle. and  . we thrive to create intelligent and expert drivers and to create traffic accident free world.\n come and visit us you shall have a better knowledge.":
-      "ሻንበል የአሽከርካሪዎች ማሰልጠኛ ተቋም\n አሽከርካሪ የተሽከርካሪዎች መልካም ገፅታ ማሳያ ተፅእኖ ያለው ሠው ነው ።\n በተጨማሪም አሽከርካሪዎች በ ኢኮኖሚ እና በማህበረሰብ ድህንነት ላይ ትልቅ ሚና አላቸው።\n እኛም ብቁና የላቁ አሽከርካሪዎችን በማምረት ከ ትራፊክ አደጋ የፀዳ የተሽከርካርሪ አለም ለመፍጠር እንተጋለን ።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
+    "hawasa : ethiopia  , atotet : wolde amanuael road infront of hayole school" : " ሀዋሳ ኢትዬጽያ አቶቴ ፡ ወልድ አማኑኤል መንገድ ከሀዮሌ ት/ት ቤት ፊት ለፊት",
+    "gebriel area , o4 kebele  , assosa , benishangul gumz ,ethiopia":"ገብርኤል ሰፈር ፡ 04 ቀበሌ ፡አሶሳ ፡ ቤንሻንጉል ጉምዝ ፡ ኢትዮጽያ",
+    "saddle dam drivers training institute \nwe thrive to create intelligent and expert drivers and to create traffic accident free world.\n come and visit us you shall have a better knowledge.":
+      "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም \n ብቁና የላቁ አሽከርካሪዎችን ማፍራት ከ ትራፊክ አደጋ የፀዳ የተሽከርካርሪ አለም ለመፍጠር እንተጋለን ።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
     "a":"ሀ",
     "b":"ለ",
     "c":"ሐ",
@@ -82,9 +82,21 @@ class Translation {
     "e":"ሰ",
     "f":"ረ",
     "g":"ሠ",
-    "question and answer for driving trainees" : "የተሽከርካሪ ሰልጣኞች መለማመጃ ጥያቄ እና መልስ ።",
+    "question and answer for driving trainees" : "የተሽከርካሪ ሰልጣኞች መለማመጃ ጥያቄ እና መልስ",
     "grade result" : "የፈተና ውጤት" ,
     "group":"ፈተና",
+    "select category" : "ምድብ ምረጥ",
+    "your are not allowed to access questions\nchoose a group first": "ጥያቄዎችን ለመፈተን አይችሉም \n መጀመሪያ የጥያቄ ቡድን ይመረጡ",
+    "test":"ፈተና",
+    "test number" : "ፈተና ቁጥር",
+    "the": "የ",
+    "vehicles" : "ተሽከርካሪዎች",
+    "cycle": "ሳይክል",
+    "theme change":"የቲም ለውጥ",
+    "exit app" : "መተግበሪያውን ዝጋ",
+    "cancel":"ይቅር",
+    "to apply the change . restart the app !":"የቲም ለውጡ ተግባራዊ እንዲሆን ፤መተግበርሪያውን ዘግተው ትክፈቱት",
+    "eg. name : muhammed" :"ምሳሌ፦ ስም ፡ ሙሀመድ"
   };
 
   static String translate(String lang, String sentence) {

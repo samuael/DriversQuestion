@@ -40,7 +40,7 @@ class CategoryItem extends StatelessWidget {
         "category": this.category,
         "lang": this.lang,
         "userdata": userdata,
-        "group": group , 
+        "group": group,
       },
     );
   }
@@ -98,9 +98,34 @@ class CategoryItem extends StatelessWidget {
                         child: Card(
                           color: Theme.of(context).primaryColor,
                           child: Text(
-                            Translation.translate(lang, category.Name) != null
-                                ? Translation.translate(lang, category.Name)
-                                : category.Name,
+                            (Translation.translate(this.lang, "The") != null
+                                    ? Translation.translate(this.lang, "The")
+                                    : "The") +
+                                " " +
+                                (Translation.translate(lang, category.Name) !=
+                                        null
+                                    ? Translation.translate(lang, category.Name)
+                                    : category.Name) +
+                                " " +
+                                (category.ID == 1
+                                    ? (Translation.translate(
+                                                this.lang, "Cycle") !=
+                                            null
+                                        ? Translation.translate(
+                                            this.lang, "Cycle")
+                                        : "Cycle")
+                                    : (Translation.translate(
+                                                this.lang, "Vehicles") !=
+                                            null
+                                        ? Translation.translate(
+                                            this.lang, "Vehicles")
+                                        : "Vehicles")) +
+                                " " +
+                                (Translation.translate(this.lang, "Questions") !=
+                                        null
+                                    ? Translation.translate(
+                                        this.lang, "Questions")
+                                    : "Questions"),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               // fontFamily: FontFamily.Apple_Symbols.toString(),
@@ -123,66 +148,73 @@ class CategoryItem extends StatelessWidget {
                         topRight: Radius.circular(20),
                       ),
                       child: Column(
-                        children: [
-                          ...this.category.groups.map((Group group) {
-                            return Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.black26,
-                                    ),
-                                  ),
-                                ),
-                                child: ListTile(
-                                  onTap: () => goToQuestions(
-                                    group.ID,
-                                    category.ID,
-                                    context,
-                                  ),
-                                  key: UniqueKey(),
-                                  leading: Icon(
-                                    Icons.group_work,
-                                  ),
-                                  title: Text(
-                                    (Translation.translate(
-                                                    lang, "Group Number ") !=
-                                                null
-                                            ? Translation.translate(
-                                                lang, "Group Number ")
-                                            : "Group Number ") + " : "+
-                                        "${group.GroupNumber}",
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    "${group.QuestionsCount} ${Translation.translate(lang, " Questions ") != null ? Translation.translate(lang, " Questions ") : " Questions "}",
-                                    // +
-                                    //             Translation.translate(
-                                    //                 lang, " Questions "
-                                    //                 ) != null
-                                    //     ? Translation.translate(lang, " Questions " , )
-                                    //     : " Questions ").toUpperCase(),
-
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  trailing: CircleAvatar(
-                                    child: Text(
-                                      "${group.GroupNumber}",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 23,
+                        children: this.category.groups != null
+                            ? (this.category.groups.map((Group group) {
+                                return Container(
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.black26,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ));
-                          }).toList(),
-                        ],
+                                    child: ListTile(
+                                      onTap: () => goToQuestions(
+                                        group.ID,
+                                        category.ID,
+                                        context,
+                                      ),
+                                      key: UniqueKey(),
+                                      leading: Icon(
+                                        Icons.group_work,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      title: Text(
+                                        (Translation.translate(
+                                                        lang, "Test Number ") !=
+                                                    null
+                                                ? Translation.translate(
+                                                    lang, "Test Number ")
+                                                : "Test Number ") +
+                                            " : " +
+                                            "${group.GroupNumber}",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        "${group.QuestionsCount} ${Translation.translate(lang, " Questions ") != null ? Translation.translate(lang, " Questions ") : " Questions "}",
+                                        // +
+                                        //             Translation.translate(
+                                        //                 lang, " Questions "
+                                        //                 ) != null
+                                        //     ? Translation.translate(lang, " Questions " , )
+                                        //     : " Questions ").toUpperCase(),
+
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                      trailing: CircleAvatar(
+                                        child: Text(
+                                          "${group.GroupNumber}",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 23,
+                                          ),
+                                        ),
+                                      ),
+                                    ));
+                              }).toList())
+                            : [
+                                Center(
+                                    child: Container(
+                                        margin: EdgeInsets.only(top: 30),
+                                        child: CircularProgressIndicator()))
+                              ],
                       ),
                     ),
                   ],
