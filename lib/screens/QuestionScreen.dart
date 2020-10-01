@@ -3,27 +3,21 @@ import 'package:DriversMobile/handlers/sharedPreference.dart';
 import 'package:DriversMobile/handlers/translation.dart';
 import 'package:DriversMobile/widgets/navigation_drawer.dart';
 import 'package:flutter/material.dart';
-// import 'package:sqflite/sqflite.dart';
 import '../widgets/QuestionItem.dart';
 import 'Categories.dart';
-import '../datas/datas.dart';
 import "ResultScreen.dart";
 import '../actions/actions.dart';
 
 class QuestionScreen extends StatefulWidget {
   static const RouteName = "/questions/";
-
   static QuestionScreen _instance;
-
   static QuestionScreen getInstance() {
     if (_instance == null) {
       _instance = QuestionScreen();
     }
     return _instance;
   }
-
   QuestionScreen({Key key}) : super(key: key);
-
   @override
   _QuestionScreenState createState() => _QuestionScreenState();
 }
@@ -47,32 +41,23 @@ class _QuestionScreenState extends State<QuestionScreen>
   bool prev = false;
   bool skip = false;
   bool result = false ;
-  // TodaysDataHolder mahder;
-  // bool once = true;
   @override
   void initState() {
-
     databaseManager = DatabaseManager.getInstance();
     WidgetsBinding.instance.addObserver(this);
-
-    // this.mahder = TodaysDataHolder.getInstance();
-
     super.initState();
   }
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.detached) {
     }
   }
-
   void nextQuestion() {
     if (next && this.gradeResult != null) {
       if (index < questions.length - 1) {
@@ -88,18 +73,13 @@ class _QuestionScreenState extends State<QuestionScreen>
           this.next = true;
         });
       } else {
-        // print("You Have Called Print hah nigggaa...");
-        //if (this.index == this.questions.length - 1) {
         if (databaseManager == null) {
           this.databaseManager = DatabaseManager.getInstance();
-          return;
         }
         databaseManager
-            .getQuestion(this.category.ID, this.group.ID)
+            .getQuestion(this.gradeResult.Categoryid, this.gradeResult.Groupid)
             .then((questi) {
           if (questi != null) {
-            // print("From Database : ");
-            // print("${questi.Body}  ${questi.Answers}  ${questi.Answerindex}");
             setState(() {
               this.question = questi;
               this.questions.add(questi);
@@ -108,18 +88,6 @@ class _QuestionScreenState extends State<QuestionScreen>
               this.index++;
               this.showQuestion = true;
               this.next = false;
-
-              // if (this.mahder == null) {
-              //   this.mahder = TodaysDataHolder.getInstance();
-              // }
-
-              // CategoryGroupData cgdt = this
-              //     .mahder
-              //     .categoryGroupDatas["${this.category.ID}:${this.group.ID}"];
-              // if (cgdt == null) {
-              //   cgdt = CategoryGroupData();
-              // }
-              // cgdt.questions.add(this.question);
             });
           }
         });
@@ -157,7 +125,6 @@ class _QuestionScreenState extends State<QuestionScreen>
                   ))
             ],
             backgroundColor: Theme.of(context).primaryColor,
-            // shape: CircleBorder(),
             contentPadding: EdgeInsets.all(20),
             titlePadding: EdgeInsets.all(10),
             content: Text(
@@ -190,7 +157,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       );
     }
   }
-
   void goToCategoreis(BuildContext context) {
     Navigator.of(context).pushNamedAndRemoveUntil(
       CategoryScreen.RouteName,
@@ -199,16 +165,14 @@ class _QuestionScreenState extends State<QuestionScreen>
       },
     );
   }
-
-  // the grade result of te question must not be passed to the main Question Itm Widget
-  // but we will return the correct answers Index in the returrn value and depending on this value
-  // the question item will update the answers backgrouns
-  // and also a popup view will be sshown
+  // The grade result of te question must not be passed to the main Question Itm Widget
+  // but we will return the correct answers Index in the return value and depending on this value
+  // the question item will update the answers background
+  // and also a popup view will be shown
   // since teh group and the category are global the QuestionItme class has to pass only the
   // Question ID and the answer Index of the Question Only
   Future<int> answerQuestion(int questionID, answerIndex) async {
     int answerI = 0;
-    print("previously  ${this.gradeResult.Questions}");
     await databaseManager
         .answerQuestion(questionID, answerIndex, this.gradeResult)
         .then((answerIn) {
@@ -223,7 +187,6 @@ class _QuestionScreenState extends State<QuestionScreen>
           }
         } else {
           final was = gradeResult.Questions.indexOf("$questionID");
-          print("Heree : ${gradeResult.Questions} and the Length Is ${ gradeResult.Questions.length}");
           if (was < 0) {
             this.gradeResult.Questions.add("$questionID");
             this.gradeResult.AskedCount++;
@@ -232,14 +195,11 @@ class _QuestionScreenState extends State<QuestionScreen>
         }
         answerI = answerIn;
       });
-      print("After Update ${gradeResult.Questions}");
-      // print("this is answer In : $answerIn");
       this.prev = true;
       this.next = true;
     });
     return answerI;
   }
-
   void skipQuestion() {
     if (skip && !next) {
       this.questions.removeAt(index);
@@ -252,17 +212,8 @@ class _QuestionScreenState extends State<QuestionScreen>
         this.index--;
         nextQuestion();
       }
-    } else {
-      // Scaffold.of(context).showSnackBar(SnackBar(
-      //   content: Text(
-      //     Translation.translate(this.lang, "Can't Skip this Question ") != null
-      //         ? Translation.translate(this.lang, "Can't Skip this Question ")
-      //         : "Can't Skip this Question ",
-      //   ),
-      // ));
     }
   }
-
   void previousQuestion(BuildContext context) {
     setState(() {
       if (this.index > 0) {
@@ -327,7 +278,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       }
     });
   }
-
   QuestionItem QuestionWidget(Question question) {
     if (question != null) {
       this.questionItem = QuestionItem(
@@ -335,12 +285,10 @@ class _QuestionScreenState extends State<QuestionScreen>
         question: question,
         questionNumber : gradeResult.AskedCount+1,
         answerQuestion: answerQuestion,
-        // nextCallback
       );
     }
     return this.questionItem;
   }
-
   Widget getGoToCategoriesPage() {
     return Container(
       height: 200,
@@ -386,7 +334,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       )),
     );
   }
-
   Widget starterWidget() {
     return Container(
       height: 200,
@@ -432,7 +379,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       )),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     final Map<String, Object> arguments =
@@ -441,7 +387,9 @@ class _QuestionScreenState extends State<QuestionScreen>
     // and if the Route is Coming from main Page First Page
     // then the First page will get the group and the category from the shared Preferences and
     // will call the question page
-    // if there is no category and group id saved in the shared preferences then  the first page to be shown will be the category page
+    // if there is no category and group id saved in the
+    // shared preferences then  the first page to be
+    // shown will be the category page
     this.userdata = arguments["userdata"] as UserData;
     this.lang = arguments["lang"] as String;
     this.category = arguments["category"] as Category;
@@ -449,7 +397,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     if (group == null || category == null) {
       this.goToCategoriesPage = true;
     } else {
-      print("Saving the Category and the Group to the Shared Preferences ...");
+      print("Instantiating the Category and the  Group Id Values ...  Category ${category.ID}  Group ID : ${group.ID}");
       this.userdata.SetCategory(category.ID);
       this.userdata.SetGroup(group.ID);
       this.userdata.initialize();
@@ -468,8 +416,8 @@ class _QuestionScreenState extends State<QuestionScreen>
           result = true;
         });
       }
+      userdata.initialize();
     }
-    // databaseManager.printAllQuestions(category.ID , group.ID);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -524,7 +472,6 @@ class _QuestionScreenState extends State<QuestionScreen>
         containerContext: context,
         userdata: userdata,
       ),
-
       /*
         *
         * Bottom Navigation bar Begins 
@@ -616,27 +563,6 @@ class _QuestionScreenState extends State<QuestionScreen>
                     height: 100,
                     child: Row(
                       children: <Widget>[
-                        // Expanded(
-                        //   flex: 1,
-                        //   child: Container(
-                        //     height: 100,
-                        //     width: 100,
-                        //     child: new AnimatedBuilder(
-                        //       builder: (BuildContext context, Widget _widget) {
-                        //         return Transform.rotate(
-                        //           angle: animationController.value * 6.3,
-                        //           child: _widget,
-                        //         );
-                        //       },
-                        //       key: UniqueKey(),
-                        //       animation: animationController,
-                        //       child: CircleAvatar(
-                        //         child: Image.asset("assets/images/tyrePng.png"),
-                        //         backgroundColor: Colors.white,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Expanded(
                           flex: 3,
                           child: Column(

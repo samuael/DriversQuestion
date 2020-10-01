@@ -159,11 +159,12 @@ class CategoryItem extends StatelessWidget {
                                       ),
                                     ),
                                     child: ListTile(
-                                      onTap: () => goToQuestions(
+                                      onTap: (){
+                                        goToQuestions(
                                         group.ID,
                                         category.ID,
                                         context,
-                                      ),
+                                      );},
                                       key: UniqueKey(),
                                       leading: Icon(
                                         Icons.group_work,

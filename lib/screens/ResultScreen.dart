@@ -146,7 +146,8 @@ class _ResultScreenState extends State<ResultScreen> {
                 gradeResult.Categoryid == gres.Categoryid &&
                 gradeResult.Groupid == gres.Groupid) {
               setState(() {
-                this.motorResults[k] = gradeResult;
+                print("The k is $k");
+                this.othersResults[k] = gradeResult;
                 this.otherTotalAnswered=0;
                 this.otherTotalAsked=0;
                 
@@ -202,6 +203,8 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     // clear();
     // initialize();
+    int motorTestCounter =0;
+    int othersTestCounter =0;
     return Scaffold(
       drawer: NavigationDrawer(
         containerContext: context,
@@ -284,7 +287,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       (Translation.translate(this.lang, "Test") != null
                               ? Translation.translate(this.lang, "Test")
                               : "Test") +
-                          " : ${gradeResult.Groupid}",
+                          " : ${++motorTestCounter}",
                       style: TextStyle(
                         color:Theme.of(context).textTheme.body1.color,
                       ),
@@ -375,7 +378,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       (Translation.translate(this.lang, "Test") != null
                               ? Translation.translate(this.lang, "Test")
                               : "Test") +
-                          " : ${gradeResult.Groupid}",
+                          " : ${++othersTestCounter}",
                       style: TextStyle(
                         color:Theme.of(context).textTheme.body1.color,
                       ),

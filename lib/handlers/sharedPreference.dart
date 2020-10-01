@@ -76,7 +76,7 @@ class UserData {
     final pref = await SharedPreferences.getInstance();
     this.Lang = pref.getString("lang");
     if (this.Lang == null || this.Lang == "") {
-      return "";
+      return "amh";
     }
     return this.Lang;
   }
@@ -100,9 +100,9 @@ class UserData {
 
   Future<int> SetGroup(int group) async {
     final pref = await SharedPreferences.getInstance();
-    pref.setInt("group", category).then((val) {
+    pref.setInt("group", group).then((val) {
       if (val) {
-        return category;
+        return group;
       }
       return -1;
     });

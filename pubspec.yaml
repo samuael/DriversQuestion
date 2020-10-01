@@ -27,6 +27,7 @@ dependencies:
   shared_preferences: 0.5.2
   sqflite: 
   path:
+  device_info: ^0.4.2
   # path_provider:
   # csv_sheet: any
   # csv_sheet: ^0.0.2

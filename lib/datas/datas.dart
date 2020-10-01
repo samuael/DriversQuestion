@@ -57,25 +57,34 @@ class TodaysDataHolder {
   Future<bool> deleteResetedGroupQuestions(int categoryid, int groupid) async {
     GradeResult gradeResult;
     DatabaseManager databaseManager = DatabaseManager.getInstance();
+    print("Category ID : ${categoryid}   // Group ID : ${groupid}");
     await databaseManager
         .getGradeResult(groupid, categoryid)
         .then((gradeReesult) {
       gradeResult = gradeReesult;
     });
+
     if (gradeResult == null) {
+      print("it is because of gradeResult is null nigga ");
       return false;
     }
     print(" DATAS PAGE : Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
     try {
+      print("${gradeResult.Questions}");
+      // print(gradeResult.toMap());
       for (var id in gradeResult.Questions) {
-        // print("$id ");
+        print("Question ID : ${id}");
+        if(id=="" || id==null){
+          continue;
+        }
         if (int.parse(id) == null) {
           continue;
         }
         this.questionDatas[int.parse(id)] = QuestionData();
       }
     }catch(s , e){
-      return false;
+      print("it is because of Question ID Parsing Nigga ...");
+      // return false;
     }
     return true;
   }

@@ -150,7 +150,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     Userdata = argumentsMap["locald"] as UserData;
     Userdata.initialize();
      this.lang = Userdata.Lang ;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,

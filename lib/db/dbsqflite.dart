@@ -168,8 +168,11 @@ class DatabaseManager {
     await OpenDatabase();
     Question question;
     // print("Grooup : $group   : Category : $category ");
-    final graderesult = await getGradeResult(group, category);
 
+    GradeResult graderesult = await getGradeResult(group, category);
+    if(graderesult == null) {
+      graderesult = GradeResult(Categoryid: category, Groupid: group);
+    }
     print("Grade Result  ID :${graderesult.ID}  / Questions: ${graderesult.Questions}");
     String ids = "";
     if (graderesult.Questions.length > 0) {
@@ -350,6 +353,7 @@ class DatabaseManager {
         Questions: questionids,
       );
     });
+    print("Before Returning the GradeResult ${ gradeResult.toMap()}");
     return gradeResult;
   }
 
@@ -418,7 +422,7 @@ class DatabaseManager {
           Groupid: groupid,
           AskedCount: 0,
           AnsweredCount: 0,
-          Questions: [],
+          Questions: List<String>(),
         );
       }
     });
@@ -426,6 +430,7 @@ class DatabaseManager {
       int count = Sqflite.firstIntValue(
           await database.rawQuery('SELECT COUNT(*) FROM graderesult'));
       graderResult.ID = count;
+      await saveGradeResult(graderResult);
     }
     return graderResult;
   }
