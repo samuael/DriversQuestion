@@ -32,9 +32,16 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+//    lintOptions {
+//        disable 'InvalidPackage'
+//    }
+//
     lintOptions {
-        disable 'InvalidPackage'
+        checkReleaseBuilds false
+        abortOnError false
     }
+
+
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).

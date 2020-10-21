@@ -150,6 +150,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     Userdata = argumentsMap["locald"] as UserData;
     Userdata.initialize();
      this.lang = Userdata.Lang ;
+
+     this.lang = "amh";
+     this.Userdata.SetLanguage("amh");
+     this.Userdata.initialize();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -231,7 +235,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Container(
                   height: 160,
                   child: Image.asset(
-                    "assets/images/onewTwo.jpeg",
+                    "assets/images/logo.png",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -332,34 +336,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                   Container(
-                    // height: 40,
-
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-                    ),
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: CupertinoTextField(
-                      autofocus: true, obscureText: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue),
-                          color: Colors.white,
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(10))),
-                      controller: passwordController,
-                      keyboardType: TextInputType.text,
-                      maxLines: 1,
-                      placeholder: Translation.translate(
-                          this.lang, ' Company Password ....') !=
-                          null
-                          ? Translation.translate(
-                          this.lang, ' Company Password ....')
-                          : "Company Password ...",
-                    ),
-                  ),
-                  Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
                     constraints: const BoxConstraints(maxWidth: 500),
@@ -368,12 +344,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         print(
                           "${nameController.text} ${passwordController.text}",
                         );
-                        if (nameController.text != "" &&
-                            passwordController.text != "") {
+                        if (nameController.text != "") {
                           // loginStore.getCodeWithPhoneNumber(context, phoneController.text.toString());
                           username = nameController.text;
-                          password = passwordController.text;
-                          if (UserData.PASSWORD == password) {
                             setState(() {
                               this.message = (Translation.translate(
                                               this.lang, "Loading") !=
@@ -684,7 +657,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 }
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     CategoryScreen.RouteName, (_) {
-                                  return true;
+                                  return false;
                                 }, arguments: {
                                   'username': username,
                                   "locald": Userdata,
@@ -692,20 +665,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               });
                             });
                             // Load Data to the database
-                          } else {
-                            setState(() {
-                              message = Translation.translate(this.lang,
-                                          "Incorrect Company Password ") !=
-                                      null
-                                  ? Translation.translate(
-                                      this.lang, "Incorrect Company Password ")
-                                  : "Incorrect Company Password ";
-                              loading = false;
-                              messageColor = Colors.red;
-                            });
-                          }
-                        } else if (nameController.text.isEmpty &&
-                            passwordController.text.isNotEmpty) {
+
+                        } else if (nameController.text.isEmpty ) {
                           setState(() {
                             message = Translation.translate(this.lang,
                                         "Please Fill the name Correctly ") !=
@@ -713,27 +674,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 ? Translation.translate(this.lang,
                                     "Please Fill the name Correctly ")
                                 : "Please Fill the name Correctly ";
-                            messageColor = Colors.red;
-                          });
-                        } else if (passwordController.text.isEmpty &&
-                            nameController.text.isNotEmpty) {
-                          setState(() {
-                            message = Translation.translate(this.lang,
-                                        "Invalid Password! \n Try The Company Pasword Correctly ") !=
-                                    null
-                                ? Translation.translate(this.lang,
-                                    "Invalid Password! \n Try The Company Pasword Correctly ")
-                                : "Invalid Password! \n Try The Company Pasword Correctly ";
-                            messageColor = Colors.red;
-                          });
-                        } else {
-                          setState(() {
-                            message = Translation.translate(this.lang,
-                                        "Please Fiil the input fields ") !=
-                                    null
-                                ? Translation.translate(
-                                    this.lang, "Please Fiil the input fields ")
-                                : "Please Fiil the input fields ";
                             messageColor = Colors.red;
                           });
                         }

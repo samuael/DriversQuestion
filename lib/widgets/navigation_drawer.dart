@@ -75,7 +75,7 @@ class NavigationDrawer extends StatelessWidget {
                     Container(
                         child: Stack(children: [
                       Image.asset(
-                        "assets/images/onewTwo.jpeg",
+                        "assets/images/logo.png",
                         fit: BoxFit.cover,
                       ),
                     ])),
@@ -200,7 +200,7 @@ class NavigationDrawer extends StatelessWidget {
                       Translation.translate(lang, "Question And Answer For Driving Trainees ") != null ? Translation.translate(lang, "Question And Answer For Driving Trainees ") :"Question And Answer For Driving Trainees " ,
                     ),
                     Text(
-                      "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+                      "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
                     )
                   ]))
             ],

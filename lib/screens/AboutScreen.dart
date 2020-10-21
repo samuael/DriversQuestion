@@ -15,23 +15,23 @@ class AboutScreen extends StatelessWidget {
   UserData userdata;
   bool once = true;
 
-  // final List<String> phones = [
-  //   "+251 917335555",
-  //   "+251 933335566",
-  //   "+251 906682990",
-  //   "+251-577754444",
+  final List<String> phones = [
+    "+251 917335555",
+    "+251 933335566",
+    "+251 906682990",
+    "+251-577754444",
+  ];
+  // final List<String > phonesHawassa= [
+  //   "+251909531439" ,
+  //   "+251938008050" ,
+  //   "0942429898" ,
   // ];
-  final List<String > phonesHawassa= [
-    "+251909531439" ,
-    "+251938008050" ,
-    "0942429898" ,
-  ];
-  final List<String > imageNames = [
-        "assets/images/onewTwo.jpeg",
-        "assets/images/photo5967444311891096430.jpg" ,
-        "assets/images/photo5967444311891096429.jpg" ,
-        // "assets/images/logo.png" ,
-  ];
+  // final List<String > imageNames = [
+  //       "assets/images/onewTwo.jpeg",
+  //       "assets/images/photo5967444311891096430.jpg" ,
+  //       "assets/images/photo5967444311891096429.jpg" ,
+  //       // "assets/images/logo.png" ,
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -323,41 +323,49 @@ class AboutScreen extends StatelessWidget {
           )
           ),
           
-          ListTile(
-            leading : Image.asset("assets/images/samuael.jpg"),
-            title: Text(
-                Translation.translate(this.lang, "Samuael Adnew") != null ? Translation.translate(this.lang, "Samuael Adnew") : "Samuael Adnew" ,
-              style: TextStyle(
-                fontWeight : FontWeight.bold ,
-                color:Theme.of(context).textTheme.body1.color,
-              ),
-            ) ,
-            subtitle: Column(
-              children: [
-                Text(
-                  (Translation.translate(this.lang , "Phone") != null ? Translation.translate(this.lang , "Phone") : "Phone") + " : " +
-                    "0992078204",
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold  ,
-                    fontStyle: FontStyle.italic,
-                    color:Theme.of(context).textTheme.body1.color,
-                  ),
-                ) ,
-                Text(
-                  (Translation.translate(this.lang , "Email") != null ? Translation.translate(this.lang , "Email") : "Email") + " : " +
-                      "samuaeladnew.zebir@gmail.com\n\t" + (Translation.translate(this.lang , "Or ") != null ? Translation.translate(this.lang , "Or ") : "Or") + "\n\t"
-                  "samuaeladnew@gmail.com",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold  ,
-                    fontStyle: FontStyle.italic,
-                    color:Theme.of(context).textTheme.body1.color,
-                  ),
-                ) ,
+         Row(
+           children: [
+             Expanded(
+               flex: 2,
+               child:  ListTile(
+                 // leading : Image.asset("assets/images/samuael.jpg"),
+                 title: Text(
+                   Translation.translate(this.lang, "Samuael Adnew") != null ? Translation.translate(this.lang, "Samuael Adnew") : "Samuael Adnew" ,
+                   style: TextStyle(
+                     fontWeight : FontWeight.bold ,
+                     color:Theme.of(context).textTheme.body1.color,
+                   ),
+                 ) ,
+                 subtitle: Column(
+                   children: [
+                     Text(
+                       (Translation.translate(this.lang , "Phone") != null ? Translation.translate(this.lang , "Phone") : "Phone") + " : " +
+                           "0992078204",
+                       textAlign: TextAlign.justify,
+                       style: TextStyle(
+                         fontWeight: FontWeight.bold  ,
+                         fontStyle: FontStyle.italic,
+                         color:Theme.of(context).textTheme.body1.color,
+                       ),
+                     ) ,
+                     Text(
+                       (Translation.translate(this.lang , "Email") != null ? Translation.translate(this.lang , "Email") : "Email") + " : " +
+                           "samuaeladnew.zebir@gmail.com\n\t" + (Translation.translate(this.lang , "Or ") != null ? Translation.translate(this.lang , "Or ") : "Or") + "\n\t"
+                           "samuaeladnew@gmail.com",
+                       style: TextStyle(
+                         fontWeight: FontWeight.bold  ,
+                         fontStyle: FontStyle.italic,
+                         color:Theme.of(context).textTheme.body1.color,
+                       ),
+                     ) ,
 
-              ],
-            ),
-          )
+                   ],
+                 ),
+               ),
+             )
+           ],
+         )
+
         ],
       )),
     );
