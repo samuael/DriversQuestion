@@ -1,4 +1,4 @@
-name: DriversMobile
+name: drivers_question
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -28,11 +28,9 @@ dependencies:
   sqflite: 
   path:
   device_info: ^0.4.2
-  # path_provider:
-  # csv_sheet: any
-  # csv_sheet: ^0.0.2
   excel: 1.1.5
-
+  provider: ^5.0.0
+  flutter_bloc: ^7.0.0
   # The following adds the Cupertino Icons f  ont to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
@@ -58,23 +56,24 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/logo.png
-    - assets/file.xlsx
-    - assets/images/motor_cycle1.png
-    - assets/images/other_vehicles.png
-    - assets/images/newMotorNigga.jpeg
-    - assets/images/Urban.jpg
-    - assets/images/tyrePng.png
-    - assets/images/samuael.jpg
-    - assets/images/defaultTheme.png
-    - assets/images/blueBlack.png
-    - assets/images/themeBrown.png
-    - assets/images/tealTheme.png
-    - assets/images/deepOrange.png
-    - assets/images/onewTwo.jpeg
-    - assets/images/newOne.jpeg
-    - assets/images/photo5967444311891096430.jpg
-    - assets/images/photo5967444311891096429.jpg
+    - assets/iconImages/
+    - assets/images/
+    - assets/
+    
+    # - assets/images/other_vehicles.png
+    # - assets/images/newMotorNigga.jpeg
+    # - assets/images/Urban.jpg
+    # - assets/images/tyrePng.png
+    # - assets/images/samuael.jpg
+    # - assets/images/defaultTheme.png
+    # - assets/images/blueBlack.png
+    # - assets/images/themeBrown.png
+    # - assets/images/tealTheme.png
+    # - assets/images/deepOrange.png
+    # - assets/images/onewTwo.jpeg
+    # - assets/images/newOne.jpeg
+    # - assets/images/photo5967444311891096430.jpg
+    # - assets/images/photo5967444311891096429.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

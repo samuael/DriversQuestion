@@ -1,12 +1,7 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
-import 'package:DriversMobile/handlers/sharedPreference.dart';
-import 'package:DriversMobile/handlers/translation.dart';
-import 'package:DriversMobile/widgets/navigation_drawer.dart';
+import 'dart:ui';
+
+import 'package:drivers_question/libs.dart';
 import 'package:flutter/material.dart';
-import '../widgets/QuestionItem.dart';
-import 'Categories.dart';
-import "ResultScreen.dart";
-import '../actions/actions.dart';
 
 class QuestionScreen extends StatefulWidget {
   static const RouteName = "/questions/";
@@ -17,6 +12,7 @@ class QuestionScreen extends StatefulWidget {
     }
     return _instance;
   }
+
   QuestionScreen({Key key}) : super(key: key);
   @override
   _QuestionScreenState createState() => _QuestionScreenState();
@@ -40,24 +36,26 @@ class _QuestionScreenState extends State<QuestionScreen>
   bool next = true;
   bool prev = false;
   bool skip = false;
-  bool result = false ;
+  bool result = false;
   @override
   void initState() {
     databaseManager = DatabaseManager.getInstance();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.detached) {
-    }
+    if (state == AppLifecycleState.detached) {}
   }
+
   void nextQuestion() {
     if (next && this.gradeResult != null) {
       if (index < questions.length - 1) {
@@ -128,22 +126,19 @@ class _QuestionScreenState extends State<QuestionScreen>
             contentPadding: EdgeInsets.all(20),
             titlePadding: EdgeInsets.all(10),
             content: Text(
-              this.gradeResult ==null ?
-                (Translation.translate(
-                this.lang, "your are not allowed to access questions\nchoose a group first") !=
-                null
-                ? Translation.translate(
-                this.lang, "your are not allowed to access questions\nchoose a group first")
-                    : "your are not allowed to access questions\nchoose a group first")
-             :
-            (
-                Translation.translate(
-            this.lang, "First ! Answer this question") !=
-            null
-            ? Translation.translate(
-            this.lang, "First ! Answer this question")
-                : "First ! Answer this question"
-            ),
+              this.gradeResult == null
+                  ? (Translation.translate(this.lang,
+                              "your are not allowed to access questions\nchoose a group first") !=
+                          null
+                      ? Translation.translate(this.lang,
+                          "your are not allowed to access questions\nchoose a group first")
+                      : "your are not allowed to access questions\nchoose a group first")
+                  : (Translation.translate(
+                              this.lang, "First ! Answer this question") !=
+                          null
+                      ? Translation.translate(
+                          this.lang, "First ! Answer this question")
+                      : "First ! Answer this question"),
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -157,6 +152,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       );
     }
   }
+
   void goToCategoreis(BuildContext context) {
     Navigator.of(context).pushNamedAndRemoveUntil(
       CategoryScreen.RouteName,
@@ -165,6 +161,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       },
     );
   }
+
   // The grade result of te question must not be passed to the main Question Itm Widget
   // but we will return the correct answers Index in the return value and depending on this value
   // the question item will update the answers background
@@ -200,6 +197,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     });
     return answerI;
   }
+
   void skipQuestion() {
     if (skip && !next) {
       this.questions.removeAt(index);
@@ -214,6 +212,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       }
     }
   }
+
   void previousQuestion(BuildContext context) {
     setState(() {
       if (this.index > 0) {
@@ -278,17 +277,19 @@ class _QuestionScreenState extends State<QuestionScreen>
       }
     });
   }
+
   QuestionItem QuestionWidget(Question question) {
     if (question != null) {
       this.questionItem = QuestionItem(
         key: UniqueKey(),
         question: question,
-        questionNumber : gradeResult.AskedCount+1,
+        questionNumber: gradeResult.AskedCount + 1,
         answerQuestion: answerQuestion,
       );
     }
     return this.questionItem;
   }
+
   Widget getGoToCategoriesPage() {
     return Container(
       height: 200,
@@ -334,6 +335,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       )),
     );
   }
+
   Widget starterWidget() {
     return Container(
       height: 200,
@@ -379,10 +381,12 @@ class _QuestionScreenState extends State<QuestionScreen>
       )),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final Map<String, Object> arguments =
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
+
     /// if the route is coming from the Category page then the data will be saved in the Shared Preferences
     // and if the Route is Coming from main Page First Page
     // then the First page will get the group and the category from the shared Preferences and
@@ -397,21 +401,22 @@ class _QuestionScreenState extends State<QuestionScreen>
     if (group == null || category == null) {
       this.goToCategoriesPage = true;
     } else {
-      print("Instantiating the Category and the  Group Id Values ...  Category ${category.ID}  Group ID : ${group.ID}");
+      print(
+          "Instantiating the Category and the  Group Id Values ...  Category ${category.ID}  Group ID : ${group.ID}");
       this.userdata.SetCategory(category.ID);
       this.userdata.SetGroup(group.ID);
       this.userdata.initialize();
     }
     if (!goToCategoriesPage) {
       databaseManager.getGradeResult(group.ID, category.ID).then((value) {
-        if( this.gradeResult != null ) {
+        if (this.gradeResult != null) {
           return;
         }
         setState(() {
           this.gradeResult = value;
         });
       });
-      if(gradeResult != null ){
+      if (gradeResult != null) {
         setState(() {
           result = true;
         });
@@ -420,6 +425,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     }
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
           Translation.translate(
                     lang,
@@ -431,6 +437,10 @@ class _QuestionScreenState extends State<QuestionScreen>
                   "Question Page",
                 )
               : "Question Page",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          ),
         ),
         key: UniqueKey(),
         centerTitle: true,
@@ -440,26 +450,32 @@ class _QuestionScreenState extends State<QuestionScreen>
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color:Theme.of(context).canvasColor,),
+                  border: Border.all(
+                    color: Theme.of(context).canvasColor,
+                  ),
                 ),
-                child:Row(
+                child: Row(
                   children: [
                     Text(
-                      Translation.translate(this.lang, "Categories") != null ? Translation.translate(this.lang, "Categories") : "Categories",
+                      Translation.translate(this.lang, "Categories") != null
+                          ? Translation.translate(this.lang, "Categories")
+                          : "Categories",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize:10,
+                        fontSize: 10,
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios  , color: Colors.white,
-                    size: 10,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 10,
+                    ),
                   ],
-                )
-            ),
-            onTap: (){
+                )),
+            onTap: () {
               Navigator.of(context).pushNamedAndRemoveUntil(
                 CategoryScreen.RouteName,
-                    (_) {
+                (_) {
                   return false;
                 },
               );
@@ -470,7 +486,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       drawer: NavigationDrawer(
         key: UniqueKey(),
         containerContext: context,
-        userdata: userdata,
       ),
       /*
         *
@@ -484,11 +499,11 @@ class _QuestionScreenState extends State<QuestionScreen>
             if (index == 0) {
               previousQuestion(context);
             } else if (index == 1) {
-              if(result){
-                ShowResult(this.lang  , gradeResult , context);
+              if (result) {
+                ShowResult(this.lang, gradeResult, context);
               }
             } else {
-              if(gradeResult != null ) {
+              if (gradeResult != null) {
                 nextQuestion();
               }
             }
@@ -542,85 +557,92 @@ class _QuestionScreenState extends State<QuestionScreen>
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
+              Card(
+                // elevation: 10,
+                margin: EdgeInsets.only(top: 0),
                 child: InkWell(
-                  onTap: () =>
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                  ResultScreen.RouteName,
-                  (_) {
-                    return false;
-                  },
-                ),
+                  onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                    ResultScreen.RouteName,
+                    (_) {
+                      return false;
+                    },
+                  ),
                   splashColor: Colors.brown[300],
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.blue[100],
+                      color: Theme.of(context).textTheme.bodyText1.color,
                     ),
                     height: 100,
                     child: Row(
                       children: <Widget>[
                         Expanded(
                           flex: 3,
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                (Translation.translate(lang, "Category ") !=
-                                            null
-                                        ? Translation.translate(
-                                            lang, "Category ")
-                                        : "Category ") +
-                                    " : " +
-                                    (goToCategoriesPage
-                                        ? (Translation.translate(
-                                                    lang, "Unset") !=
-                                                null
-                                            ? Translation.translate(
-                                                lang, "Unset")
-                                            : "Unset")
-                                        : (Translation.translate(
-                                                    lang, this.category.Name) !=
-                                                null
-                                            ? Translation.translate(
-                                                lang, this.category.Name)
-                                            : this.category.Name)),
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(50)),
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              Text(
-                                (Translation.translate(lang, "Test Number ") !=
-                                            null
-                                        ? Translation.translate(
-                                            lang, "Test Number ")
-                                        : "Test Number  ") +
-                                    " : " +
-                                    (goToCategoriesPage
-                                        ? "?"
-                                        : "${this.group.GroupNumber}"),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.normal,
+                                Text(
+                                  (Translation.translate(lang, "Category ") !=
+                                              null
+                                          ? Translation.translate(
+                                              lang, "Category ")
+                                          : "Category ") +
+                                      " : " +
+                                      (goToCategoriesPage
+                                          ? (Translation.translate(
+                                                      lang, "Unset") !=
+                                                  null
+                                              ? Translation.translate(
+                                                  lang, "Unset")
+                                              : "Unset")
+                                          : (Translation.translate(lang,
+                                                      this.category.Name) !=
+                                                  null
+                                              ? Translation.translate(
+                                                  lang, this.category.Name)
+                                              : this.category.Name)),
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  (Translation.translate(
+                                                  lang, "Test Number ") !=
+                                              null
+                                          ? Translation.translate(
+                                              lang, "Test Number ")
+                                          : "Test Number  ") +
+                                      " : " +
+                                      (goToCategoriesPage
+                                          ? "?"
+                                          : "${this.group.GroupNumber}"),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(
                           flex: 2,
                           child: Container(
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(50),
+                                  topRight: Radius.circular(-50),
+                                )),
                             height: double.infinity,
                             width: 100,
-                            color: Theme.of(context).primaryColor,
                             padding: EdgeInsets.all(10),
                             child: Text(
                               this.gradeResult != null

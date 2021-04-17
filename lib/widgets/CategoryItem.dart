@@ -1,9 +1,5 @@
-import 'package:DriversMobile/handlers/sharedPreference.dart';
-import 'package:DriversMobile/handlers/translation.dart';
+import 'package:drivers_question/libs.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import '../db/dbsqflite.dart';
-import '../screens/QuestionScreen.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;
@@ -159,12 +155,13 @@ class CategoryItem extends StatelessWidget {
                                       ),
                                     ),
                                     child: ListTile(
-                                      onTap: (){
+                                      onTap: () {
                                         goToQuestions(
-                                        group.ID,
-                                        category.ID,
-                                        context,
-                                      );},
+                                          group.ID,
+                                          category.ID,
+                                          context,
+                                        );
+                                      },
                                       key: UniqueKey(),
                                       leading: Icon(
                                         Icons.group_work,

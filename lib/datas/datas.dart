@@ -1,7 +1,5 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
+import 'package:drivers_question/libs.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import '../widgets/QuestionItem.dart';
 
 final List<String> LETTERS = [
   "A",

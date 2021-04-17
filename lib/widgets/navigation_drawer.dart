@@ -1,22 +1,14 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
-import 'package:DriversMobile/handlers/translation.dart';
-import 'package:DriversMobile/screens/Categories.dart';
-import 'package:DriversMobile/screens/SettingsScreen.dart';
+import 'package:drivers_question/libs.dart';
 import 'package:flutter/material.dart';
-import '../screens/SettingsScreen.dart';
-// import '../screens/Registration.dart';
-import '../handlers/sharedPreference.dart';
-import '../screens/ResultScreen.dart';
-import '../screens/QuestionScreen.dart';
-import "../screens/AboutScreen.dart";
+import 'package:provider/provider.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final BuildContext containerContext;
-  final UserData userdata;
+  // final UserData userdata;
 
-  const NavigationDrawer({Key key, this.containerContext, this.userdata})
-      : super(key: key);
+  const NavigationDrawer({Key key, this.containerContext}) : super(key: key);
 
+  // tileElement a method
   Widget tileElement({String theTitle, IconData icondata, Function onClick}) {
     return Card(
       elevation: 1,
@@ -38,14 +30,14 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String lang;
-    String username;
+    final userdata = context.watch<UserDataState>().state;
+    String username = "";
     userdata.initialize();
     lang = userdata.Lang;
     if (lang == "") {
       lang = "eng";
     }
     username = userdata.Username;
-    // print("The Language $lang");
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
@@ -79,25 +71,23 @@ class NavigationDrawer extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ])),
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Icon(Icons.person)
-                         ,
-                         Text(
-                           username,
-                           style: TextStyle(
-                             color: Colors.black,
-                             fontSize: 17,
-                             fontWeight: FontWeight.bold,
-                             // fontStyle: FontStyle.italic,
-                           ),
-                           softWrap: true,
-                           overflow: TextOverflow.fade,
-                         ),
-                       ],
-                     )
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person),
+                        Text(
+                          username,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            // fontStyle: FontStyle.italic,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -120,12 +110,13 @@ class NavigationDrawer extends StatelessWidget {
                     : 'Questions',
                 icondata: Icons.question_answer,
                 onClick: () => () async {
-                  userdata.initialize();
+                  final userdata = context.watch<UserDataState>().state;
                   Category category;
                   Group group;
                   final databaseManager = DatabaseManager.getInstance();
-                  int categoryID = userdata.category;
-                  int groupID = userdata.group;
+                  int categoryID =
+                      context.watch<UserDataState>().state.category;
+                  int groupID = context.watch<UserDataState>().state.group;
                   if (categoryID != null && groupID != null) {
                     category = DatabaseManager.categories[categoryID - 1];
                     await databaseManager.GetGroupByID(groupID).then((grou) {
@@ -197,7 +188,12 @@ class NavigationDrawer extends StatelessWidget {
                   child: Column(children: [
                     Text(
                       // Translation.translate(
-                      Translation.translate(lang, "Question And Answer For Driving Trainees ") != null ? Translation.translate(lang, "Question And Answer For Driving Trainees ") :"Question And Answer For Driving Trainees " ,
+                      Translation.translate(lang,
+                                  "Question And Answer For Driving Trainees ") !=
+                              null
+                          ? Translation.translate(
+                              lang, "Question And Answer For Driving Trainees ")
+                          : "Question And Answer For Driving Trainees ",
                     ),
                     Text(
                       "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",

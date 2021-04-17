@@ -1,21 +1,16 @@
-import 'package:excel/excel.dart';
+import 'package:drivers_question/libs.dart';
 import 'package:flutter/material.dart';
 import '../datas/datas.dart' as datas;
-import "../db/dbsqflite.dart";
-import "../handlers/sharedPreference.dart";
-import "../handlers/translation.dart";
-
-
 
 class QuestionItem extends StatefulWidget {
   final Question question;
   final Function answerQuestion;
-  final int questionNumber ;
+  final int questionNumber;
 
   QuestionItem({
     Key key,
     this.question,
-    this.questionNumber ,
+    this.questionNumber,
     this.answerQuestion,
   }) : super(key: key);
 
@@ -38,8 +33,8 @@ class _QuestionItemState extends State<QuestionItem> {
   QStage stage = QStage.NotAnswered;
   Question question;
   datas.TodaysDataHolder mahder;
-  String lang ="";
-  UserData userdata ;
+  String lang = "";
+  UserData userdata;
   // bool once = true; // this thing represents whether it has to run the Fetching thing or not at first build
   // but since i am using the initState method i think i don't have to initiate it
   // nigga you got me
@@ -99,12 +94,14 @@ class _QuestionItemState extends State<QuestionItem> {
     }
   }
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     this.question = widget.question;
     this.userdata = UserData.getInstance();
     this.userdata.initialize();
-      this.lang = userdata.Lang;
+    this.lang = userdata.Lang;
     int counter = 0;
     return ClipRRect(
       borderRadius: BorderRadius.only(
@@ -116,7 +113,7 @@ class _QuestionItemState extends State<QuestionItem> {
       child: Card(
         elevation: 10,
         child: Container(
-          decoration : BoxDecoration(
+          decoration: BoxDecoration(
             color: Theme.of(context).canvasColor,
           ),
           padding: EdgeInsets.all(10),
@@ -137,55 +134,67 @@ class _QuestionItemState extends State<QuestionItem> {
                     ),
                   ),
                   child: Text(
-                    "(${ widget.questionNumber }). " + this.question.Body,
+                    "(${widget.questionNumber}). " + this.question.Body,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                      //  fontFamily: FontFamily.,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
                     ),
                   ),
                 ),
               ),
-              ...this.question.Answers.map((ans) {
-                this.answerToIndex[ans] = counter;
-                this.indexToanswer[counter] = ans;
-                if (answerToBackgroundColor[ans] == null) {
-                  answerToBackgroundColor[ans] = Colors.white;
-                }
-                if (answerToTextColor[ans] == null) {
-                  answerToTextColor[ans] = Colors.black;
-                }
-                final widget = Container(
-                  child: ListTile(
-                    onTap: () => handlerAnswer(ans),
-                    selected: false,
-                    leading: CircleAvatar(
-                      child: Text(
-                        Translation.translate(lang , datas.LETTERS[counter]) != null ?
-                        Translation.translate(lang , datas.LETTERS[counter]) :
-                        datas.LETTERS[counter]                       
+              Column(
+                children: [
+                  ...this.question.Answers.map((ans) {
+                    this.answerToIndex[ans] = counter;
+                    this.indexToanswer[counter] = ans;
+                    if (answerToBackgroundColor[ans] == null) {
+                      answerToBackgroundColor[ans] = Colors.white;
+                    }
+                    if (answerToTextColor[ans] == null) {
+                      answerToTextColor[ans] = Colors.black;
+                    }
+                    final widget = Container(
+                      child: ListTile(
+                        onTap: () => handlerAnswer(ans),
+                        selected: false,
+                        leading: CircleAvatar(
+                          child: Text(Translation.translate(
+                                      lang, datas.LETTERS[counter]) !=
+                                  null
+                              ? Translation.translate(
+                                  lang, datas.LETTERS[counter])
+                              : datas.LETTERS[counter]),
                         ),
-                    ),
-                    title: Text(
-                      ans,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: answerToTextColor[ans],
+                        title: ans.endsWith(".JPG")
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(150),
+                                child: Image.asset(
+                                  "assets/iconImages/$ans",
+                                  height: 50,
+                                  width: 50,
+                                ),
+                              )
+                            : Text(
+                                ans,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: answerToTextColor[ans],
+                                ),
+                              ),
                       ),
-                    ),
-                  ),
-                  // color: Colors.white,
-                  decoration: BoxDecoration(
-                    color: answerToBackgroundColor[ans],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                );
-                counter++;
-                return widget;
-              }).toList(),
+                      // color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: answerToBackgroundColor[ans],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    );
+                    counter++;
+                    return widget;
+                  }).toList(),
+                ],
+              ),
               SizedBox(
                 height: 20,
               ),
