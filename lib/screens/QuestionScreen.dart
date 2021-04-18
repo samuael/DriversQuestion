@@ -561,16 +561,15 @@ class _QuestionScreenState extends State<QuestionScreen>
                 // elevation: 10,
                 margin: EdgeInsets.only(top: 0),
                 child: InkWell(
-                  onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  onTap: () => Navigator.of(context).pushNamed(
                     ResultScreen.RouteName,
-                    (_) {
-                      return false;
-                    },
+                    // (_) {
+                    //   return false;
+                    // },
                   ),
                   splashColor: Colors.brown[300],
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).textTheme.bodyText1.color,
                     ),
                     height: 100,
                     child: Row(

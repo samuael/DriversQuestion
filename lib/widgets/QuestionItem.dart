@@ -142,59 +142,78 @@ class _QuestionItemState extends State<QuestionItem> {
                   ),
                 ),
               ),
-              Column(
-                children: [
-                  ...this.question.Answers.map((ans) {
-                    this.answerToIndex[ans] = counter;
-                    this.indexToanswer[counter] = ans;
-                    if (answerToBackgroundColor[ans] == null) {
-                      answerToBackgroundColor[ans] = Colors.white;
-                    }
-                    if (answerToTextColor[ans] == null) {
-                      answerToTextColor[ans] = Colors.black;
-                    }
-                    final widget = Container(
-                      child: ListTile(
-                        onTap: () => handlerAnswer(ans),
-                        selected: false,
-                        leading: CircleAvatar(
-                          child: Text(Translation.translate(
-                                      lang, datas.LETTERS[counter]) !=
-                                  null
-                              ? Translation.translate(
-                                  lang, datas.LETTERS[counter])
-                              : datas.LETTERS[counter]),
-                        ),
-                        title: ans.endsWith(".JPG")
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(150),
-                                child: Image.asset(
-                                  "assets/iconImages/$ans",
-                                  height: 50,
-                                  width: 50,
-                                ),
-                              )
-                            : Text(
-                                ans,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: answerToTextColor[ans],
-                                ),
+              loading
+                  ? Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.15),
+                      child: CircularProgressIndicator())
+                  : Column(
+                      children: [
+                        ...this.question.Answers.map((ans) {
+                          final anotherFunc = () {
+                            setState(() {
+                              this.loading = false;
+                            });
+                          };
+                          final newFunc = () {
+                            setState(() {
+                              this.loading = true;
+                              Future.delayed(Duration(seconds: 1), anotherFunc);
+                            });
+                          };
+                          this.answerToIndex[ans] = counter;
+                          this.indexToanswer[counter] = ans;
+                          if (answerToBackgroundColor[ans] == null) {
+                            answerToBackgroundColor[ans] = Colors.white;
+                          }
+                          if (answerToTextColor[ans] == null) {
+                            answerToTextColor[ans] = Colors.black;
+                          }
+                          final widget = Container(
+                            child: ListTile(
+                              onTap: () {
+                                newFunc();
+                                handlerAnswer(ans);
+                              },
+                              selected: false,
+                              leading: CircleAvatar(
+                                child: Text(Translation.translate(
+                                            lang, datas.LETTERS[counter]) !=
+                                        null
+                                    ? Translation.translate(
+                                        lang, datas.LETTERS[counter])
+                                    : datas.LETTERS[counter]),
                               ),
-                      ),
-                      // color: Colors.white,
-                      decoration: BoxDecoration(
-                        color: answerToBackgroundColor[ans],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    );
-                    counter++;
-                    return widget;
-                  }).toList(),
-                ],
-              ),
+                              title: ans.endsWith(".JPG")
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(150),
+                                      child: Image.asset(
+                                        "assets/iconImages/$ans",
+                                        height: 50,
+                                        width: 50,
+                                      ),
+                                    )
+                                  : Text(
+                                      ans,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: answerToTextColor[ans],
+                                      ),
+                                    ),
+                            ),
+                            // color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: answerToBackgroundColor[ans],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          );
+                          counter++;
+                          return widget;
+                        }).toList(),
+                      ],
+                    ),
               SizedBox(
                 height: 20,
               ),
