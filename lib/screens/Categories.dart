@@ -1,23 +1,19 @@
-import '../widgets/CategoryItem.dart';
-import 'package:excel/excel.dart';
 import "package:flutter/material.dart";
-import "../widgets/navigation_drawer.dart";
-import '../handlers/sharedPreference.dart';
-import '../db/dbsqflite.dart';
-import '../handlers/translation.dart';
+import '../libs.dart';
 
 class CategoryScreen extends StatefulWidget {
   static const RouteName = "/categories";
   CategoryScreen({Key key}) : super(key: key);
 
-  static  CategoryScreen _instance;
+  static CategoryScreen _instance;
 
-  static CategoryScreen getInstance(){
-    if(CategoryScreen._instance==null){
-      _instance= CategoryScreen();
+  static CategoryScreen getInstance() {
+    if (CategoryScreen._instance == null) {
+      _instance = CategoryScreen();
     }
     return _instance;
   }
+
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
 }
@@ -31,7 +27,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   String lang;
   int selectedIndex = 0;
   List<CategoryItem> categoryitems = [];
-  bool once =true;
+  bool once = true;
 
   @override
   void initState() {
@@ -56,47 +52,47 @@ class _CategoryScreenState extends State<CategoryScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (userdata == null) {
       userdata = UserData.getInstance();
       userdata.initialize();
     }
-    if(once) {
+    if (once) {
       this.categories[0].populateGroups(databaseManager).then((value) {
         setState(() {
           this.categories[0].groups = value;
-          if(this.categoryitems[0] != null) {
+          if (this.categoryitems[0] != null) {
             this.categoryitems[0] =
                 CategoryItem(category: this.categories[0], lang: userdata.Lang);
-          }else {
-            this.categoryitems.add(CategoryItem(category: this.categories[0], lang: userdata.Lang));
+          } else {
+            this.categoryitems.add(CategoryItem(
+                category: this.categories[0], lang: userdata.Lang));
           }
         });
       });
       this.categories[1].populateGroups(databaseManager).then((value) {
         setState(() {
           this.categories[1].groups = value;
-          if(this.categoryitems[1] != null) {
+          if (this.categoryitems[1] != null) {
             this.categoryitems[1] =
                 CategoryItem(category: this.categories[1], lang: userdata.Lang);
-          }else {
-            this.categoryitems.add(CategoryItem(category: this.categories[1], lang: userdata.Lang));
+          } else {
+            this.categoryitems.add(CategoryItem(
+                category: this.categories[1], lang: userdata.Lang));
           }
         });
       });
-      once=false;
+      once = false;
     }
-
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-            Translation.translate(lang, "Select Category") != null
-                ? Translation.translate(lang, "Select Category ")
-                : "Select Category" ,
+          Translation.translate(lang, "Select Category") != null
+              ? Translation.translate(lang, "Select Category ")
+              : "Select Category",
         ),
       ),
       drawer: NavigationDrawer(
@@ -114,7 +110,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         },
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black87 ,
+        unselectedItemColor: Colors.black87,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(

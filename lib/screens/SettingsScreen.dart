@@ -1,12 +1,7 @@
-import 'package:DriversMobile/handlers/sharedPreference.dart';
-import 'package:DriversMobile/widgets/navigation_drawer.dart';
+import '../libs.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import '../handlers/translation.dart';
-import '../handlers/sharedPreference.dart';
-import "dart:io";
 
 class SettingsScreen extends StatefulWidget {
   static const RouteName = "/settings/";
@@ -65,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       body: Container(
-        width:double.infinity,
+        width: double.infinity,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -85,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               Container(
                 // width: double.infinity,
-                height:30,
+                height: 30,
                 child: DropdownButton<String>(
                   hint: Text(
                     Translation.translate(lang, "Select Language"),
@@ -127,30 +122,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               Container(
-                child:Text(
-                Translation.translate(lang, "Select Theme") != null
-                    ? Translation.translate(lang, "Select Theme")
-                    : "Select Theme",
-                style: TextStyle(
-                  fontFamily:
-                      FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
+                child: Text(
+                  Translation.translate(lang, "Select Theme") != null
+                      ? Translation.translate(lang, "Select Theme")
+                      : "Select Theme",
+                  style: TextStyle(
+                    fontFamily:
+                        FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 20,
+                  ),
                 ),
-              ),),
+              ),
               SizedBox(
                 height: 50,
               ),
               Container(
                 width: double.infinity,
-                height:250,
+                height: 250,
                 child: new ListView.builder(
                   itemCount: themeImages.length,
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
-                      onTap: ()=>changeTheme(context  , index),
-                      child:Container(
+                      onTap: () => changeTheme(context, index),
+                      child: Container(
                         // height: 120,
                         margin: EdgeInsets.symmetric(horizontal: 5),
                         width: 150,
@@ -159,8 +155,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     );
                   },
                   scrollDirection: Axis.horizontal,
-                  ),
                 ),
+              ),
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: 20,
@@ -288,7 +284,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-  void changeTheme( BuildContext contaext , int index) {
+  void changeTheme(BuildContext contaext, int index) {
     this.userdata.SetThmeIndex(index);
     this.userdata.initialize();
 
@@ -319,7 +315,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   backgroundColor: Theme.of(context).primaryColor,
                   color: Colors.white,
                 ),
-              ),),
+              ),
+            ),
             // FlatButton(
             //   onPressed: () => Navigator.pop(conta),
             //   child: Text(
@@ -344,15 +341,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
             //         color: Colors.white,
             //       ),
             //     ),),
-
           ],
           backgroundColor: Theme.of(context).primaryColor,
           // shape: CircleBorder(),
           contentPadding: EdgeInsets.all(20),
           titlePadding: EdgeInsets.all(10),
           content: Text(
-            Translation.translate(lang, "To Apply the change . Restart the App !") != null
-                ? Translation.translate(lang, "To Apply the change . Restart the App !")
+            Translation.translate(
+                        lang, "To Apply the change . Restart the App !") !=
+                    null
+                ? Translation.translate(
+                    lang, "To Apply the change . Restart the App !")
                 : "To Apply the change . Restart the App !",
             style: TextStyle(
               fontWeight: FontWeight.bold,

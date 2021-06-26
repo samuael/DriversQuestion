@@ -1,6 +1,6 @@
 import 'package:DriversMobile/handlers/sharedPreference.dart';
-import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class Translation {
   static const languages = ["Eng", "Amh"];
@@ -51,52 +51,61 @@ class Translation {
         "ውጤቱን ሲያጠፉ የውስጥ ችግር ተፈጥሯል ፤ እባክዎ በድጋሚ ይሞክሩ ",
     "reset results": "ውጤቶቹን አጥፋ",
     "others": "ሌሎች",
-    'company password ....' : "የድርጅቱ ይለፍ ቃል ... " ,
-    "loading" : "በመጫን ላይ",
-    "internal code error. \nplease try again...." : "yewust chigr tefetrual \nebakwo bedgami yimokru" , 
-    "incorrect company password" : "yetesasate yedrjit yilef kal" , 
-    "please fill the name correctly" : " ebakwo smwon bemigeba yimulu" , 
-    "invalid password! \n try the company pasword correctly" : " yetesasate yilef kal \n ebakwo ye drjitun yilef kal bedgami yimokru" , 
-    "please fiil the input fields" : "ebakwo mereja mekebeyawochun bemigeba yimulu",
-    "invalid character length \n character length has to be greater than 2" :"የተሳሣተ የፊደል ብዛት\n የፊደሎች ብዛት ከ 2 መብለጥ አለበት",
-    "username changed succesfully" : "መለያ ስም በሚገባ ተቀይሯል",
-    "motor cycle" : "ሞተር ሳይክል",
-    "other vehicles":"ሌሎች ተሽከርካሪዎች",
-    "about us":"ስለ እኛ",
-    "email"  :'ኢሜል',
-    "description" : "ማብራሪያ",
-    "address" : "አድራሻ",
-    'phones' : "ስልኮች",
-    "phone" :"ስልክ",
-    "or" : "ወይም",
-    "app developer" :"መተግበሪያ አበልፃጊ",
-    "samuael adnew" : "ሳሙኤል አድነው",
-    "hawasa : ethiopia  , atotet : wolde amanuael road infront of hayole school" : " ሀዋሳ ኢትዬጽያ አቶቴ ፡ ወልድ አማኑኤል መንገድ ከሀዮሌ ት/ት ቤት ፊት ለፊት",
-    "gebriel area , o4 kebele  , assosa , benishangul gumz ,ethiopia":"ገብርኤል ሰፈር ፡ 04 ቀበሌ ፡አሶሳ ፡ ቤንሻንጉል ጉምዝ ፡ ኢትዮጽያ",
+    'company password ....': "የድርጅቱ ይለፍ ቃል ... ",
+    "loading": "በመጫን ላይ",
+    "internal code error. \nplease try again....":
+        "yewust chigr tefetrual \nebakwo bedgami yimokru",
+    "incorrect company password": "yetesasate yedrjit yilef kal",
+    "please fill the name correctly": " ebakwo smwon bemigeba yimulu",
+    "invalid password! \n try the company pasword correctly":
+        " yetesasate yilef kal \n ebakwo ye drjitun yilef kal bedgami yimokru",
+    "please fiil the input fields":
+        "ebakwo mereja mekebeyawochun bemigeba yimulu",
+    "invalid character length \n character length has to be greater than 2":
+        "የተሳሣተ የፊደል ብዛት\n የፊደሎች ብዛት ከ 2 መብለጥ አለበት",
+    "username changed succesfully": "መለያ ስም በሚገባ ተቀይሯል",
+    "motor cycle": "ሞተር ሳይክል",
+    "other vehicles": "ሌሎች ተሽከርካሪዎች",
+    "about us": "ስለ እኛ",
+    "email": 'ኢሜል',
+    "description": "ማብራሪያ",
+    "address": "አድራሻ",
+    'phones': "ስልኮች",
+    "phone": "ስልክ",
+    "or": "ወይም",
+    "app developer": "መተግበሪያ አበልፃጊ",
+    "samuael adnew": "ሳሙኤል አድነው",
+    "hawasa : ethiopia  , atotet : wolde amanuael road infront of hayole school":
+        " ሀዋሳ ኢትዬጽያ አቶቴ ፡ ወልድ አማኑኤል መንገድ ከሀዮሌ ት/ት ቤት ፊት ለፊት",
+    "gebriel area , o4 kebele  , assosa , benishangul gumz ,ethiopia":
+        "ገብርኤል ሰፈር ፡ 04 ቀበሌ ፡አሶሳ ፡ ቤንሻንጉል ጉምዝ ፡ ኢትዮጽያ",
     "saddle dam drivers training institute \nwe thrive to create intelligent and expert drivers and to create traffic accident free world.\n come and visit us you shall have a better knowledge.":
-      "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም \n ብቁና የላቁ አሽከርካሪዎችን ማፍራት ከ ትራፊክ አደጋ የፀዳ የተሽከርካርሪ አለም ለመፍጠር እንተጋለን ።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
-    "a":"ሀ",
-    "b":"ለ",
-    "c":"ሐ",
-    "d":"መ",
-    "e":"ሰ",
-    "f":"ረ",
-    "g":"ሠ",
-    "question and answer for driving trainees" : "የተሽከርካሪ ሰልጣኞች መለማመጃ ጥያቄ እና መልስ",
-    "grade result" : "የፈተና ውጤት" ,
-    "group":"ፈተና",
-    "select category" : "ምድብ ምረጥ",
-    "your are not allowed to access questions\nchoose a group first": "ጥያቄዎችን ለመፈተን አይችሉም \n መጀመሪያ የጥያቄ ቡድን ይመረጡ",
-    "test":"ፈተና",
-    "test number" : "ፈተና ቁጥር",
+        "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም \n ብቁና የላቁ አሽከርካሪዎችን ማፍራት ከ ትራፊክ አደጋ የፀዳ የተሽከርካርሪ አለም ለመፍጠር እንተጋለን ።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
+    "a": "ሀ",
+    "b": "ለ",
+    "c": "ሐ",
+    "d": "መ",
+    "e": "ሰ",
+    "f": "ረ",
+    "g": "ሠ",
+    "question and answer for driving trainees":
+        "የተሽከርካሪ ሰልጣኞች መለማመጃ ጥያቄ እና መልስ",
+    "grade result": "የፈተና ውጤት",
+    "group": "ፈተና",
+    "select category": "ምድብ ምረጥ",
+    "your are not allowed to access questions\nchoose a group first":
+        "ጥያቄዎችን ለመፈተን አይችሉም \n መጀመሪያ የጥያቄ ቡድን ይመረጡ",
+    "test": "ፈተና",
+    "test number": "ፈተና ቁጥር",
     "the": "የ",
-    "vehicles" : "ተሽከርካሪዎች",
+    "vehicles": "ተሽከርካሪዎች",
     "cycle": "ሳይክል",
-    "theme change":"የቲም ለውጥ",
-    "exit app" : "መተግበሪያውን ዝጋ",
-    "cancel":"ይቅር",
-    "to apply the change . restart the app !":"የቲም ለውጡ ተግባራዊ እንዲሆን ፤መተግበርሪያውን ዘግተው ትክፈቱት",
-    "eg. name : muhammed" :"ምሳሌ፦ ስም ፡ ሙሀመድ"
+    "theme change": "የቲም ለውጥ",
+    "exit app": "መተግበሪያውን ዝጋ",
+    "cancel": "ይቅር",
+    "to apply the change . restart the app !":
+        "የቲም ለውጡ ተግባራዊ እንዲሆን ፤መተግበርሪያውን ዘግተው ትክፈቱት",
+    "eg. name : muhammed": "ምሳሌ፦ ስም ፡ ሙሀመድ"
   };
 
   static String translate(String lang, String sentence) {

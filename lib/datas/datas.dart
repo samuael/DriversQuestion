@@ -1,7 +1,5 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import '../widgets/QuestionItem.dart';
+import '../libs.dart';
 
 final List<String> LETTERS = [
   "A",
@@ -68,13 +66,14 @@ class TodaysDataHolder {
       print("it is because of gradeResult is null nigga ");
       return false;
     }
-    print(" DATAS PAGE : Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
+    print(
+        " DATAS PAGE : Grade Result Questions Length : ${gradeResult.Questions.length}   and Questions : ${gradeResult.Questions}");
     try {
       print("${gradeResult.Questions}");
       // print(gradeResult.toMap());
       for (var id in gradeResult.Questions) {
         print("Question ID : ${id}");
-        if(id=="" || id==null){
+        if (id == "" || id == null) {
           continue;
         }
         if (int.parse(id) == null) {
@@ -82,7 +81,7 @@ class TodaysDataHolder {
         }
         this.questionDatas[int.parse(id)] = QuestionData();
       }
-    }catch(s , e){
+    } catch (s, e) {
       print("it is because of Question ID Parsing Nigga ...");
       // return false;
     }

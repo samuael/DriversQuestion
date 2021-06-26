@@ -1,9 +1,4 @@
 import "dart:async";
-import 'dart:async';
-import 'dart:async';
-import 'dart:ffi';
-import "dart:async";
-import 'dart:typed_data';
 import "package:flutter/foundation.dart";
 import "package:path/path.dart";
 import "package:sqflite/sqflite.dart";
@@ -57,6 +52,7 @@ class DatabaseManager {
       });
     }
   }
+
   Future<Group> GetGroupByID(int groupID) async {
     await OpenDatabase();
     Group group;
@@ -170,10 +166,11 @@ class DatabaseManager {
     // print("Grooup : $group   : Category : $category ");
 
     GradeResult graderesult = await getGradeResult(group, category);
-    if(graderesult == null) {
+    if (graderesult == null) {
       graderesult = GradeResult(Categoryid: category, Groupid: group);
     }
-    print("Grade Result  ID :${graderesult.ID}  / Questions: ${graderesult.Questions}");
+    print(
+        "Grade Result  ID :${graderesult.ID}  / Questions: ${graderesult.Questions}");
     String ids = "";
     if (graderesult.Questions.length > 0) {
       ids = "${graderesult.Questions[0]}";
@@ -262,8 +259,8 @@ class DatabaseManager {
       return -2;
     }
     gradeResult.AskedCount++;
-    List<String> values = [ ...gradeResult.Questions  , "$questionID"];
-    gradeResult.Questions =values;
+    List<String> values = [...gradeResult.Questions, "$questionID"];
+    gradeResult.Questions = values;
     if (question.Answerindex == answerIndex) {
       gradeResult.AnsweredCount++;
     }
@@ -353,13 +350,14 @@ class DatabaseManager {
         Questions: questionids,
       );
     });
-    print("Before Returning the GradeResult ${ gradeResult.toMap()}");
+    print("Before Returning the GradeResult ${gradeResult.toMap()}");
     return gradeResult;
   }
 
   Future<int> UpdateGradeResult(GradeResult gradeResult) async {
     int counter = 0;
-    print("Grade Result ID : ${gradeResult.ID}  and Questions : ${gradeResult.Questions}");
+    print(
+        "Grade Result ID : ${gradeResult.ID}  and Questions : ${gradeResult.Questions}");
     await OpenDatabase();
     database.update(
       "graderesult",
@@ -408,7 +406,10 @@ class DatabaseManager {
         whereArgs: [categoryid, groupid]).then((value) {
       if (value.length > 0) {
         print(value);
-        final questionsID = (value[0]["askedquestions"] as String != null ? value[0]["askedquestions"] as String : "").split("`");
+        final questionsID = (value[0]["askedquestions"] as String != null
+                ? value[0]["askedquestions"] as String
+                : "")
+            .split("`");
         print("Question grade Results  $questionsID");
         graderResult.Categoryid = value[0]["categoryid"] as int;
         graderResult.AnsweredCount = value[0]["answeredcount"] as int;
@@ -540,14 +541,14 @@ class GradeResult {
   String join() {
     String ids = '';
 
-    this.Questions.removeWhere( (el){
-      try{
+    this.Questions.removeWhere((el) {
+      try {
         int val = int.tryParse(el);
-        if(val <=0 ){
+        if (val <= 0) {
           return true;
         }
-        return false ;
-      }catch(s , e ){
+        return false;
+      } catch (s, e) {
         return true;
       }
     });
@@ -555,29 +556,30 @@ class GradeResult {
     for (var el in this.Questions) {
       if (count == 0) {
         // count++;
-        try{   
-          int val = int.tryParse( el );
-          if(val != null && val>0){
-            ids+= "$val";
-            count ++;
+        try {
+          int val = int.tryParse(el);
+          if (val != null && val > 0) {
+            ids += "$val";
+            count++;
           }
-        }catch( s , e ){
+        } catch (s, e) {
           print("error character $el");
         }
         continue;
       }
-      bool valid =false ;
-      int val = int.parse( el );
-      if(val != null && val > 0){
-        valid=true;
+      bool valid = false;
+      int val = int.parse(el);
+      if (val != null && val > 0) {
+        valid = true;
       }
-      if(valid){
-        ids +=  "`$el";
+      if (valid) {
+        ids += "`$el";
       }
     }
     print("inside to map method te ids variable $ids ");
     return ids;
   }
+
   Map<String, dynamic> toMap() {
     return {
       "categoryid": this.Categoryid,

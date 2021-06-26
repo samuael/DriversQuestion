@@ -1,10 +1,5 @@
-import 'package:DriversMobile/datas/datas.dart';
 import 'package:flutter/material.dart';
-import '../handlers/translation.dart';
-import '../handlers/sharedPreference.dart';
-import '../db/dbsqflite.dart';
-import '../widgets/navigation_drawer.dart';
-import '../actions/actions.dart';
+import '../libs.dart';
 
 class ResultScreen extends StatefulWidget {
   static const RouteName = "/results/";
@@ -128,13 +123,12 @@ class _ResultScreenState extends State<ResultScreen> {
                 gradeResult.Groupid == gres.Groupid) {
               setState(() {
                 this.motorResults[k] = gradeResult;
-                this.motorTotalAnswered=0;
-                this.motorTotalAsked=0;
+                this.motorTotalAnswered = 0;
+                this.motorTotalAsked = 0;
 
-                for(var gr in this.motorResults ){
-
-                  this.motorTotalAnswered+=gr.AnsweredCount;
-                  this.motorTotalAsked+=gr.AskedCount;
+                for (var gr in this.motorResults) {
+                  this.motorTotalAnswered += gr.AnsweredCount;
+                  this.motorTotalAsked += gr.AskedCount;
                 }
               });
             }
@@ -148,12 +142,12 @@ class _ResultScreenState extends State<ResultScreen> {
               setState(() {
                 print("The k is $k");
                 this.othersResults[k] = gradeResult;
-                this.otherTotalAnswered=0;
-                this.otherTotalAsked=0;
-                
-                for(var gr in this.othersResults ){
-                  this.otherTotalAnswered+=gr.AnsweredCount;
-                  this.otherTotalAsked+=gr.AskedCount;
+                this.otherTotalAnswered = 0;
+                this.otherTotalAsked = 0;
+
+                for (var gr in this.othersResults) {
+                  this.otherTotalAnswered += gr.AnsweredCount;
+                  this.otherTotalAsked += gr.AskedCount;
                 }
               });
             }
@@ -203,8 +197,8 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     // clear();
     // initialize();
-    int motorTestCounter =0;
-    int othersTestCounter =0;
+    int motorTestCounter = 0;
+    int othersTestCounter = 0;
     return Scaffold(
       drawer: NavigationDrawer(
         containerContext: context,
@@ -241,7 +235,12 @@ class _ResultScreenState extends State<ResultScreen> {
                                 ? Translation.translate(this.lang, "Category")
                                 : "Category") +
                             "  : " +
-                            (Translation.translate(this.lang ,this.categories[0].Name) != null ? Translation.translate(this.lang  , this.categories[0].Name) : this.categories[0].Name) ,
+                            (Translation.translate(
+                                        this.lang, this.categories[0].Name) !=
+                                    null
+                                ? Translation.translate(
+                                    this.lang, this.categories[0].Name)
+                                : this.categories[0].Name),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
@@ -249,7 +248,6 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                       ),
                       Container(
-
                         decoration: BoxDecoration(
                           color: Colors.white54,
                         ),
@@ -260,7 +258,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               " : $motorTotalAnswered / $motorTotalAsked",
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
-                            fontSize : 17 ,
+                            fontSize: 17,
                             color: Colors.black,
                           ),
                         ),
@@ -289,14 +287,14 @@ class _ResultScreenState extends State<ResultScreen> {
                               : "Test") +
                           " : ${++motorTestCounter}",
                       style: TextStyle(
-                        color:Theme.of(context).textTheme.body1.color,
+                        color: Theme.of(context).textTheme.body1.color,
                       ),
                     ),
                     subtitle: Text(
                       "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color:Theme.of(context).textTheme.body1.color,
+                        color: Theme.of(context).textTheme.body1.color,
                       ),
                     ),
                     trailing: InkWell(
@@ -335,7 +333,12 @@ class _ResultScreenState extends State<ResultScreen> {
                                 ? Translation.translate(this.lang, "Category")
                                 : "Category") +
                             "  : " +
-                             (Translation.translate( this.lang , this.categories[1].Name ) != null ? Translation.translate( this.lang , this.categories[1].Name ) : this.categories[1].Name ),
+                            (Translation.translate(
+                                        this.lang, this.categories[1].Name) !=
+                                    null
+                                ? Translation.translate(
+                                    this.lang, this.categories[1].Name)
+                                : this.categories[1].Name),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
@@ -353,7 +356,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               " : $otherTotalAnswered / $otherTotalAsked",
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
-                            fontSize:17,
+                            fontSize: 17,
                             color: Colors.black,
                           ),
                         ),
@@ -380,7 +383,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               : "Test") +
                           " : ${++othersTestCounter}",
                       style: TextStyle(
-                        color:Theme.of(context).textTheme.body1.color,
+                        color: Theme.of(context).textTheme.body1.color,
                       ),
                     ),
                     subtitle: Text(

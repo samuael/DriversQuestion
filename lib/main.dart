@@ -1,40 +1,31 @@
-import 'dart:io';
-
 import "package:flutter/material.dart";
-import "./screens/SplashScreen.dart";
-import "./widgets/navigation_drawer.dart";
-import "./screens/Registration.dart";
-import "./screens/Categories.dart";
-import "./handlers/sharedPreference.dart";
 import 'package:flutter/services.dart';
-import './screens/SettingsScreen.dart';
-import './screens/QuestionScreen.dart';
-import './screens/ResultScreen.dart';
-import './screens/AboutScreen.dart';
+import 'libs.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  UserData ud =  UserData.getInstance();
+  UserData ud = UserData.getInstance();
   ud.initTheme();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   Future.delayed(
     Duration(milliseconds: 2000),
-        () => runApp(MainApp()),
+    () => runApp(MainApp()),
   );
 }
 
-class MainApp  extends StatelessWidget {
-  int themeIndex=0;
-  static final List<ThemeData> themeDatas =  List<ThemeData>.from([
-      ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          body1: TextStyle(
-            color:Colors.black,
-          ),
+class MainApp extends StatelessWidget {
+  int themeIndex = 0;
+  static final List<ThemeData> themeDatas = List<ThemeData>.from([
+    ThemeData(
+      primarySwatch: Colors.blue,
+      textTheme: TextTheme(
+        body1: TextStyle(
+          color: Colors.black,
         ),
-        canvasColor: Colors.white,
       ),
+      canvasColor: Colors.white,
+    ),
     ThemeData(
       primarySwatch: Colors.blue,
       textTheme: TextTheme(
@@ -48,7 +39,7 @@ class MainApp  extends StatelessWidget {
       primarySwatch: Colors.brown,
       textTheme: TextTheme(
         body1: TextStyle(
-          color:Colors.white,
+          color: Colors.white,
         ),
       ),
       canvasColor: Colors.black26,
@@ -57,7 +48,7 @@ class MainApp  extends StatelessWidget {
       primarySwatch: Colors.teal,
       textTheme: TextTheme(
         body1: TextStyle(
-          color:Colors.black,
+          color: Colors.black,
         ),
       ),
       canvasColor: Colors.white,
@@ -66,7 +57,7 @@ class MainApp  extends StatelessWidget {
       primarySwatch: Colors.orange,
       textTheme: TextTheme(
         body1: TextStyle(
-          color:Colors.black,
+          color: Colors.black,
         ),
       ),
       canvasColor: Colors.white,
@@ -105,7 +96,7 @@ class MainApp  extends StatelessWidget {
         ResultScreen.RouteName: (BuildContext context) {
           return ResultScreen.getInstance();
         },
-        AboutScreen.RouteName : (BuildContext context ){
+        AboutScreen.RouteName: (BuildContext context) {
           return AboutScreen();
         }
       },

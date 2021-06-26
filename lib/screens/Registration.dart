@@ -1,13 +1,10 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/cupertino.dart';
-import "../handlers/sharedPreference.dart";
 import "dart:math" as math;
 import "dart:async";
 import 'package:flutter/services.dart' show ByteData, rootBundle;
-import "../handlers/translation.dart";
 import 'package:excel/excel.dart';
-import 'Categories.dart';
+import '../libs.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({Key key}) : super(key: key);
@@ -55,7 +52,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     this.Userdata.initialize();
 
     super.initState();
-
   }
 
   Future<List<List<dynamic>>> LoadXlsx(String path, String sheetName) async {
@@ -70,9 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       List<String> singleRowAsAList = [];
       int ind = 0;
       row.removeWhere((value) {
-        if (value == null ||
-            "$value" == "" ||
-            "$value" == "null") {
+        if (value == null || "$value" == "" || "$value" == "null") {
           return true;
         }
         return false;
@@ -116,9 +110,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           if (index != null && index > 0 && index <= (row.length - 2)) {
             valid = true;
           }
-        }catch(s , e ){
-          valid = false ;
-          index=0;
+        } catch (s, e) {
+          valid = false;
+          index = 0;
         }
       }
 
@@ -149,36 +143,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
     Userdata = argumentsMap["locald"] as UserData;
     Userdata.initialize();
-     this.lang = Userdata.Lang ;
+    this.lang = Userdata.Lang;
 
-     this.lang = "amh";
-     this.Userdata.SetLanguage("amh");
-     this.Userdata.initialize();
+    this.lang = "amh";
+    this.Userdata.SetLanguage("amh");
+    this.Userdata.initialize();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         // centerTitle: true,
         title: Text(
-          Translation.translate(lang, 'Registration') != null
-              ? Translation.translate(lang, 'Registration')
-              : 'Registration',
-          // views[selectedIndex]['title'] as String,
-          // Translation.translate("Registration") ,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight:FontWeight.bold,
-          )
-        ),
+            Translation.translate(lang, 'Registration') != null
+                ? Translation.translate(lang, 'Registration')
+                : 'Registration',
+            // views[selectedIndex]['title'] as String,
+            // Translation.translate("Registration") ,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            )),
         actions: [
           Container(
             // width: double.infinity,
-            color:Colors.white,
+            color: Colors.white,
             child: DropdownButton<String>(
               hint: Text(
                 Translation.translate(lang, "Select Language"),
                 style: TextStyle(
                   fontFamily:
-                  FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
+                      FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                   fontSize: 20,
@@ -216,7 +209,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )
         ],
       ),
-
       body: SingleChildScrollView(
         child: Column(children: [
           Container(
@@ -318,7 +310,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         horizontal: 20, vertical: 10),
                     child: CupertinoTextField(
                       autofocus: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.blue),
                           color: Colors.white,
@@ -347,326 +340,325 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         if (nameController.text != "") {
                           // loginStore.getCodeWithPhoneNumber(context, phoneController.text.toString());
                           username = nameController.text;
-                            setState(() {
-                              this.message = (Translation.translate(
-                                              this.lang, "Loading") !=
-                                          null
-                                      ? Translation.translate(
-                                          this.lang, "Loading")
-                                      : "Loading") +
-                                  "...";
-                              this.loading = true;
-                              messageColor = Colors.green;
-                            });
-                            int Countero = 0;
-                            int CounterOther = 0;
+                          setState(() {
+                            this.message =
+                                (Translation.translate(this.lang, "Loading") !=
+                                            null
+                                        ? Translation.translate(
+                                            this.lang, "Loading")
+                                        : "Loading") +
+                                    "...";
+                            this.loading = true;
+                            messageColor = Colors.green;
+                          });
+                          int Countero = 0;
+                          int CounterOther = 0;
 
-                            await LoadXlsxIndexed(
-                                    "assets/file.xlsx", "MotorIndexed")
-                                .then((rows) {
-                              int category = 1;
-                              for (var row in rows) {
-                                int index = int.parse(row[1]);
-                                List<String> answers = row.sublist(2);
-                                final question = Question(
-                                    Categoryid: category,
-                                    Body: row[0],
-                                    Answers: answers,
-                                    Answerindex: index - 1);
-                                this.motorIndexedQuestions.add(question);
-                              }
-                            });
-
-                            // Populating the Motor Category
-                            await LoadXlsx("assets/file.xlsx", "Motor")
-                                .then((listoo) {
-                              int category = 1;
-                              int groupId = 0;
-                              int initIndex = 0;
-                              int initIndexForIndexed = 0;
-                              int totalGroups = ((listoo.length +
-                                          motorIndexedQuestions.length) /
-                                      100)
-                                  .ceil();
-                              List<List<String>> questions = [];
-                              List<Question> QuestObjects = [];
-                              List<Group> GroupObjects = [];
-                              List<GradeResult> gradeResultObjects = [];
-                              for (var p = 0; p < totalGroups; p++) {
-                                groupId = p + 1;
-                                List<Question> groupIndexedQuestions =
-                                    List<Question>();
-                                if (groupId < totalGroups) {
-                                  int indexedLength =
-                                      (motorIndexedQuestions.length /
-                                              totalGroups)
-                                          .ceil();
-                                  groupIndexedQuestions =
-                                      motorIndexedQuestions.sublist(
-                                          initIndexForIndexed,
-                                          (initIndexForIndexed +
-                                              indexedLength));
-                                  questions = listoo.sublist(
-                                    initIndex,
-                                    (initIndex + 100 - indexedLength),
-                                  );
-                                  initIndexForIndexed += indexedLength;
-                                  initIndex += (100 - indexedLength);
-                                } else {
-                                  groupIndexedQuestions = this
-                                      .motorIndexedQuestions
-                                      .sublist(initIndexForIndexed);
-                                  questions = listoo.sublist(initIndex);
-                                }
-                                // initIndex += 100;
-                                this.groutCounter++;
-
-                                for (var a = 0;
-                                    a < groupIndexedQuestions.length;
-                                    a++) {
-                                  final question = groupIndexedQuestions[a];
-                                  question.Groupid = this.groutCounter;
-                                  QuestObjects.add(question);
-                                }
-
-                                final group = Group(
-                                  ID: this.groutCounter,
-                                  GroupNumber: groupId,
+                          await LoadXlsxIndexed(
+                                  "assets/file.xlsx", "MotorIndexed")
+                              .then((rows) {
+                            int category = 1;
+                            for (var row in rows) {
+                              int index = int.parse(row[1]);
+                              List<String> answers = row.sublist(2);
+                              final question = Question(
                                   Categoryid: category,
+                                  Body: row[0],
+                                  Answers: answers,
+                                  Answerindex: index - 1);
+                              this.motorIndexedQuestions.add(question);
+                            }
+                          });
+
+                          // Populating the Motor Category
+                          await LoadXlsx("assets/file.xlsx", "Motor")
+                              .then((listoo) {
+                            int category = 1;
+                            int groupId = 0;
+                            int initIndex = 0;
+                            int initIndexForIndexed = 0;
+                            int totalGroups = ((listoo.length +
+                                        motorIndexedQuestions.length) /
+                                    100)
+                                .ceil();
+                            List<List<String>> questions = [];
+                            List<Question> QuestObjects = [];
+                            List<Group> GroupObjects = [];
+                            List<GradeResult> gradeResultObjects = [];
+                            for (var p = 0; p < totalGroups; p++) {
+                              groupId = p + 1;
+                              List<Question> groupIndexedQuestions =
+                                  List<Question>();
+                              if (groupId < totalGroups) {
+                                int indexedLength =
+                                    (motorIndexedQuestions.length / totalGroups)
+                                        .ceil();
+                                groupIndexedQuestions =
+                                    motorIndexedQuestions.sublist(
+                                        initIndexForIndexed,
+                                        (initIndexForIndexed + indexedLength));
+                                questions = listoo.sublist(
+                                  initIndex,
+                                  (initIndex + 100 - indexedLength),
                                 );
-                                final gradeResult = GradeResult(
-                                  ID: this.groutCounter,
+                                initIndexForIndexed += indexedLength;
+                                initIndex += (100 - indexedLength);
+                              } else {
+                                groupIndexedQuestions = this
+                                    .motorIndexedQuestions
+                                    .sublist(initIndexForIndexed);
+                                questions = listoo.sublist(initIndex);
+                              }
+                              // initIndex += 100;
+                              this.groutCounter++;
+
+                              for (var a = 0;
+                                  a < groupIndexedQuestions.length;
+                                  a++) {
+                                final question = groupIndexedQuestions[a];
+                                question.Groupid = this.groutCounter;
+                                QuestObjects.add(question);
+                              }
+
+                              final group = Group(
+                                ID: this.groutCounter,
+                                GroupNumber: groupId,
+                                Categoryid: category,
+                              );
+                              final gradeResult = GradeResult(
+                                ID: this.groutCounter,
+                                Categoryid: category,
+                                Groupid: group.ID,
+                                AnsweredCount: 0,
+                                AskedCount: 0,
+                                Questions: [],
+                              );
+                              gradeResultObjects.add(gradeResult);
+                              group.QuestionsCount = (questions.length +
+                                  groupIndexedQuestions.length);
+                              GroupObjects.add(group);
+                              // Generating Questios Object for each one of the List element
+                              for (var t = 0; t < questions.length; t++) {
+                                List<String> oneQuestion = questions[t];
+                                final answer = oneQuestion[1];
+                                final answers = oneQuestion.sublist(1);
+                                answers.shuffle(math.Random.secure());
+                                int index = answers.indexOf(answer);
+
+                                Question quest = Question(
+                                  // ID: questionCounter,
                                   Categoryid: category,
                                   Groupid: group.ID,
-                                  AnsweredCount: 0,
-                                  AskedCount: 0,
-                                  Questions: [],
+                                  Body: oneQuestion[0],
+                                  Answerindex: index,
+                                  Answers: answers,
                                 );
-                                gradeResultObjects.add(gradeResult);
-                                group.QuestionsCount = (questions.length + groupIndexedQuestions.length);
-                                GroupObjects.add(group);
-                                // Generating Questios Object for each one of the List element
-                                for (var t = 0; t < questions.length; t++) {
-                                  List<String> oneQuestion = questions[t];
-                                  final answer = oneQuestion[1];
-                                  final answers = oneQuestion.sublist(1);
-                                  answers.shuffle(math.Random.secure());
-                                  int index = answers.indexOf(answer);
-
-                                  Question quest = Question(
-                                      // ID: questionCounter,
-                                      Categoryid: category,
-                                      Groupid: group.ID,
-                                      Body: oneQuestion[0],
-                                      Answerindex: index,
-                                      Answers: answers,);
-                                  QuestObjects.add(quest);
-                                }
+                                QuestObjects.add(quest);
                               }
-                              QuestObjects.shuffle(math.Random.secure());
-                              for (var k = 0; k < QuestObjects.length; k++) {
-                                this.questionCounter++;
-                                final quest = QuestObjects[k];
-                                quest.ID = this.questionCounter;
-                                QuestObjects[k] = quest;
-                              }
+                            }
+                            QuestObjects.shuffle(math.Random.secure());
+                            for (var k = 0; k < QuestObjects.length; k++) {
+                              this.questionCounter++;
+                              final quest = QuestObjects[k];
+                              quest.ID = this.questionCounter;
+                              QuestObjects[k] = quest;
+                            }
 
-                              databaseManager.InsertGroups(GroupObjects)
-                                  .then((value) {
-                                if (GroupObjects.length < value) {
-                                  setState(() {
-                                    this.message = Translation.translate(
-                                                this.lang,
-                                                "Internal Code Error. \nPlease Try Again....") !=
-                                            null
-                                        ? Translation.translate(this.lang,
-                                            "Internal Code Error. \nPlease Try Again....")
-                                        : "Internal Code Error. \nPlease Try Again....";
-                                    this.messageColor = Colors.red;
-                                    this.loading = false;
-                                    this.success = false;
-                                  });
-                                }
-                              });
-                              databaseManager.InsertGradeResults(
-                                      gradeResultObjects)
-                                  .then((counts) {
-                                if (counts < gradeResultObjects.length) {
-                                  setState(() {
-                                    // this.message =
-                                    //     " Internal Error while Saving the GradeResults  1";
-                                    // this.success = false;
-                                    // this.messageColor = Colors.red;
-                                    // this.loading = false;
-                                  });
-                                }
-                              });
-                              databaseManager.InsertQuestions(QuestObjects)
-                                  .then((onValue) {
-                                Countero = onValue;
-                              });
-                            });
-                            await LoadXlsxIndexed(
-                                    "assets/file.xlsx", "OthersIndexed")
-                                .then((rows) {
-                              int category = 2;
-                              for (var row in rows) {
-                                int index = int.parse(row[1]);
-                                List<String> answers = row.sublist(2);
-                                final question = Question(
-                                    Categoryid: category,
-                                    Body: row[0],
-                                    Answers: answers,
-                                    Answerindex: index - 1);
-                                this.otherIndexedQuestions.add(question);
-                              }
-                            });
-
-                            await LoadXlsx("assets/file.xlsx", "Others")
-                                .then((listoo) {
-                              int category = 2;
-                              int groupId = 0;
-                              int initIndex = 0;
-                              int initIndexForIndexed = 0;
-                              int totalGroups = ((listoo.length +
-                                          otherIndexedQuestions.length) /
-                                      100)
-                                  .ceil();
-                              List<List<String>> questions = [];
-                              List<Question> QuestObjects = [];
-                              List<Group> GroupObjects = [];
-                              List<GradeResult> gradeResultObjects = [];
-                              for (var p = 0; p < totalGroups; p++) {
-                                groupId = p + 1;
-                                List<Question> groupIndexedQuestions = [];
-                                if (groupId < totalGroups) {
-                                  int indexedLength =
-                                      (otherIndexedQuestions.length /
-                                              totalGroups)
-                                          .ceil();
-                                  groupIndexedQuestions =
-                                      otherIndexedQuestions.sublist(
-                                          initIndexForIndexed,
-                                          (initIndexForIndexed +
-                                              indexedLength));
-                                  questions = listoo.sublist(initIndex,
-                                      (initIndex + 100 - indexedLength));
-                                  initIndex += (100 - indexedLength);
-                                  initIndexForIndexed += indexedLength;
-                                } else {
-                                  groupIndexedQuestions = otherIndexedQuestions
-                                      .sublist(initIndexForIndexed);
-                                  questions = listoo.sublist(initIndex);
-                                }
-                                // initIndex += 100;
-                                this.groutCounter++;
-
-                                for (var a = 0;
-                                    a < groupIndexedQuestions.length;
-                                    a++) {
-                                  final question = groupIndexedQuestions[a];
-                                  question.Groupid = this.groutCounter;
-                                  QuestObjects.add(question);
-                                }
-
-
-                                final group = Group(
-                                  ID: this.groutCounter,
-                                  GroupNumber: groupId,
-                                  Categoryid: category,
-                                );
-                                final gradeResult = GradeResult(
-                                  ID: this.groutCounter,
-                                  Categoryid: category,
-                                  Groupid: group.ID,
-                                  AnsweredCount: 0,
-                                  AskedCount: 0,
-                                  Questions: [],
-                                );
-                                gradeResultObjects.add(gradeResult);
-                                group.QuestionsCount = questions.length + groupIndexedQuestions.length;
-                                GroupObjects.add(group);
-                                // Generating Questios Object for each one of the List element
-                                for (var t = 0; t < questions.length; t++) {
-                                  List<String> oneQuestion = questions[t];
-                                  final answer = oneQuestion[1];
-                                  final answers = oneQuestion.sublist(1);
-                                  answers.shuffle(math.Random.secure());
-                                  int index = answers.indexOf(answer);
-                                  // this.questionCounter++;
-                                  Question quest = Question(
-                                      Categoryid: category,
-                                      Groupid: group.ID,
-                                      Body: oneQuestion[0],
-                                      Answerindex: index,
-                                      Answers: answers,);
-                                  QuestObjects.add(quest);
-                                }
-                              }
-                              QuestObjects.shuffle(math.Random.secure());
-                              for (var w = 0; w < QuestObjects.length; w++) {
-                                this.questionCounter++;
-                                final quest = QuestObjects[w];
-                                quest.ID = this.questionCounter;
-                                QuestObjects[w] = quest;
-                              }
-
-                              databaseManager.InsertGroups(GroupObjects)
-                                  .then((value) {
-                                if (GroupObjects.length < value) {
-                                  setState(() {
-                                    this.message = Translation.translate(
-                                                this.lang,
-                                                "Internal Code Error. \nPlease Try Again....") !=
-                                            null
-                                        ? Translation.translate(this.lang,
-                                            "Internal Code Error. \nPlease Try Again....")
-                                        : "Internal Code Error. \nPlease Try Again....";
-                                    this.messageColor = Colors.red;
-                                    this.loading = false;
-                                    this.success = false;
-                                  });
-                                }
-                              });
-
-                              databaseManager.InsertGradeResults(
-                                      gradeResultObjects)
-                                  .then((counts) {
-                                if (counts < gradeResultObjects.length) {
-                                  setState(() {
-                                    // this.message =
-                                    //     " Internal Error while Saving the GradeResults 2 ";
-                                    // this.success = false;
-                                    // this.messageColor = Colors.red;
-                                    // this.loading = false;
-                                  });
-                                }
-                              });
-
-                              databaseManager.InsertQuestions(QuestObjects)
-                                  .then((onValue) {
-                                CounterOther = onValue;
+                            databaseManager.InsertGroups(GroupObjects)
+                                .then((value) {
+                              if (GroupObjects.length < value) {
                                 setState(() {
-                                  message =
-                                      "Succesfully Added ${Countero + CounterOther} Questions ... ";
-                                  loading = false;
+                                  this.message = Translation.translate(
+                                              this.lang,
+                                              "Internal Code Error. \nPlease Try Again....") !=
+                                          null
+                                      ? Translation.translate(this.lang,
+                                          "Internal Code Error. \nPlease Try Again....")
+                                      : "Internal Code Error. \nPlease Try Again....";
+                                  this.messageColor = Colors.red;
+                                  this.loading = false;
+                                  this.success = false;
                                 });
-                                Userdata.SetUsername(username);
-                                if (!this.success) {
-                                  return;
-                                }
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    CategoryScreen.RouteName, (_) {
-                                  return false;
-                                }, arguments: {
-                                  'username': username,
-                                  "locald": Userdata,
+                              }
+                            });
+                            databaseManager.InsertGradeResults(
+                                    gradeResultObjects)
+                                .then((counts) {
+                              if (counts < gradeResultObjects.length) {
+                                setState(() {
+                                  // this.message =
+                                  //     " Internal Error while Saving the GradeResults  1";
+                                  // this.success = false;
+                                  // this.messageColor = Colors.red;
+                                  // this.loading = false;
                                 });
+                              }
+                            });
+                            databaseManager.InsertQuestions(QuestObjects)
+                                .then((onValue) {
+                              Countero = onValue;
+                            });
+                          });
+                          await LoadXlsxIndexed(
+                                  "assets/file.xlsx", "OthersIndexed")
+                              .then((rows) {
+                            int category = 2;
+                            for (var row in rows) {
+                              int index = int.parse(row[1]);
+                              List<String> answers = row.sublist(2);
+                              final question = Question(
+                                  Categoryid: category,
+                                  Body: row[0],
+                                  Answers: answers,
+                                  Answerindex: index - 1);
+                              this.otherIndexedQuestions.add(question);
+                            }
+                          });
+
+                          await LoadXlsx("assets/file.xlsx", "Others")
+                              .then((listoo) {
+                            int category = 2;
+                            int groupId = 0;
+                            int initIndex = 0;
+                            int initIndexForIndexed = 0;
+                            int totalGroups = ((listoo.length +
+                                        otherIndexedQuestions.length) /
+                                    100)
+                                .ceil();
+                            List<List<String>> questions = [];
+                            List<Question> QuestObjects = [];
+                            List<Group> GroupObjects = [];
+                            List<GradeResult> gradeResultObjects = [];
+                            for (var p = 0; p < totalGroups; p++) {
+                              groupId = p + 1;
+                              List<Question> groupIndexedQuestions = [];
+                              if (groupId < totalGroups) {
+                                int indexedLength =
+                                    (otherIndexedQuestions.length / totalGroups)
+                                        .ceil();
+                                groupIndexedQuestions =
+                                    otherIndexedQuestions.sublist(
+                                        initIndexForIndexed,
+                                        (initIndexForIndexed + indexedLength));
+                                questions = listoo.sublist(initIndex,
+                                    (initIndex + 100 - indexedLength));
+                                initIndex += (100 - indexedLength);
+                                initIndexForIndexed += indexedLength;
+                              } else {
+                                groupIndexedQuestions = otherIndexedQuestions
+                                    .sublist(initIndexForIndexed);
+                                questions = listoo.sublist(initIndex);
+                              }
+                              // initIndex += 100;
+                              this.groutCounter++;
+
+                              for (var a = 0;
+                                  a < groupIndexedQuestions.length;
+                                  a++) {
+                                final question = groupIndexedQuestions[a];
+                                question.Groupid = this.groutCounter;
+                                QuestObjects.add(question);
+                              }
+
+                              final group = Group(
+                                ID: this.groutCounter,
+                                GroupNumber: groupId,
+                                Categoryid: category,
+                              );
+                              final gradeResult = GradeResult(
+                                ID: this.groutCounter,
+                                Categoryid: category,
+                                Groupid: group.ID,
+                                AnsweredCount: 0,
+                                AskedCount: 0,
+                                Questions: [],
+                              );
+                              gradeResultObjects.add(gradeResult);
+                              group.QuestionsCount = questions.length +
+                                  groupIndexedQuestions.length;
+                              GroupObjects.add(group);
+                              // Generating Questios Object for each one of the List element
+                              for (var t = 0; t < questions.length; t++) {
+                                List<String> oneQuestion = questions[t];
+                                final answer = oneQuestion[1];
+                                final answers = oneQuestion.sublist(1);
+                                answers.shuffle(math.Random.secure());
+                                int index = answers.indexOf(answer);
+                                // this.questionCounter++;
+                                Question quest = Question(
+                                  Categoryid: category,
+                                  Groupid: group.ID,
+                                  Body: oneQuestion[0],
+                                  Answerindex: index,
+                                  Answers: answers,
+                                );
+                                QuestObjects.add(quest);
+                              }
+                            }
+                            QuestObjects.shuffle(math.Random.secure());
+                            for (var w = 0; w < QuestObjects.length; w++) {
+                              this.questionCounter++;
+                              final quest = QuestObjects[w];
+                              quest.ID = this.questionCounter;
+                              QuestObjects[w] = quest;
+                            }
+
+                            databaseManager.InsertGroups(GroupObjects)
+                                .then((value) {
+                              if (GroupObjects.length < value) {
+                                setState(() {
+                                  this.message = Translation.translate(
+                                              this.lang,
+                                              "Internal Code Error. \nPlease Try Again....") !=
+                                          null
+                                      ? Translation.translate(this.lang,
+                                          "Internal Code Error. \nPlease Try Again....")
+                                      : "Internal Code Error. \nPlease Try Again....";
+                                  this.messageColor = Colors.red;
+                                  this.loading = false;
+                                  this.success = false;
+                                });
+                              }
+                            });
+
+                            databaseManager.InsertGradeResults(
+                                    gradeResultObjects)
+                                .then((counts) {
+                              if (counts < gradeResultObjects.length) {
+                                setState(() {
+                                  // this.message =
+                                  //     " Internal Error while Saving the GradeResults 2 ";
+                                  // this.success = false;
+                                  // this.messageColor = Colors.red;
+                                  // this.loading = false;
+                                });
+                              }
+                            });
+
+                            databaseManager.InsertQuestions(QuestObjects)
+                                .then((onValue) {
+                              CounterOther = onValue;
+                              setState(() {
+                                message =
+                                    "Succesfully Added ${Countero + CounterOther} Questions ... ";
+                                loading = false;
+                              });
+                              Userdata.SetUsername(username);
+                              if (!this.success) {
+                                return;
+                              }
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  CategoryScreen.RouteName, (_) {
+                                return false;
+                              }, arguments: {
+                                'username': username,
+                                "locald": Userdata,
                               });
                             });
-                            // Load Data to the database
+                          });
+                          // Load Data to the database
 
-                        } else if (nameController.text.isEmpty ) {
+                        } else if (nameController.text.isEmpty) {
                           setState(() {
                             message = Translation.translate(this.lang,
                                         "Please Fill the name Correctly ") !=

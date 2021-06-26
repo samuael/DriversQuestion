@@ -1,21 +1,16 @@
-import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import '../datas/datas.dart' as datas;
-import "../db/dbsqflite.dart";
-import "../handlers/sharedPreference.dart";
-import "../handlers/translation.dart";
-
-
+import '../libs.dart';
 
 class QuestionItem extends StatefulWidget {
   final Question question;
   final Function answerQuestion;
-  final int questionNumber ;
+  final int questionNumber;
 
   QuestionItem({
     Key key,
     this.question,
-    this.questionNumber ,
+    this.questionNumber,
     this.answerQuestion,
   }) : super(key: key);
 
@@ -38,8 +33,8 @@ class _QuestionItemState extends State<QuestionItem> {
   QStage stage = QStage.NotAnswered;
   Question question;
   datas.TodaysDataHolder mahder;
-  String lang ="";
-  UserData userdata ;
+  String lang = "";
+  UserData userdata;
   // bool once = true; // this thing represents whether it has to run the Fetching thing or not at first build
   // but since i am using the initState method i think i don't have to initiate it
   // nigga you got me
@@ -104,7 +99,7 @@ class _QuestionItemState extends State<QuestionItem> {
     this.question = widget.question;
     this.userdata = UserData.getInstance();
     this.userdata.initialize();
-      this.lang = userdata.Lang;
+    this.lang = userdata.Lang;
     int counter = 0;
     return ClipRRect(
       borderRadius: BorderRadius.only(
@@ -116,7 +111,7 @@ class _QuestionItemState extends State<QuestionItem> {
       child: Card(
         elevation: 10,
         child: Container(
-          decoration : BoxDecoration(
+          decoration: BoxDecoration(
             color: Theme.of(context).canvasColor,
           ),
           padding: EdgeInsets.all(10),
@@ -137,7 +132,7 @@ class _QuestionItemState extends State<QuestionItem> {
                     ),
                   ),
                   child: Text(
-                    "(${ widget.questionNumber }). " + this.question.Body,
+                    "(${widget.questionNumber}). " + this.question.Body,
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       //  fontFamily: FontFamily.,
@@ -161,11 +156,11 @@ class _QuestionItemState extends State<QuestionItem> {
                     onTap: () => handlerAnswer(ans),
                     selected: false,
                     leading: CircleAvatar(
-                      child: Text(
-                        Translation.translate(lang , datas.LETTERS[counter]) != null ?
-                        Translation.translate(lang , datas.LETTERS[counter]) :
-                        datas.LETTERS[counter]                       
-                        ),
+                      child: Text(Translation.translate(
+                                  lang, datas.LETTERS[counter]) !=
+                              null
+                          ? Translation.translate(lang, datas.LETTERS[counter])
+                          : datas.LETTERS[counter]),
                     ),
                     title: Text(
                       ans,

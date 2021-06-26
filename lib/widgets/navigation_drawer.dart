@@ -1,14 +1,5 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
-import 'package:DriversMobile/handlers/translation.dart';
-import 'package:DriversMobile/screens/Categories.dart';
-import 'package:DriversMobile/screens/SettingsScreen.dart';
 import 'package:flutter/material.dart';
-import '../screens/SettingsScreen.dart';
-// import '../screens/Registration.dart';
-import '../handlers/sharedPreference.dart';
-import '../screens/ResultScreen.dart';
-import '../screens/QuestionScreen.dart';
-import "../screens/AboutScreen.dart";
+import '../libs.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final BuildContext containerContext;
@@ -79,25 +70,23 @@ class NavigationDrawer extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ])),
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Icon(Icons.person)
-                         ,
-                         Text(
-                           username,
-                           style: TextStyle(
-                             color: Colors.black,
-                             fontSize: 17,
-                             fontWeight: FontWeight.bold,
-                             // fontStyle: FontStyle.italic,
-                           ),
-                           softWrap: true,
-                           overflow: TextOverflow.fade,
-                         ),
-                       ],
-                     )
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person),
+                        Text(
+                          username,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            // fontStyle: FontStyle.italic,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -197,7 +186,12 @@ class NavigationDrawer extends StatelessWidget {
                   child: Column(children: [
                     Text(
                       // Translation.translate(
-                      Translation.translate(lang, "Question And Answer For Driving Trainees ") != null ? Translation.translate(lang, "Question And Answer For Driving Trainees ") :"Question And Answer For Driving Trainees " ,
+                      Translation.translate(lang,
+                                  "Question And Answer For Driving Trainees ") !=
+                              null
+                          ? Translation.translate(
+                              lang, "Question And Answer For Driving Trainees ")
+                          : "Question And Answer For Driving Trainees ",
                     ),
                     Text(
                       "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",

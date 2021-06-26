@@ -1,12 +1,5 @@
-import 'package:DriversMobile/screens/QuestionScreen.dart';
+import '../libs.dart';
 import "package:flutter/material.dart";
-import "package:csv/csv.dart";
-import "dart:io";
-import "dart:convert";
-import "../handlers/sharedPreference.dart";
-import "../screens/Registration.dart";
-import "../screens/Categories.dart";
-import '../db/dbsqflite.dart';
 
 Future<void> runMainApp(BuildContext context) async {
   final UserData userdata = UserData.getInstance();
@@ -32,7 +25,10 @@ Future<void> runMainApp(BuildContext context) async {
         // 'username': username,
         "locald": userdata,
       });
-    } else if ((categoryID != null && groupID != null && groupID >0 && categoryID>0 ) &&
+    } else if ((categoryID != null &&
+            groupID != null &&
+            groupID > 0 &&
+            categoryID > 0) &&
         (categoryID > 0 && groupID > 0)) {
       gotoQuestions(categoryID, groupID, context);
     } else {
@@ -61,8 +57,7 @@ Future<void> gotoQuestions(
   final userdata = UserData.getInstance();
   userdata.initialize();
   if (groupo == null) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        CategoryScreen.RouteName,
+    Navigator.of(context).pushNamedAndRemoveUntil(CategoryScreen.RouteName,
         (_) {
       return false;
     }, arguments: {
@@ -129,13 +124,13 @@ class _SplashAppState extends State<SplashApp> {
   Widget build(BuildContext context) {
     _initializeAsyncDependencies(context);
 
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home :_buildBody(),
-    ) ;
+      home: _buildBody(),
+    );
   }
 
   Widget _buildBody() {
@@ -247,8 +242,7 @@ class _SplashAppState extends State<SplashApp> {
                 ],
               ),
             ),
-            Column(
-                children: [
+            Column(children: [
               SizedBox(
                 height: 30,
               ),
