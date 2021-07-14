@@ -203,7 +203,6 @@ class _ResultScreenState extends State<ResultScreen> {
       drawer: NavigationDrawer(
         containerContext: context,
         key: UniqueKey(),
-        userdata: userData,
       ),
       appBar: AppBar(
         title: Text(

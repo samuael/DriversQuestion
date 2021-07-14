@@ -1,7 +1,7 @@
 import "dart:async";
-import "package:flutter/foundation.dart";
 import "package:path/path.dart";
 import "package:sqflite/sqflite.dart";
+import '../libs.dart';
 
 class DatabaseManager {
   Database database;
@@ -28,6 +28,12 @@ class DatabaseManager {
       imageDir: "assets/images/newOne.jpeg",
       groups: [],
     ),
+    Category(
+      ID: 3,
+      Name: "Icons",
+      imageDir: "assets/images/newOne.jpeg",
+      groups: [],
+    )
   ];
 
   // OpenDatabase  method
@@ -40,9 +46,17 @@ class DatabaseManager {
             "drivers.db",
             // Version
           ),
-          version: 1, onCreate: (Database database, int version) async {
-        await database.execute(
-            "CREATE TABLE questions (id INTEGER PRIMARYKEY AUTO INCREMENT NOT NULL ,categoryid INTEGER , groupid INTEGER, body TEXT  ,answers TEXT, answerindex INTEGER  )");
+          version: 2, onCreate: (Database database, int version) async {
+        await database.execute('''CREATE TABLE questions (
+            id INTEGER PRIMARYKEY AUTO INCREMENT NOT NULL,
+            categoryid INTEGER,
+            groupid INTEGER,
+            body TEXT ,
+            answers TEXT,
+            answerindex INTEGER ,
+            question_image INTEGER DEFAULT "",
+            type  INTERGER DEFAULT 0
+            )''');
         // await database.execute(
         //     "CREATE TABLE category ( id INTEGER AUTO INCREMENT PRIMARY KEY ,name TEXT NOT NULL )");
         await database.execute(
@@ -452,142 +466,5 @@ class DatabaseManager {
       return true;
     }
     return false;
-  }
-}
-
-// Question handler
-class Question {
-  int ID;
-  int Categoryid;
-  int Groupid;
-  String Body;
-  List<String> Answers;
-  int Answerindex;
-
-  Question({
-    @required this.ID,
-    @required this.Categoryid,
-    @required this.Groupid,
-    @required this.Body,
-    @required this.Answers,
-    @required this.Answerindex,
-  });
-  Map<String, dynamic> toMap() {
-    return {
-      "id": this.ID,
-      "categoryid": this.Categoryid,
-      "groupid": this.Groupid,
-      "body": this.Body,
-      "answerindex": this.Answerindex,
-      "answers": this.Answers.join("`"),
-    };
-  }
-}
-
-class Category {
-  int ID;
-  String Name;
-  String imageDir;
-  List<Group> groups;
-  Category({this.ID, this.Name, this.imageDir, this.groups});
-
-  Map<String, dynamic> toMap() {
-    return {
-      "id": this.ID,
-      "name": this.Name,
-    };
-  }
-
-  Future<List<Group>> populateGroups(DatabaseManager databaseManager) async {
-    databaseManager.getGroupsOfCategory(this.ID).then((groups) {
-      this.groups = groups;
-      return this.groups;
-    });
-  }
-}
-
-class Group {
-  int ID;
-  int GroupNumber;
-  int Categoryid;
-  int QuestionsCount;
-  Group({this.GroupNumber, this.Categoryid, this.QuestionsCount, this.ID});
-  Map<String, dynamic> toMap() {
-    return {
-      "id": this.ID,
-      "group_no": this.GroupNumber,
-      "categoryid": this.Categoryid,
-      "questionscount": this.QuestionsCount,
-    };
-  }
-}
-
-class GradeResult {
-  int ID;
-  int Categoryid;
-  int Groupid;
-  int AskedCount = 0;
-  int AnsweredCount = 0;
-  List<String> Questions = [];
-  GradeResult({
-    this.ID,
-    @required this.Categoryid,
-    @required this.Groupid,
-    this.AnsweredCount,
-    this.AskedCount,
-    this.Questions,
-  });
-
-  String join() {
-    String ids = '';
-
-    this.Questions.removeWhere((el) {
-      try {
-        int val = int.tryParse(el);
-        if (val <= 0) {
-          return true;
-        }
-        return false;
-      } catch (s, e) {
-        return true;
-      }
-    });
-    int count = 0;
-    for (var el in this.Questions) {
-      if (count == 0) {
-        // count++;
-        try {
-          int val = int.tryParse(el);
-          if (val != null && val > 0) {
-            ids += "$val";
-            count++;
-          }
-        } catch (s, e) {
-          print("error character $el");
-        }
-        continue;
-      }
-      bool valid = false;
-      int val = int.parse(el);
-      if (val != null && val > 0) {
-        valid = true;
-      }
-      if (valid) {
-        ids += "`$el";
-      }
-    }
-    print("inside to map method te ids variable $ids ");
-    return ids;
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      "categoryid": this.Categoryid,
-      "groupid": this.Groupid,
-      "askedcount": this.AskedCount,
-      "answeredcount": this.AnsweredCount,
-      "id": this.ID,
-      "askedquestions": this.join(),
-    };
   }
 }

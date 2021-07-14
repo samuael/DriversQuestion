@@ -1,3 +1,4 @@
+import 'package:DriversMobile/handlers/list_loaders.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/cupertino.dart';
 import "dart:math" as math;
@@ -54,78 +55,78 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.initState();
   }
 
-  Future<List<List<dynamic>>> LoadXlsx(String path, String sheetName) async {
-    List<List<String>> mainList = [];
-    ByteData data = await rootBundle.load(path);
-    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    var excel = Excel.decodeBytes(bytes);
-    bool validRow =
-        false; // this is going to be true if the row has three three or more valid columns
-    for (var row in excel.tables[sheetName].rows) {
-      int counter = 0;
-      List<String> singleRowAsAList = [];
-      int ind = 0;
-      row.removeWhere((value) {
-        if (value == null || "$value" == "" || "$value" == "null") {
-          return true;
-        }
-        return false;
-      });
-      final List<String> newRow = [];
-      for (var f = 0; f < row.length; f++) {
-        newRow.add("${row[f]}");
-      }
-      if (newRow.length >= 3) {
-        mainList.add(newRow);
-      }
-    }
-    return mainList;
-  }
+  // Future<List<List<dynamic>>> LoadXlsx(String path, String sheetName) async {
+  //   List<List<String>> mainList = [];
+  //   ByteData data = await rootBundle.load(path);
+  //   var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  //   var excel = Excel.decodeBytes(bytes);
+  //   bool validRow =
+  //       false; // this is going to be true if the row has three three or more valid columns
+  //   for (var row in excel.tables[sheetName].rows) {
+  //     int counter = 0;
+  //     List<String> singleRowAsAList = [];
+  //     int ind = 0;
+  //     row.removeWhere((value) {
+  //       if (value == null || "$value" == "" || "$value" == "null") {
+  //         return true;
+  //       }
+  //       return false;
+  //     });
+  //     final List<String> newRow = [];
+  //     for (var f = 0; f < row.length; f++) {
+  //       newRow.add("${row[f]}");
+  //     }
+  //     if (newRow.length >= 3) {
+  //       mainList.add(newRow);
+  //     }
+  //   }
+  //   return mainList;
+  // }
 
-  Future<List<List<dynamic>>> LoadXlsxIndexed(
-      String path, String sheetName) async {
-    List<List<String>> mainList = [];
-    ByteData data = await rootBundle.load(path);
-    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    var excel = Excel.decodeBytes(bytes);
-    bool validRow =
-        false; // this is going to be true if the row has three three or more valid columns
-    for (var row in excel.tables[sheetName].rows) {
-      int counter = 0;
-      List<String> singleRowAsAList = [];
-      int ind = 0;
+  // Future<List<List<dynamic>>> LoadXlsxIndexed(
+  //     String path, String sheetName) async {
+  //   List<List<String>> mainList = [];
+  //   ByteData data = await rootBundle.load(path);
+  //   var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  //   var excel = Excel.decodeBytes(bytes);
+  //   bool validRow =
+  //       false; // this is going to be true if the row has three three or more valid columns
+  //   for (var row in excel.tables[sheetName].rows) {
+  //     int counter = 0;
+  //     List<String> singleRowAsAList = [];
+  //     int ind = 0;
 
-      row.removeWhere((value) {
-        if (value == null || "$value" == "" || "$value" == "null") {
-          return true;
-        }
-        return false;
-      });
+  //     row.removeWhere((value) {
+  //       if (value == null || "$value" == "" || "$value" == "null") {
+  //         return true;
+  //       }
+  //       return false;
+  //     });
 
-      int index = 0;
-      bool valid = false;
-      if (row.length > 4) {
-        try {
-          index = int.tryParse("${row[1]}");
-          if (index != null && index > 0 && index <= (row.length - 2)) {
-            valid = true;
-          }
-        } catch (s, e) {
-          valid = false;
-          index = 0;
-        }
-      }
+  //     int index = 0;
+  //     bool valid = false;
+  //     if (row.length > 4) {
+  //       try {
+  //         index = int.tryParse("${row[1]}");
+  //         if (index != null && index > 0 && index <= (row.length - 2)) {
+  //           valid = true;
+  //         }
+  //       } catch (s, e) {
+  //         valid = false;
+  //         index = 0;
+  //       }
+  //     }
 
-      final List<String> newRow = [];
-      for (var f = 0; f < row.length; f++) {
-        newRow.add("${row[f]}");
-      }
-      if (newRow.length >= 4 && valid) {
-        mainList.add(newRow);
-      }
-    }
-    return mainList;
-  }
+  //     final List<String> newRow = [];
+  //     for (var f = 0; f < row.length; f++) {
+  //       newRow.add("${row[f]}");
+  //     }
+  //     if (newRow.length >= 4 && valid) {
+  //       mainList.add(newRow);
+  //     }
+  //   }
+  //   return mainList;
+  // }
 
   void running() {
     setState(() {
@@ -354,7 +355,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           int Countero = 0;
                           int CounterOther = 0;
 
-                          await LoadXlsxIndexed(
+                          await ListLoader.loadXlsx(
                                   "assets/file.xlsx", "MotorIndexed")
                               .then((rows) {
                             int category = 1;

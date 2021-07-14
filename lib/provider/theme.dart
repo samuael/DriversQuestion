@@ -1,3 +1,4 @@
+import 'package:DriversMobile/libs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -51,12 +52,23 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     ),
   ];
 
+  ThemeProvider({this.themeIndex = 0}) {
+    this.theTheme = themes[this.themeIndex];
+  }
+
+  ThemeProvider.withUserData(UserData userdata) {
+    print("The Provided Theme Index is : ${userdata.themeIndex} ");
+    this.themeIndex = userdata.themeIndex;
+    this.theTheme = themes[this.themeIndex];
+  }
+
   ThemeData theTheme;
   int themeIndex = 0;
   ThemeData get theme => theTheme;
 
   void setTheme(int index) {
-    this.theTheme = themes[index];
+    this.themeIndex = index;
+    this.theTheme = themes[this.themeIndex];
     notifyListeners();
   }
 }

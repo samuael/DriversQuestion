@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 // ignore: prefer_mixin
-class Counter with ChangeNotifier, DiagnosticableTreeMixin {
+class ActiveQuestion with ChangeNotifier, DiagnosticableTreeMixin {
   Question _question;
 
   Question get question => _question;

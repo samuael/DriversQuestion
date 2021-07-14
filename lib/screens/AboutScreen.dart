@@ -40,7 +40,7 @@ class AboutScreen extends StatelessWidget {
       drawer: NavigationDrawer(
         containerContext: context,
         key: UniqueKey(),
-        userdata: this.userdata,
+        // userdata: this.userdata,
       ),
       appBar: AppBar(
         title: Text(

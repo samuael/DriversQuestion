@@ -28,9 +28,6 @@ dependencies:
   sqflite: 
   path:
   device_info: ^0.4.2
-  path_provider:
-  # csv_sheet: any
-  # csv_sheet: ^0.0.2
   excel: 1.1.5
   provider: ^5.0.0
 

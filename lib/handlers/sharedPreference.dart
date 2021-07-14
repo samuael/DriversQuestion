@@ -3,32 +3,31 @@ import "package:shared_preferences/shared_preferences.dart";
 class UserData {
   static const String PASSWORD = "shambel1122";
 
-  String Lang="amh";
+  String Lang = "amh";
   String Username;
   int category;
   int group;
-  int themeIndex =0;
-
+  int themeIndex = 0;
 
   static UserData userdata;
 
-  Future<int > GetThemeIndex() async {
+  Future<int> GetThemeIndex() async {
     final pref = await SharedPreferences.getInstance();
     this.themeIndex = pref.getInt("theme");
-    if(this.themeIndex==null ){
-      this.themeIndex=0;
+    if (this.themeIndex == null) {
+      this.themeIndex = 0;
     }
     return this.themeIndex;
   }
 
   Future<int> SetThmeIndex(int themeIndex) async {
     final pref = await SharedPreferences.getInstance();
-    bool success =false;
-    pref.setInt( "theme" , themeIndex ).then((val ){
-      this.themeIndex= themeIndex;
-      success = val ;
+    bool success = false;
+    pref.setInt("theme", themeIndex).then((val) {
+      this.themeIndex = themeIndex;
+      success = val;
     });
-    if(success){
+    if (success) {
       return this.themeIndex;
     }
     return 0;
@@ -55,8 +54,8 @@ class UserData {
     GetCategory();
     GetLanguage();
     GetGroup();
-
   }
+
   Future<void> initTheme() async {
     await GetThemeIndex();
   }

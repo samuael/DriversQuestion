@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../libs.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final BuildContext containerContext;
-  final UserData userdata;
+  // final UserData userdata;
 
-  const NavigationDrawer({Key key, this.containerContext, this.userdata})
-      : super(key: key);
+  NavigationDrawer({Key key, this.containerContext}) : super(key: key);
 
   Widget tileElement({String theTitle, IconData icondata, Function onClick}) {
     return Card(
@@ -26,16 +27,19 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 
+  UserDataProvider userDataProvider;
   @override
   Widget build(BuildContext context) {
-    String lang;
-    String username;
-    userdata.initialize();
-    lang = userdata.Lang;
-    if (lang == "") {
-      lang = "eng";
-    }
-    username = userdata.Username;
+    userDataProvider = context.read<UserDataProvider>();
+
+    // String lang;
+    // String username;
+    // userdata.initialize();
+    // lang = userdata.Lang;
+    // if (lang == "") {
+    //   lang = "eng";
+    // }
+    // username = userdata.Username;
     // print("The Language $lang");
     return Drawer(
       child: Container(
@@ -75,7 +79,7 @@ class NavigationDrawer extends StatelessWidget {
                       children: [
                         Icon(Icons.person),
                         Text(
-                          username,
+                          context.watch<UserDataProvider>().username,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
@@ -91,9 +95,13 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               tileElement(
-                theTitle: Translation.translate(lang, "Category") == null
+                theTitle: Translation.translate(
+                            context.watch<UserDataProvider>().language,
+                            "Category") ==
+                        null
                     ? "Category"
-                    : Translation.translate(lang, "Category"),
+                    : Translation.translate(
+                        context.watch<UserDataProvider>().language, "Category"),
                 icondata: Icons.category,
                 onClick: () =>
                     Navigator.of(containerContext).pushNamedAndRemoveUntil(
@@ -104,17 +112,23 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               tileElement(
-                theTitle: Translation.translate(lang, 'Questions') != null
-                    ? Translation.translate(lang, 'Questions')
+                theTitle: Translation.translate(
+                            context.watch<UserDataProvider>().language,
+                            'Questions') !=
+                        null
+                    ? Translation.translate(
+                        context.watch<UserDataProvider>().language, 'Questions')
                     : 'Questions',
                 icondata: Icons.question_answer,
                 onClick: () => () async {
-                  userdata.initialize();
+                  context.watch<UserDataProvider>().userdata.initialize();
                   Category category;
                   Group group;
                   final databaseManager = DatabaseManager.getInstance();
-                  int categoryID = userdata.category;
-                  int groupID = userdata.group;
+                  int categoryID =
+                      context.watch<UserDataProvider>().userdata.category;
+                  int groupID =
+                      context.watch<UserDataProvider>().userdata.group;
                   if (categoryID != null && groupID != null) {
                     category = DatabaseManager.categories[categoryID - 1];
                     await databaseManager.GetGroupByID(groupID).then((grou) {
@@ -127,8 +141,8 @@ class NavigationDrawer extends StatelessWidget {
                       return false;
                     },
                     arguments: {
-                      "userdata": userdata,
-                      "lang": userdata.Lang,
+                      "userdata": context.watch<UserDataProvider>().userdata,
+                      "lang": context.watch<UserDataProvider>().userdata.Lang,
                       "category": category,
                       "group": group,
                     },
@@ -136,8 +150,12 @@ class NavigationDrawer extends StatelessWidget {
                 }(),
               ),
               tileElement(
-                theTitle: Translation.translate(lang, 'Result') != null
-                    ? Translation.translate(lang, 'Result')
+                theTitle: Translation.translate(
+                            context.watch<UserDataProvider>().language,
+                            'Result') !=
+                        null
+                    ? Translation.translate(
+                        context.watch<UserDataProvider>().language, 'Result')
                     : 'Result',
                 icondata: Icons.score,
                 onClick: () =>
@@ -149,8 +167,12 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               tileElement(
-                theTitle: Translation.translate(lang, 'Setting') != null
-                    ? Translation.translate(lang, 'Setting')
+                theTitle: Translation.translate(
+                            context.watch<UserDataProvider>().language,
+                            'Setting') !=
+                        null
+                    ? Translation.translate(
+                        context.watch<UserDataProvider>().language, 'Setting')
                     : 'Setting',
                 icondata: Icons.settings,
                 onClick: () =>
@@ -162,8 +184,12 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               tileElement(
-                theTitle: Translation.translate(lang, 'About Us') != null
-                    ? Translation.translate(lang, 'About Us')
+                theTitle: Translation.translate(
+                            context.watch<UserDataProvider>().language,
+                            'About Us') !=
+                        null
+                    ? Translation.translate(
+                        context.watch<UserDataProvider>().language, 'About Us')
                     : 'About Us',
                 icondata: Icons.people_outline,
                 onClick: () =>
@@ -186,11 +212,13 @@ class NavigationDrawer extends StatelessWidget {
                   child: Column(children: [
                     Text(
                       // Translation.translate(
-                      Translation.translate(lang,
+                      Translation.translate(
+                                  context.watch<UserDataProvider>().language,
                                   "Question And Answer For Driving Trainees ") !=
                               null
                           ? Translation.translate(
-                              lang, "Question And Answer For Driving Trainees ")
+                              context.watch<UserDataProvider>().language,
+                              "Question And Answer For Driving Trainees ")
                           : "Question And Answer For Driving Trainees ",
                     ),
                     Text(

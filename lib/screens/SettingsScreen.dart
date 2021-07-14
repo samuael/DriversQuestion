@@ -2,6 +2,7 @@ import '../libs.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const RouteName = "/settings/";
@@ -37,26 +38,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Color usernameTextColor = Colors.green;
   String usernameText = "";
 
+  UserDataProvider userdataProvider;
+  ThemeProvider themeProvider;
   @override
   Widget build(BuildContext context) {
-    if (userdata == null) {
-      userdata = UserData.getInstance();
-      userdata.initialize();
-      this.lang = userdata.Lang;
-      this.username = userdata.Username;
-    }
+    this.themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    this.userdataProvider =
+        Provider.of<UserDataProvider>(context, listen: false);
+    this.userdata = userdataProvider.userdata;
     return Scaffold(
       drawer: NavigationDrawer(
         containerContext: context,
         key: UniqueKey(),
-        userdata: userdata,
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          Translation.translate(this.lang, "Settings") == null
-              ? "Settings"
-              : Translation.translate(this.lang, "Settings"),
+        title: Consumer<UserDataProvider>(
+          builder: (context, userDataProvider, _) {
+            return Text(
+              Translation.translate(userDataProvider.language, "Settings") ==
+                      null
+                  ? "Settings"
+                  : Translation.translate(
+                      userDataProvider.language, "Settings"),
+            );
+          },
         ),
       ),
       body: Container(
@@ -67,7 +73,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Container(
                 width: double.infinity,
                 child: Text(
-                  Translation.translate(lang, "Select Language"),
+                  Translation.translate(
+                      context.watch<UserDataProvider>().language,
+                      "Select Language"),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily:
@@ -83,7 +91,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 height: 30,
                 child: DropdownButton<String>(
                   hint: Text(
-                    Translation.translate(lang, "Select Language"),
+                    Translation.translate(
+                        context.watch<UserDataProvider>().language,
+                        "Select Language"),
                     style: TextStyle(
                       fontFamily:
                           FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
@@ -96,7 +106,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: (String language) {
                     setState(() {
                       this.lang = language;
-                      userdata.SetLanguage(this.lang);
+                      Provider.of<UserDataProvider>(context, listen: false)
+                          .setLanguage(this.lang);
                     });
                   },
                   items: Translation.languages.map((String language) {
@@ -110,7 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           Text(
                             Translation.translate(
-                              this.lang,
+                              context.watch<UserDataProvider>().userdata.Lang,
                               language.toUpperCase(),
                             ),
                             style: TextStyle(color: Colors.black),
@@ -123,8 +134,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               Container(
                 child: Text(
-                  Translation.translate(lang, "Select Theme") != null
-                      ? Translation.translate(lang, "Select Theme")
+                  Translation.translate(
+                              context.watch<UserDataProvider>().language,
+                              "Select Theme") !=
+                          null
+                      ? Translation.translate(
+                          context.watch<UserDataProvider>().language,
+                          "Select Theme")
                       : "Select Theme",
                   style: TextStyle(
                     fontFamily:
@@ -143,7 +159,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 height: 250,
                 child: new ListView.builder(
                   itemCount: themeImages.length,
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (BuildContext contexto, int index) {
                     return InkWell(
                       onTap: () => changeTheme(context, index),
                       child: Container(
@@ -181,10 +197,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: Center(
                           child: Text(
                             Translation.translate(
-                                        this.lang, " Change Username ") !=
+                                        context
+                                            .watch<UserDataProvider>()
+                                            .language,
+                                        " Change Username ") !=
                                     null
                                 ? Translation.translate(
-                                    this.lang, " Change Username ")
+                                    context.watch<UserDataProvider>().language,
+                                    " Change Username ")
                                 : "Change Username",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -225,9 +245,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           // keyboardType: TextInputType.passwords,
                           maxLines: 1,
                           placeholder: Translation.translate(
-                                      this.lang, ' Username ') !=
+                                      context
+                                          .watch<UserDataProvider>()
+                                          .language,
+                                      ' Username ') !=
                                   null
-                              ? Translation.translate(this.lang, ' Username ')
+                              ? Translation.translate(
+                                  context.watch<UserDataProvider>().language,
+                                  ' Username ')
                               : " Username ",
                         ),
                       ),
@@ -238,8 +263,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         splashColor: Colors.white24,
                         onPressed: changeUsername,
                         child: Text(
-                            Translation.translate(this.lang, "Submit") != null
-                                ? Translation.translate(this.lang, "Submit")
+                            Translation.translate(
+                                        context
+                                            .watch<UserDataProvider>()
+                                            .language,
+                                        "Submit") !=
+                                    null
+                                ? Translation.translate(
+                                    context.watch<UserDataProvider>().language,
+                                    "Submit")
                                 : "Submit",
                             style: TextStyle(
                               color: Colors.white,
@@ -260,10 +292,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       this.usernameText = usernameController.text;
       if (this.usernameText.length <= 2) {
-        this.usernameText = Translation.translate(this.lang,
+        this.usernameText = Translation.translate(
+                    this.userdataProvider.language,
                     "Invalid Character Length \n Character Length Has to be greater than 2") !=
                 null
-            ? Translation.translate(this.lang,
+            ? Translation.translate(this.userdataProvider.language,
                 "Invalid Character Length \n Character Length Has to be greater than 2")
             : "Invalid Character Length \n Character Length Has to be greater than 2";
         this.usernameTextColor = Colors.red;
@@ -285,83 +318,88 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void changeTheme(BuildContext contaext, int index) {
-    this.userdata.SetThmeIndex(index);
-    this.userdata.initialize();
-
-    showDialog(
-      context: context,
-      builder: (conta) {
-        return AlertDialog(
-          title: Text(
-            Translation.translate(lang, "Theme Change") != null
-                ? Translation.translate(lang, "Theme Change")
-                : "Theme Change",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          elevation: 25,
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () => Navigator.pop(conta),
-              child: Text(
-                Translation.translate(lang, "ok") != null
-                    ? Translation.translate(lang, "Ok")
-                    : "Ok",
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            // FlatButton(
-            //   onPressed: () => Navigator.pop(conta),
-            //   child: Text(
-            //     Translation.translate(lang, "Cancel") != null
-            //         ? Translation.translate(lang, "Cancel")
-            //         : "Cancel",
-            //     textAlign: TextAlign.justify,
-            //     style: TextStyle(
-            //       backgroundColor: Theme.of(context).primaryColor,
-            //       color: Colors.white,
-            //     ),
-            //   ),),
-            // FlatButton(
-            //     onPressed: () => SystemNavigator.pop(animated: true),
-            //     child: Text(
-            //       Translation.translate(lang, "Exit App") != null
-            //           ? Translation.translate(lang, "Exit App")
-            //           : "Exit App",
-            //       textAlign: TextAlign.justify,
-            //       style: TextStyle(
-            //         backgroundColor: Theme.of(context).primaryColor,
-            //         color: Colors.white,
-            //       ),
-            //     ),),
-          ],
-          backgroundColor: Theme.of(context).primaryColor,
-          // shape: CircleBorder(),
-          contentPadding: EdgeInsets.all(20),
-          titlePadding: EdgeInsets.all(10),
-          content: Text(
-            Translation.translate(
-                        lang, "To Apply the change . Restart the App !") !=
-                    null
-                ? Translation.translate(
-                    lang, "To Apply the change . Restart the App !")
-                : "To Apply the change . Restart the App !",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        );
-      },
-      barrierDismissible: true,
-    );
+    Provider.of<ThemeProvider>(contaext, listen: false).setTheme(index);
+    // Provider.of<UserDataProvider>(context, listen: false).setThemeIndex(index);
+    // showDialog(
+    //   context: context,
+    //   builder: (conta) {
+    //     return AlertDialog(
+    //       title: Text(
+    //         Translation.translate(context.watch<UserDataProvider>().language,
+    //                     "Theme Change") !=
+    //                 null
+    //             ? Translation.translate(
+    //                 context.watch<UserDataProvider>().language, "Theme Change")
+    //             : "Theme Change",
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(
+    //           fontWeight: FontWeight.bold,
+    //           color: Colors.white,
+    //         ),
+    //       ),
+    //       elevation: 25,
+    //       actions: <Widget>[
+    //         FlatButton(
+    //           onPressed: () => Navigator.pop(conta),
+    //           child: Text(
+    //             Translation.translate(
+    //                         context.watch<UserDataProvider>().language, "ok") !=
+    //                     null
+    //                 ? Translation.translate(
+    //                     context.watch<UserDataProvider>().language, "Ok")
+    //                 : "Ok",
+    //             textAlign: TextAlign.justify,
+    //             style: TextStyle(
+    //               backgroundColor: Theme.of(context).primaryColor,
+    //               color: Colors.white,
+    //             ),
+    //           ),
+    //         ),
+    //         // FlatButton(
+    //         //   onPressed: () => Navigator.pop(conta),
+    //         //   child: Text(
+    //         //     Translation.translate(lang, "Cancel") != null
+    //         //         ? Translation.translate(lang, "Cancel")
+    //         //         : "Cancel",
+    //         //     textAlign: TextAlign.justify,
+    //         //     style: TextStyle(
+    //         //       backgroundColor: Theme.of(context).primaryColor,
+    //         //       color: Colors.white,
+    //         //     ),
+    //         //   ),),
+    //         // FlatButton(
+    //         //     onPressed: () => SystemNavigator.pop(animated: true),
+    //         //     child: Text(
+    //         //       Translation.translate(lang, "Exit App") != null
+    //         //           ? Translation.translate(lang, "Exit App")
+    //         //           : "Exit App",
+    //         //       textAlign: TextAlign.justify,
+    //         //       style: TextStyle(
+    //         //         backgroundColor: Theme.of(context).primaryColor,
+    //         //         color: Colors.white,
+    //         //       ),
+    //         //     ),),
+    //       ],
+    //       backgroundColor: Theme.of(context).primaryColor,
+    //       contentPadding: EdgeInsets.all(20),
+    //       titlePadding: EdgeInsets.all(10),
+    //       content: Text(
+    //         Translation.translate(context.watch<UserDataProvider>().language,
+    //                     "To Apply the change . Restart the App !") !=
+    //                 null
+    //             ? Translation.translate(
+    //                 context.watch<UserDataProvider>().language,
+    //                 "To Apply the change . Restart the App !")
+    //             : "To Apply the change . Restart the App !",
+    //         style: TextStyle(
+    //           fontWeight: FontWeight.bold,
+    //           color: Colors.white,
+    //           fontStyle: FontStyle.italic,
+    //         ),
+    //       ),
+    //     );
+    //   },
+    //   barrierDismissible: true,
+    // );
   }
 }

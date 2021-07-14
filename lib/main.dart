@@ -1,68 +1,33 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'libs.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   UserData ud = UserData.getInstance();
   ud.initTheme();
+  Provider.debugCheckInvalidValueType = null;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   Future.delayed(
     Duration(milliseconds: 2000),
-    () => runApp(MainApp()),
+    () => runApp(MultiProvider(
+      providers: [
+        Provider<Questions>(create: (_) => Questions()),
+        Provider<ActiveQuestion>(create: (_) => ActiveQuestion()),
+        Provider<ThemeProvider>(
+            create: (_) => ThemeProvider(themeIndex: ud.themeIndex)),
+        Provider<UserDataProvider>(create: (_) => UserDataProvider(ud)),
+        // Provider<AnotherThing>(create: (_) => AnotherThing()),
+      ],
+      child: MainApp(),
+    )),
   );
 }
 
 class MainApp extends StatelessWidget {
   int themeIndex = 0;
-  static final List<ThemeData> themeDatas = List<ThemeData>.from([
-    ThemeData(
-      primarySwatch: Colors.blue,
-      textTheme: TextTheme(
-        body1: TextStyle(
-          color: Colors.black,
-        ),
-      ),
-      canvasColor: Colors.white,
-    ),
-    ThemeData(
-      primarySwatch: Colors.blue,
-      textTheme: TextTheme(
-        body1: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      canvasColor: Colors.black26,
-    ),
-    ThemeData(
-      primarySwatch: Colors.brown,
-      textTheme: TextTheme(
-        body1: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      canvasColor: Colors.black26,
-    ),
-    ThemeData(
-      primarySwatch: Colors.teal,
-      textTheme: TextTheme(
-        body1: TextStyle(
-          color: Colors.black,
-        ),
-      ),
-      canvasColor: Colors.white,
-    ),
-    ThemeData(
-      primarySwatch: Colors.orange,
-      textTheme: TextTheme(
-        body1: TextStyle(
-          color: Colors.black,
-        ),
-      ),
-      canvasColor: Colors.white,
-    )
-  ]);
 
   UserData Userdata = UserData.getInstance();
 
@@ -70,10 +35,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // UserData.getInstance().initialize();
     themeIndex = UserData.getInstance().themeIndex;
-    final materialApp = MaterialApp(
+    return /*Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return */
+        MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Select Category',
-      theme: themeDatas[themeIndex],
+      theme: context.watch<ThemeProvider>().theme,
       initialRoute: "/",
       routes: {
         "/": (BuildContext context) {
@@ -101,6 +69,7 @@ class MainApp extends StatelessWidget {
         }
       },
     );
-    return materialApp;
+    //   },
+    // );
   }
 }

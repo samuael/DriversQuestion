@@ -98,7 +98,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       drawer: NavigationDrawer(
         containerContext: context,
         key: UniqueKey(),
-        userdata: this.userdata,
+        // userdata: this.userdata,
       ),
       bottomNavigationBar: BottomNavigationBar(
         // onTap: selectedIndexSet,
