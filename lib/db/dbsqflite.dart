@@ -46,7 +46,7 @@ class DatabaseManager {
             "drivers.db",
             // Version
           ),
-          version: 2, onCreate: (Database database, int version) async {
+          version: 1, onCreate: (Database database, int version) async {
         await database.execute('''CREATE TABLE questions (
             id INTEGER PRIMARYKEY AUTO INCREMENT NOT NULL,
             categoryid INTEGER,
@@ -468,3 +468,8 @@ class DatabaseManager {
     return false;
   }
 }
+
+
+
+/// how to handle Icon Questions 
+/// 

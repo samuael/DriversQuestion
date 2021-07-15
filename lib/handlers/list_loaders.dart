@@ -1,5 +1,7 @@
 /* -- File Loaders */
 /* This class loads the instruction from the xlsx file and return a list of list of dynamic data types*/
+import 'dart:ffi';
+
 import '../libs.dart';
 import 'package:flutter/services.dart' show ByteData, rootBundle;
 import 'package:excel/excel.dart';
@@ -68,8 +70,10 @@ class ListLoader {
           Groupid: group,
           Body: "${quest[0]}",
           Answers: quest.getRange(2, quest.length).toList(),
-          Answerindex: quest[1]
-              as int, // sinece i am sure about the correctness of the integer
+          Answerindex: quest[1] as int,
+          qtype: 0,
+          questionImage:
+              "", // sinece i am sure about the correctness of the integer
         );
         questions.add(question);
       } catch (e, a) {
@@ -82,10 +86,10 @@ class ListLoader {
   ///    loadXlsxTANINUMS this function loads instruction
   ///    Text  : string
   ///    Answer_Number : int
-  ///      ... Images_ Number : stirng.png
+  ///      ... Images_ Number : string.png
   ///
   ///
-  static Future<List<List<dynamic>>> loadXlsxTANINUMS(
+  static Future<List<List<dynamic>>> loadXlsxTIA(
       String path, String sheetName) async {
     List<List<String>> mainList = [];
     ByteData data = await rootBundle.load(path);
@@ -135,15 +139,41 @@ class ListLoader {
     return mainList;
   }
 
-  /*
-  ------------ Text, Answer_Number , Image_Number , ... Answers   
-    loadXlsxTANIMANS loader function to load list of list of dynamic
-    Text : string 
-    Ans_number : int 
-    Image_Number : string.png
-    ... Answers : string 
+  /* loadTIAQuestions ... 
+  List<Question> : questions 
   */
-  static Future<List<List<dynamic>>> loadXlsxTANIMANS(
+  static Future<List<Question>> loadTIAQuestions(
+      String path, String sheetName, int category, int group) async {
+    List<List<dynamic>> loads = await ListLoader.loadXlsx(path, sheetName);
+    List<Question> questions = [];
+    for (List<dynamic> quest in loads) {
+      try {
+        Question question = new Question(
+          Categoryid: category,
+          Groupid: group,
+          Body: "${quest[0]}",
+          Answers: quest.getRange(2, quest.length).toList(),
+          Answerindex: quest[1] as int,
+          qtype: 1, //  0000000001
+          questionImage: "",
+        );
+        questions.add(question);
+      } catch (e, a) {
+        continue;
+      }
+    }
+    return questions;
+  }
+
+  ///
+  ///------------ Text, Answer_Number , Image_Number , ... Answers
+  ///    loadXlsxTANIMANS loader function to load list of list of dynamic
+  ///    Text : string
+  ///    Ans_number : int
+  ///  Image_Number : string.png
+  ///... Answers : string
+  ///
+  static Future<List<List<dynamic>>> loadXlsxITANS(
       String path, String sheetName) async {
     List<List<String>> mainList = [];
     ByteData data = await rootBundle.load(path);
@@ -189,5 +219,33 @@ class ListLoader {
       }
     }
     return mainList;
+  }
+
+  /// loadITAQuestions
+  /// List<Question> : questions
+  ///   text  , ans_number , image_number , ... answers
+  ///
+  static Future<List<Question>> loadITAQuestions(
+      String path, String sheetName, int category, int group) async {
+    List<List<dynamic>> loads = await ListLoader.loadXlsx(path, sheetName);
+    List<Question> questions = [];
+    for (List<dynamic> quest in loads) {
+      try {
+        Question question = new Question(
+          Categoryid: category,
+          Groupid: group,
+          Body: "${quest[0]}",
+          Answers: quest.getRange(3, quest.length).toList(),
+          Answerindex: quest[1] as int,
+          qtype: 2,
+          questionImage:
+              "${quest[2]}", // sinece i am sure about the correctness of the integer
+        );
+        questions.add(question);
+      } catch (e, a) {
+        continue;
+      }
+    }
+    return questions;
   }
 }

@@ -21,7 +21,7 @@ class Question {
   /// 1. 00000000 ( simple Indexed Question  )
   /// 2. 00000001 ( simple Image answer Questions   )
   /// 3. 00000010 (simple image as a question questions )
-  Int8 qtype;
+  int qtype;
 
   Question({
     this.ID,
@@ -56,7 +56,7 @@ class Question {
         Body: json["body"],
         Answers: json["answers"].split("`"),
         Answerindex: json["answerindex"] as int,
-        qtype: json["type"] as Int8,
+        qtype: json["type"] as int,
         questionImage: json["question_image"],
       );
     } catch (e, a) {

@@ -1,5 +1,8 @@
+import 'package:flutter/scheduler.dart';
+
 import '../libs.dart';
 import "package:flutter/material.dart";
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 Future<void> runMainApp(BuildContext context) async {
   final UserData userdata = UserData.getInstance();
@@ -97,10 +100,29 @@ class SplashApp extends StatefulWidget {
 }
 
 class _SplashAppState extends State<SplashApp> {
-  bool _hasError = false;
   @override
   void initState() {
     super.initState();
+    // start the ticker to control the progress value
+    // updateTime();
+  }
+
+  double tickerValue = 0;
+
+  /// some thing that update a value every time the time ticks
+  /// Method Name : updateTime
+  void updateTime() {
+    Ticker ticker;
+    ticker = new Ticker((Duration duration) {
+      if (duration.inSeconds >= 50) {
+        ticker.stop();
+      }
+      setState(() {
+        this.tickerValue = duration.inSeconds * 0.02;
+        print(this.tickerValue);
+      });
+    });
+    ticker.start();
   }
 
   Future<void> _initializeAsyncDependencies(BuildContext context) async {
@@ -114,7 +136,7 @@ class _SplashAppState extends State<SplashApp> {
     // print(lists);
     UserData.getInstance().initialize();
     Future.delayed(
-      Duration(milliseconds: 5000),
+      Duration(milliseconds: 3000),
       () => widget.onInitializationComplete(context),
     );
     return;
@@ -146,75 +168,76 @@ class _SplashAppState extends State<SplashApp> {
         ),
         child: Column(
           children: [
-            Container(
-              child: Card(
-                elevation: 3,
-                // backgroundColor : Colors.blue  ,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(
-                      25,
-                    ),
-                    bottomRight: Radius.circular(
-                      25,
-                    ),
-                  ),
-                ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+            // Container(
+            //   child: Card(
+            //     elevation: 3,
+            //     // backgroundColor : Colors.blue  ,
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.only(
+            //         bottomLeft: Radius.circular(
+            //           25,
+            //         ),
+            //         bottomRight: Radius.circular(
+            //           25,
+            //         ),
+            //       ),
+            //     ),
 
-                child: Column(children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                      child: Text(
-                        "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 3,
-                        vertical: 3,
-                      )),
-                  Container(
-                      child: Text(
-                        "Saddle Drivers Training Institute",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 3,
-                        vertical: 3,
-                      )),
-                  Container(
-                      child: Text(
-                        " Drivers Exercise Question ",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 3,
-                        vertical: 3,
-                      )),
-                ]),
-              ),
-            ),
+            //     child: Column(children: [
+            //       SizedBox(
+            //         height: 40,
+            //       ),
+            //       Container(
+            //           child: Text(
+            //             "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+            //             style: TextStyle(
+            //               color: Colors.black,
+            //               fontSize: 18,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //             softWrap: true,
+            //             overflow: TextOverflow.fade,
+            //           ),
+            //           padding: EdgeInsets.symmetric(
+            //             horizontal: 3,
+            //             vertical: 3,
+            //           )),
+            //       Container(
+            //           child: Text(
+            //             "Saddle Drivers Training Institute",
+            //             style: TextStyle(
+            //               color: Colors.black,
+            //               fontSize: 15,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //             softWrap: true,
+            //             overflow: TextOverflow.fade,
+            //           ),
+            //           padding: EdgeInsets.symmetric(
+            //             horizontal: 3,
+            //             vertical: 3,
+            //           )),
+            //       Container(
+            //           child: Text(
+            //             " Drivers Exercise Question ",
+            //             style: TextStyle(
+            //               color: Colors.blue,
+            //               fontSize: 15,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //             softWrap: true,
+            //             overflow: TextOverflow.fade,
+            //           ),
+            //           padding: EdgeInsets.symmetric(
+            //             horizontal: 3,
+            //             vertical: 3,
+            //           )),
+            //     ]),
+            //   ),
+            // ),
             Card(
-              elevation: 1,
+              elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(
@@ -242,19 +265,69 @@ class _SplashAppState extends State<SplashApp> {
                 ],
               ),
             ),
+            Card(elevation: 0, child: _AnimatedLiquidLinearProgressIndicator()),
             Column(children: [
               SizedBox(
                 height: 30,
               ),
-              Center(
-                child: const RefreshProgressIndicator(
-                  backgroundColor: Colors.black,
-                  strokeWidth: 5,
-                  semanticsLabel: "Loading...",
-                ),
-              )
-            ])
+            ]),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AnimatedLiquidLinearProgressIndicator extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() =>
+      _AnimatedLiquidLinearProgressIndicatorState();
+}
+
+class _AnimatedLiquidLinearProgressIndicatorState
+    extends State<_AnimatedLiquidLinearProgressIndicator>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 3),
+    );
+
+    _animationController.addListener(() => setState(() {}));
+    _animationController.repeat();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final percentage = _animationController.value * 100;
+    return Center(
+      child: Container(
+        width: double.infinity,
+        height: 75.0,
+        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        child: LiquidLinearProgressIndicator(
+          value: _animationController.value,
+          backgroundColor: Colors.white,
+          valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor),
+          borderRadius: 12.0,
+          center: Text(
+            "${percentage.toStringAsFixed(0)}%",
+            style: TextStyle(
+              color: Colors.lightBlueAccent,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );

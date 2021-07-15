@@ -30,7 +30,6 @@ class MainApp extends StatelessWidget {
   int themeIndex = 0;
 
   UserData Userdata = UserData.getInstance();
-
   @override
   Widget build(BuildContext context) {
     // UserData.getInstance().initialize();
@@ -40,7 +39,7 @@ class MainApp extends StatelessWidget {
         return */
         MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Select Category',
+      title: 'Drivers Question',
       theme: context.watch<ThemeProvider>().theme,
       initialRoute: "/",
       routes: {
