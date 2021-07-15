@@ -79,7 +79,12 @@ class NavigationDrawer extends StatelessWidget {
                       children: [
                         Icon(Icons.person),
                         Text(
-                          context.watch<UserDataProvider>().username,
+                          context.watch<UserDataProvider>().username.length > 10
+                              ? context
+                                  .watch<UserDataProvider>()
+                                  .username
+                                  .substring(0, 10)
+                              : context.watch<UserDataProvider>().username,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,

@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart';
+import 'package:loop_page_view/loop_page_view.dart';
 import "package:flutter/material.dart";
 import '../libs.dart';
 
@@ -88,6 +90,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text(
           Translation.translate(lang, "Select Category") != null
@@ -105,6 +108,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         onTap: (int index) {
           setState(() {
             this.selectedIndex = index;
+            if (index == 2) this.selectedIndex = index - 1;
           });
           // print("selected Index is : $selectedIndex");
         },
@@ -131,9 +135,114 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ? Translation.translate(lang, "Other Vehicles")
                 : "Other Vehicles"),
           ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.white,
+            icon: Icon(
+              Icons.image,
+              // color: Colors.white,
+            ),
+            title: Text(Translation.translate(lang, "Icons") != null
+                ? Translation.translate(lang, "Icons")
+                : "Icons"),
+          ),
         ],
       ),
-      body: this.categoryitems[selectedIndex],
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  color: Theme.of(context).primaryColor,
+                ),
+                Container(
+                  // height: 100,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.elliptical(50, 40))),
+                  // width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              this.selectedIndex = 0;
+                            });
+                          },
+                          child: Card(
+                            elevation: this.selectedIndex == 0 ? 10 : 0,
+                            child: CategorySmallItem(
+                                category: this.categories[0],
+                                background: this.selectedIndex == 0
+                                    ? Colors.white
+                                    : Theme.of(context).primaryColor,
+                                color: this.selectedIndex == 0
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.white),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              this.selectedIndex = 1;
+                            });
+                          },
+                          child: Card(
+                            elevation: this.selectedIndex == 1 ? 10 : 0,
+                            child: CategorySmallItem(
+                                category: this.categories[1],
+                                background: this.selectedIndex == 1
+                                    ? Colors.white
+                                    : Theme.of(context).primaryColor,
+                                color: this.selectedIndex == 1
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.white),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              this.selectedIndex = 1;
+                            });
+                          },
+                          child: Card(
+                            elevation: this.selectedIndex == 2 ? 10 : 0,
+                            child: CategorySmallItem(
+                                category: this.categories[2],
+                                background: this.selectedIndex == 2
+                                    ? Colors.white
+                                    : Theme.of(context).primaryColor,
+                                color: this.selectedIndex == 1
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: this.categoryitems[selectedIndex],
+          ),
+        ],
+      ),
     );
   }
 }

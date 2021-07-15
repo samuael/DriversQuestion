@@ -51,15 +51,12 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
       canvasColor: Colors.white,
     ),
   ];
-
-  ThemeProvider({this.themeIndex = 0}) {
-    this.theTheme = themes[this.themeIndex];
-  }
-
-  ThemeProvider.withUserData(UserData userdata) {
+  UserData userdata;
+  ThemeProvider.withUserData({UserData userdata}) {
     print("The Provided Theme Index is : ${userdata.themeIndex} ");
     this.themeIndex = userdata.themeIndex;
     this.theTheme = themes[this.themeIndex];
+    this.userdata = userdata;
   }
 
   ThemeData theTheme;
@@ -69,6 +66,7 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void setTheme(int index) {
     this.themeIndex = index;
     this.theTheme = themes[this.themeIndex];
+    this.userdata.SetThmeIndex(this.themeIndex);
     notifyListeners();
   }
 }

@@ -1,8 +1,7 @@
-import 'package:flutter/scheduler.dart';
-
 import '../libs.dart';
+import 'package:flutter/scheduler.dart';
 import "package:flutter/material.dart";
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:provider/provider.dart';
 
 Future<void> runMainApp(BuildContext context) async {
   final UserData userdata = UserData.getInstance();
@@ -148,9 +147,7 @@ class _SplashAppState extends State<SplashApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: context.watch<ThemeProvider>().theTheme,
       home: _buildBody(),
     );
   }
@@ -265,69 +262,13 @@ class _SplashAppState extends State<SplashApp> {
                 ],
               ),
             ),
-            Card(elevation: 0, child: _AnimatedLiquidLinearProgressIndicator()),
+            Card(elevation: 0, child: AnimatedLiquidLinearProgressIndicator()),
             Column(children: [
               SizedBox(
                 height: 30,
               ),
             ]),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AnimatedLiquidLinearProgressIndicator extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() =>
-      _AnimatedLiquidLinearProgressIndicatorState();
-}
-
-class _AnimatedLiquidLinearProgressIndicatorState
-    extends State<_AnimatedLiquidLinearProgressIndicator>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 3),
-    );
-
-    _animationController.addListener(() => setState(() {}));
-    _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final percentage = _animationController.value * 100;
-    return Center(
-      child: Container(
-        width: double.infinity,
-        height: 75.0,
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: LiquidLinearProgressIndicator(
-          value: _animationController.value,
-          backgroundColor: Colors.white,
-          valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor),
-          borderRadius: 12.0,
-          center: Text(
-            "${percentage.toStringAsFixed(0)}%",
-            style: TextStyle(
-              color: Colors.lightBlueAccent,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import "dart:async";
+import 'package:flutter/material.dart';
 import "package:path/path.dart";
 import "package:sqflite/sqflite.dart";
 import '../libs.dart';
@@ -21,19 +22,20 @@ class DatabaseManager {
       Name: "Motor",
       imageDir: "assets/images/Urban.jpg",
       groups: [],
+      icon: Icons.motorcycle_sharp,
     ),
     Category(
-      ID: 2,
-      Name: "Others",
-      imageDir: "assets/images/newOne.jpeg",
-      groups: [],
-    ),
+        ID: 2,
+        Name: "Others",
+        imageDir: "assets/images/newOne.jpeg",
+        groups: [],
+        icon: Icons.car_rental_rounded),
     Category(
-      ID: 3,
-      Name: "Icons",
-      imageDir: "assets/images/newOne.jpeg",
-      groups: [],
-    )
+        ID: 3,
+        Name: "Icons",
+        imageDir: "assets/images/newOne.jpeg",
+        groups: [],
+        icon: Icons.image)
   ];
 
   // OpenDatabase  method

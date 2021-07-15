@@ -23,13 +23,13 @@ class UserData {
   Future<int> SetThmeIndex(int themeIndex) async {
     final pref = await SharedPreferences.getInstance();
     bool success = false;
-    pref.setInt("theme", themeIndex).then((val) {
-      this.themeIndex = themeIndex;
-      success = val;
-    });
+    success = await pref.setInt("theme", themeIndex);
     if (success) {
+      this.themeIndex = themeIndex;
+      print("SUCCESFULY WRITEN THE THEME CHANGE !");
       return this.themeIndex;
     }
+    print("ERROR WHILE SAVING THE THEME CHANGE");
     return 0;
   }
 

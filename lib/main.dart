@@ -12,17 +12,18 @@ void main() {
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   Future.delayed(
     Duration(milliseconds: 2000),
-    () => runApp(MultiProvider(
-      providers: [
-        Provider<Questions>(create: (_) => Questions()),
-        Provider<ActiveQuestion>(create: (_) => ActiveQuestion()),
-        Provider<ThemeProvider>(
-            create: (_) => ThemeProvider(themeIndex: ud.themeIndex)),
-        Provider<UserDataProvider>(create: (_) => UserDataProvider(ud)),
-        // Provider<AnotherThing>(create: (_) => AnotherThing()),
-      ],
-      child: MainApp(),
-    )),
+    () => runApp(
+      MultiProvider(
+        providers: [
+          Provider<Questions>(create: (_) => Questions()),
+          Provider<ActiveQuestion>(create: (_) => ActiveQuestion()),
+          Provider<ThemeProvider>(
+              create: (_) => ThemeProvider.withUserData(userdata: ud)),
+          Provider<UserDataProvider>(create: (_) => UserDataProvider(ud)),
+        ],
+        child: MainApp(),
+      ),
+    ),
   );
 }
 
@@ -40,7 +41,7 @@ class MainApp extends StatelessWidget {
         MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Drivers Question',
-      theme: context.watch<ThemeProvider>().theme,
+      theme: context.watch<ThemeProvider>().theTheme,
       initialRoute: "/",
       routes: {
         "/": (BuildContext context) {

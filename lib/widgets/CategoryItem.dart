@@ -43,185 +43,183 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(children: [
-          Container(
-            // height: 200,
+    return SingleChildScrollView(
+      child: Column(children: [
+        Container(
+          // height: 200,
 
-            width: double.infinity,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-              child: Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.black,
-                //   border: Border.all(
-                //     color: Color(0XFF006699),
-                //   ),
-                // ),
-                padding: EdgeInsets.all(5),
-                child: Column(
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                      child: Image.asset(
-                        category.imageDir,
-                        fit: BoxFit.cover,
-                      ),
+          width: double.infinity,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+            child: Container(
+              // decoration: BoxDecoration(
+              //   color: Colors.black,
+              //   border: Border.all(
+              //     color: Color(0XFF006699),
+              //   ),
+              // ),
+              padding: EdgeInsets.all(5),
+              child: Column(
+                children: <Widget>[
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.only(
+                  //     bottomLeft: Radius.circular(20),
+                  //     bottomRight: Radius.circular(20),
+                  //   ),
+                  //   child: Image.asset(
+                  //     category.imageDir,
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
                       ),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: Card(
-                          color: Theme.of(context).primaryColor,
-                          child: Text(
-                            (Translation.translate(this.lang, "The") != null
-                                    ? Translation.translate(this.lang, "The")
-                                    : "The") +
-                                " " +
-                                (Translation.translate(lang, category.Name) !=
-                                        null
-                                    ? Translation.translate(lang, category.Name)
-                                    : category.Name) +
-                                " " +
-                                (category.ID == 1
-                                    ? (Translation.translate(
-                                                this.lang, "Cycle") !=
-                                            null
-                                        ? Translation.translate(
-                                            this.lang, "Cycle")
-                                        : "Cycle")
-                                    : (Translation.translate(
-                                                this.lang, "Vehicles") !=
-                                            null
-                                        ? Translation.translate(
-                                            this.lang, "Vehicles")
-                                        : "Vehicles")) +
-                                " " +
-                                (Translation.translate(this.lang, "Questions") !=
-                                        null
-                                    ? Translation.translate(
-                                        this.lang, "Questions")
-                                    : "Questions"),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              // fontFamily: FontFamily.Apple_Symbols.toString(),
-                              fontSize: 20,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              backgroundColor: Theme.of(context).primaryColor,
-                            ),
+                      child: Card(
+                        color: Theme.of(context).primaryColor,
+                        child: Text(
+                          (Translation.translate(this.lang, "The") != null
+                                  ? Translation.translate(this.lang, "The")
+                                  : "The") +
+                              " " +
+                              (Translation.translate(lang, category.Name) !=
+                                      null
+                                  ? Translation.translate(lang, category.Name)
+                                  : category.Name) +
+                              " " +
+                              (category.ID == 1
+                                  ? (Translation.translate(
+                                              this.lang, "Cycle") !=
+                                          null
+                                      ? Translation.translate(
+                                          this.lang, "Cycle")
+                                      : "Cycle")
+                                  : (Translation.translate(
+                                              this.lang, "Vehicles") !=
+                                          null
+                                      ? Translation.translate(
+                                          this.lang, "Vehicles")
+                                      : "Vehicles")) +
+                              " " +
+                              (Translation.translate(this.lang, "Questions") !=
+                                      null
+                                  ? Translation.translate(
+                                      this.lang, "Questions")
+                                  : "Questions"),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            // fontFamily: FontFamily.Apple_Symbols.toString(),
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            backgroundColor: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
                     ),
-                    //
-                    // The List Of Groups Are To Be Listed below here
-                    //
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                      child: Column(
-                        children: this.category.groups != null
-                            ? (this.category.groups.map((Group group) {
-                                return Container(
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.black26,
+                  ),
+                  //
+                  // The List Of Groups Are To Be Listed below here
+                  //
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    child: Column(
+                      children: this.category.groups != null
+                          ? (this.category.groups.map((Group group) {
+                              return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.black26,
+                                      ),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    onTap: () {
+                                      goToQuestions(
+                                        group.ID,
+                                        category.ID,
+                                        context,
+                                      );
+                                    },
+                                    key: UniqueKey(),
+                                    leading: Icon(
+                                      Icons.group_work,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    title: Text(
+                                      (Translation.translate(
+                                                      lang, "Test Number ") !=
+                                                  null
+                                              ? Translation.translate(
+                                                  lang, "Test Number ")
+                                              : "Test Number ") +
+                                          " : " +
+                                          "${group.GroupNumber}",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "${group.QuestionsCount} ${Translation.translate(lang, " Questions ") != null ? Translation.translate(lang, " Questions ") : " Questions "}",
+                                      // +
+                                      //             Translation.translate(
+                                      //                 lang, " Questions "
+                                      //                 ) != null
+                                      //     ? Translation.translate(lang, " Questions " , )
+                                      //     : " Questions ").toUpperCase(),
+
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    trailing: CircleAvatar(
+                                      child: Text(
+                                        "${group.GroupNumber}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 23,
                                         ),
                                       ),
                                     ),
-                                    child: ListTile(
-                                      onTap: () {
-                                        goToQuestions(
-                                          group.ID,
-                                          category.ID,
-                                          context,
-                                        );
-                                      },
-                                      key: UniqueKey(),
-                                      leading: Icon(
-                                        Icons.group_work,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      title: Text(
-                                        (Translation.translate(
-                                                        lang, "Test Number ") !=
-                                                    null
-                                                ? Translation.translate(
-                                                    lang, "Test Number ")
-                                                : "Test Number ") +
-                                            " : " +
-                                            "${group.GroupNumber}",
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        "${group.QuestionsCount} ${Translation.translate(lang, " Questions ") != null ? Translation.translate(lang, " Questions ") : " Questions "}",
-                                        // +
-                                        //             Translation.translate(
-                                        //                 lang, " Questions "
-                                        //                 ) != null
-                                        //     ? Translation.translate(lang, " Questions " , )
-                                        //     : " Questions ").toUpperCase(),
-
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                      trailing: CircleAvatar(
-                                        child: Text(
-                                          "${group.GroupNumber}",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 23,
-                                          ),
-                                        ),
-                                      ),
-                                    ));
-                              }).toList())
-                            : [
-                                Center(
-                                    child: Container(
-                                        margin: EdgeInsets.only(top: 30),
-                                        child: CircularProgressIndicator()))
-                              ],
-                      ),
+                                  ));
+                            }).toList())
+                          : [
+                              Center(
+                                  child: Container(
+                                      margin: EdgeInsets.only(top: 30),
+                                      child: CircularProgressIndicator()))
+                            ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }

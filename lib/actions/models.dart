@@ -1,6 +1,7 @@
 // Question handler
 import 'dart:ffi';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import "../libs.dart";
 
@@ -88,7 +89,8 @@ class Category {
   String Name;
   String imageDir;
   List<Group> groups;
-  Category({this.ID, this.Name, this.imageDir, this.groups});
+  IconData icon;
+  Category({this.ID, this.Name, this.imageDir, this.groups, this.icon});
 
   Map<String, dynamic> toMap() {
     return {

@@ -109,7 +109,7 @@ class _QuestionItemState extends State<QuestionItem> {
         topLeft: Radius.circular(20),
       ),
       child: Card(
-        elevation: 10,
+        // elevation: 10,
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).canvasColor,
@@ -137,7 +137,7 @@ class _QuestionItemState extends State<QuestionItem> {
                     style: TextStyle(
                       //  fontFamily: FontFamily.,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      // fontSize: 18,
                     ),
                   ),
                 ),

@@ -437,6 +437,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         ),
         key: UniqueKey(),
         centerTitle: true,
+        elevation: 0,
         actions: [
           InkWell(
             child: Container(
@@ -572,54 +573,59 @@ class _QuestionScreenState extends State<QuestionScreen>
                       children: <Widget>[
                         Expanded(
                           flex: 3,
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                (Translation.translate(lang, "Category ") !=
-                                            null
-                                        ? Translation.translate(
-                                            lang, "Category ")
-                                        : "Category ") +
-                                    " : " +
-                                    (goToCategoriesPage
-                                        ? (Translation.translate(
-                                                    lang, "Unset") !=
-                                                null
-                                            ? Translation.translate(
-                                                lang, "Unset")
-                                            : "Unset")
-                                        : (Translation.translate(
-                                                    lang, this.category.Name) !=
-                                                null
-                                            ? Translation.translate(
-                                                lang, this.category.Name)
-                                            : this.category.Name)),
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              Text(
-                                (Translation.translate(lang, "Test Number ") !=
-                                            null
-                                        ? Translation.translate(
-                                            lang, "Test Number ")
-                                        : "Test Number  ") +
-                                    " : " +
-                                    (goToCategoriesPage
-                                        ? "?"
-                                        : "${this.group.GroupNumber}"),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.normal,
+                                Text(
+                                  (Translation.translate(lang, "Category ") !=
+                                              null
+                                          ? Translation.translate(
+                                              lang, "Category ")
+                                          : "Category ") +
+                                      " : " +
+                                      (goToCategoriesPage
+                                          ? (Translation.translate(
+                                                      lang, "Unset") !=
+                                                  null
+                                              ? Translation.translate(
+                                                  lang, "Unset")
+                                              : "Unset")
+                                          : (Translation.translate(lang,
+                                                      this.category.Name) !=
+                                                  null
+                                              ? Translation.translate(
+                                                  lang, this.category.Name)
+                                              : this.category.Name)),
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  (Translation.translate(
+                                                  lang, "Test Number ") !=
+                                              null
+                                          ? Translation.translate(
+                                              lang, "Test Number ")
+                                          : "Test Number  ") +
+                                      " : " +
+                                      (goToCategoriesPage
+                                          ? "?"
+                                          : "${this.group.GroupNumber}"),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(

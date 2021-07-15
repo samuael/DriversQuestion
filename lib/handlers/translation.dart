@@ -105,7 +105,10 @@ class Translation {
     "cancel": "ይቅር",
     "to apply the change . restart the app !":
         "የቲም ለውጡ ተግባራዊ እንዲሆን ፤መተግበርሪያውን ዘግተው ትክፈቱት",
-    "eg. name : muhammed": "ምሳሌ፦ ስም ፡ ሙሀመድ"
+    "eg. name : muhammed": "ምሳሌ፦ ስም ፡ ሙሀመድ",
+    "icons": "ምልክቶች",
+    "icon": "ምልክት",
+    "icon question": "የምልክት ጥያቄ",
   };
 
   static String translate(String lang, String sentence) {

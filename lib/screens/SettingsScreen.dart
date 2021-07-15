@@ -318,7 +318,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void changeTheme(BuildContext contaext, int index) {
-    Provider.of<ThemeProvider>(contaext, listen: false).setTheme(index);
+    this.themeProvider.setTheme(index);
+    ProgressMessageDialog.show(contaext, "Updating Theme ...");
     // Provider.of<UserDataProvider>(context, listen: false).setThemeIndex(index);
     // showDialog(
     //   context: context,
