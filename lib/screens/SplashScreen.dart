@@ -154,6 +154,7 @@ class _SplashAppState extends State<SplashApp> {
 
   Widget _buildBody() {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       // appBar : AppBar(
       //   title : Text(
       //     " Drivers Exercise " ,
@@ -165,109 +166,61 @@ class _SplashAppState extends State<SplashApp> {
         ),
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-            // Container(
-            //   child: Card(
-            //     elevation: 3,
-            //     // backgroundColor : Colors.blue  ,
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.only(
-            //         bottomLeft: Radius.circular(
-            //           25,
-            //         ),
-            //         bottomRight: Radius.circular(
-            //           25,
-            //         ),
-            //       ),
-            //     ),
-
-            //     child: Column(children: [
-            //       SizedBox(
-            //         height: 40,
-            //       ),
-            //       Container(
-            //           child: Text(
-            //             "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
-            //             style: TextStyle(
-            //               color: Colors.black,
-            //               fontSize: 18,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //             softWrap: true,
-            //             overflow: TextOverflow.fade,
-            //           ),
-            //           padding: EdgeInsets.symmetric(
-            //             horizontal: 3,
-            //             vertical: 3,
-            //           )),
-            //       Container(
-            //           child: Text(
-            //             "Saddle Drivers Training Institute",
-            //             style: TextStyle(
-            //               color: Colors.black,
-            //               fontSize: 15,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //             softWrap: true,
-            //             overflow: TextOverflow.fade,
-            //           ),
-            //           padding: EdgeInsets.symmetric(
-            //             horizontal: 3,
-            //             vertical: 3,
-            //           )),
-            //       Container(
-            //           child: Text(
-            //             " Drivers Exercise Question ",
-            //             style: TextStyle(
-            //               color: Colors.blue,
-            //               fontSize: 15,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //             softWrap: true,
-            //             overflow: TextOverflow.fade,
-            //           ),
-            //           padding: EdgeInsets.symmetric(
-            //             horizontal: 3,
-            //             vertical: 3,
-            //           )),
-            //     ]),
-            //   ),
-            // ),
-            Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(
-                    25,
+            Expanded(
+              flex: 2,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.elliptical(1000, 1000))),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                padding: EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  border: Border.all(width: 0, style: BorderStyle.none),
+                ),
+                width: MediaQuery.of(context).size.width * 1,
+                child: Container(
+                  margin: EdgeInsets.zero,
+                  width: MediaQuery.of(context).size.width * 1,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0, style: BorderStyle.none),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.elliptical(100, 50),
+                    ),
                   ),
-                  bottomRight: Radius.circular(
-                    25,
+                  child: Stack(
+                    overflow: Overflow.clip,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            "assets/images/onewTwo.jpeg",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              child: Stack(
-                overflow: Overflow.clip,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        "assets/images/onewTwo.jpeg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
-            Card(elevation: 0, child: AnimatedLiquidLinearProgressIndicator()),
-            Column(children: [
-              SizedBox(
-                height: 30,
-              ),
-            ]),
+            Expanded(
+              flex: 1,
+              child: Container(
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.white)),
+                  child: AnimatedLiquidLinearProgressIndicator()),
+            )
           ],
         ),
       ),

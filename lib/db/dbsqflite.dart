@@ -470,8 +470,3 @@ class DatabaseManager {
     return false;
   }
 }
-
-
-
-/// how to handle Icon Questions 
-/// 

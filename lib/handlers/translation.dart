@@ -109,6 +109,9 @@ class Translation {
     "icons": "ምልክቶች",
     "icon": "ምልክት",
     "icon question": "የምልክት ጥያቄ",
+    "change theme": "ቲም ቀይር",
+    "english": "እንግሊዝኛ",
+    "amharic": "አማርኛ",
   };
 
   static String translate(String lang, String sentence) {

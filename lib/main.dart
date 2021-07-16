@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
         MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Drivers Question',
-      theme: context.watch<ThemeProvider>().theTheme,
+      theme: ThemeProvider.themes[context.watch<ThemeProvider>().themeIndex],
       initialRoute: "/",
       routes: {
         "/": (BuildContext context) {

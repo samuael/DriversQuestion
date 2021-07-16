@@ -5,3 +5,5 @@ export 'Configure.dart';
 export 'splash_progress.dart';
 export 'progress_message_dialog_.dart';
 export 'category_small_item.dart';
+export 'username_change_.dart';
+export 'theme_selections.dart';
