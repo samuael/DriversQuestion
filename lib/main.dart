@@ -17,8 +17,7 @@ void main() {
         providers: [
           Provider<Questions>(create: (_) => Questions()),
           Provider<ActiveQuestion>(create: (_) => ActiveQuestion()),
-          Provider<ThemeProvider>(
-              create: (_) => ThemeProvider.withUserData(userdata: ud)),
+          Provider<ThemeProvider>(create: (_) => ThemeProvider()),
           Provider<UserDataProvider>(create: (_) => UserDataProvider(ud)),
         ],
         child: MainApp(),
@@ -29,47 +28,50 @@ void main() {
 
 class MainApp extends StatelessWidget {
   int themeIndex = 0;
+  // themeProvider
+  ThemeProvider themeProvider;
 
   UserData Userdata = UserData.getInstance();
   @override
   Widget build(BuildContext context) {
     // UserData.getInstance().initialize();
     themeIndex = UserData.getInstance().themeIndex;
-    return /*Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return */
-        MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Drivers Question',
-      theme: ThemeProvider.themes[context.watch<ThemeProvider>().themeIndex],
-      initialRoute: "/",
-      routes: {
-        "/": (BuildContext context) {
-          return SplashApp();
-        },
-        RegistrationScreen.RouteName: (BuildContext context) {
-          return RegistrationScreen(
-            key: UniqueKey(),
-          );
-        },
-        CategoryScreen.RouteName: (BuildContext context) {
-          return CategoryScreen.getInstance();
-        },
-        SettingsScreen.RouteName: (BuildContext context) {
-          return SettingsScreen.GetInstance();
-        },
-        QuestionScreen.RouteName: (BuildContext context) {
-          return QuestionScreen.getInstance();
-        },
-        ResultScreen.RouteName: (BuildContext context) {
-          return ResultScreen.getInstance();
-        },
-        AboutScreen.RouteName: (BuildContext context) {
-          return AboutScreen();
-        }
+    return Consumer<UserDataProvider>(
+      builder: (context, themeProvider, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Drivers Question',
+          theme: ThemeProvider.themes[themeProvider.themeIndex],
+          initialRoute: "/",
+          routes: {
+            "/": (BuildContext context) {
+              return SplashApp();
+            },
+            RegistrationScreen.RouteName: (BuildContext context) {
+              return RegistrationScreen(
+                key: UniqueKey(),
+              );
+            },
+            CategoryScreen.RouteName: (BuildContext context) {
+              return CategoryScreen.getInstance();
+            },
+            SettingsScreen.RouteName: (BuildContext context) {
+              return SettingsScreen.GetInstance();
+            },
+            QuestionScreen.RouteName: (BuildContext context) {
+              return QuestionScreen.getInstance();
+            },
+            ResultScreen.RouteName: (BuildContext context) {
+              return ResultScreen.getInstance();
+            },
+            AboutScreen.RouteName: (BuildContext context) {
+              return AboutScreen();
+            }
+          },
+        );
       },
     );
-    //   },
+    //  )) },
     // );
   }
 }

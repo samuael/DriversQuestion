@@ -205,13 +205,23 @@ class _ResultScreenState extends State<ResultScreen> {
         key: UniqueKey(),
       ),
       appBar: AppBar(
-        title: Text(
-          Translation.translate(this.lang, "Results") != null
-              ? Translation.translate(this.lang, "Results")
-              : "Results",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
+        elevation: 0,
+        // backgroundColor: Theme.of(context).canvasColor,
+        title: Container(
+          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.elliptical(200, 120),
+              topLeft: Radius.elliptical(200, 120),
+            ),
+          ),
+          child: Text(
+            Translation.translate(this.lang, "Results"),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ),
         centerTitle: true,

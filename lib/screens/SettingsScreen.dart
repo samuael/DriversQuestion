@@ -176,7 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     usernameIcon = visibleUsernameEntry
                         ? Icons.arrow_drop_down_circle_outlined
                         : Icons.arrow_forward_ios;
-                  });
+                  },);
                 },
                 child: ListTile(
                   title: Text(

@@ -150,10 +150,7 @@ class DatabaseManager {
       where: "categoryid=?",
       whereArgs: [category],
     );
-    // print(quests
     return List.generate(quests.length, (i) {
-      // print(
-      //     "${quests[i]["id"]}  $category  ${quests[i]["group_no"] as int}  ${quests[i]["questionscount"] as int}");
       return Group(
         Categoryid: category,
         GroupNumber: quests[i]["group_no"] as int,

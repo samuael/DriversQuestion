@@ -1,4 +1,5 @@
 // import 'package:DriversMobile/handlers/list_loaders.dart';
+import 'package:DriversMobile/handlers/list_loaders.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/cupertino.dart';
 import "dart:math" as math;
@@ -264,6 +265,60 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       onPressed: () => () async {
                         // select questions from the list_loaders and put that
                         // list of question to the sql database .
+
+                        /// getting motor questions
+                        List<Question> motorQuestions = [];
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "motor", 0, 0));
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "motor", 0, 0));
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "motor", 0, 0));
+                        // shuffling questions and giving an ID for each of them at the
+                        // same time giving a group to them
+                        for (int a = 0; a < motorQuestions.length; a++) {
+                          motorQuestions[a].ID = a;
+                          motorQuestions[a].Groupid = (a / 100).floor() + 1;
+                        }
+
+                        int othersInit = motorQuestions.length;
+
+                        /// getting others questions
+                        List<Question> othersQuestions = [];
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "motor", 0, 0));
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "motor", 0, 0));
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "motor", 0, 0));
+                        // shuffling questions and giving an ID for each of them at the
+                        // same time giving a group to them
+                        for (int a = 0; a < othersQuestions.length; a++) {
+                          motorQuestions[a].ID = othersInit + a;
+                          motorQuestions[a].Groupid = (a / 100).floor() + 1;
+                        }
+                        int iconsInit = othersQuestions.length + othersInit;
+
+                        /// getting icons questions
+                        List<Question> iconsQuestions = [];
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "icons1", 2, 0));
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "icons", 2, 0));
+                        motorQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "icons", 2, 0));
+                        // shuffling questions and giving an ID for each of them at the
+                        // same time giving a group to them
+                        for (int a = 0; a < iconsQuestions.length; a++) {
+                          motorQuestions[a].ID = iconsInit + a;
+                          motorQuestions[a].Groupid = (a / 100).floor() + 1;
+                        }
+                        motorQuestions.addAll(othersQuestions);
+                        motorQuestions.addAll(iconsQuestions);
+
+                        DatabaseManager.getInstance().insertAll(motorQuestions);
+
+                        // --
                       }(),
                       color: Theme.of(context).primaryColor,
                       shape: const RoundedRectangleBorder(

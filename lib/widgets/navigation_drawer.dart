@@ -31,20 +31,10 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     userDataProvider = context.read<UserDataProvider>();
-
-    // String lang;
-    // String username;
-    // userdata.initialize();
-    // lang = userdata.Lang;
-    // if (lang == "") {
-    //   lang = "eng";
-    // }
-    // username = userdata.Username;
-    // print("The Language $lang");
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white12,
+          color: Theme.of(context).primaryColor,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -55,25 +45,23 @@ class NavigationDrawer extends StatelessWidget {
                 // height : 100,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(
-                      30,
-                    ),
-                    bottomRight: Radius.circular(
-                      30,
-                    ),
+                    bottomRight: Radius.elliptical(120, 40),
                   ),
                 ),
-                // alignment: Alignment.center,
-                // color: Theme.of(context).primaryColor,
                 child: Column(
                   children: [
                     Container(
-                        child: Stack(children: [
-                      Image.asset(
-                        "assets/images/logo.png",
-                        fit: BoxFit.cover,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      child: Stack(
+                        children: [
+                          Image.asset(
+                            "assets/images/logo.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ],
                       ),
-                    ])),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -99,137 +87,166 @@ class NavigationDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              tileElement(
-                theTitle: Translation.translate(
-                            context.watch<UserDataProvider>().language,
-                            "Category") ==
-                        null
-                    ? "Category"
-                    : Translation.translate(
-                        context.watch<UserDataProvider>().language, "Category"),
-                icondata: Icons.category,
-                onClick: () =>
-                    Navigator.of(containerContext).pushNamedAndRemoveUntil(
-                  CategoryScreen.RouteName,
-                  (_) {
-                    return false;
-                  },
-                ),
-              ),
-              tileElement(
-                theTitle: Translation.translate(
-                            context.watch<UserDataProvider>().language,
-                            'Questions') !=
-                        null
-                    ? Translation.translate(
-                        context.watch<UserDataProvider>().language, 'Questions')
-                    : 'Questions',
-                icondata: Icons.question_answer,
-                onClick: () => () async {
-                  context.watch<UserDataProvider>().userdata.initialize();
-                  Category category;
-                  Group group;
-                  final databaseManager = DatabaseManager.getInstance();
-                  int categoryID =
-                      context.watch<UserDataProvider>().userdata.category;
-                  int groupID =
-                      context.watch<UserDataProvider>().userdata.group;
-                  if (categoryID != null && groupID != null) {
-                    category = DatabaseManager.categories[categoryID - 1];
-                    await databaseManager.GetGroupByID(groupID).then((grou) {
-                      group = grou;
-                    });
-                  }
-                  return Navigator.of(context).pushNamedAndRemoveUntil(
-                    QuestionScreen.RouteName,
-                    (_) {
-                      return false;
-                    },
-                    arguments: {
-                      "userdata": context.watch<UserDataProvider>().userdata,
-                      "lang": context.watch<UserDataProvider>().userdata.Lang,
-                      "category": category,
-                      "group": group,
-                    },
-                  );
-                }(),
-              ),
-              tileElement(
-                theTitle: Translation.translate(
-                            context.watch<UserDataProvider>().language,
-                            'Result') !=
-                        null
-                    ? Translation.translate(
-                        context.watch<UserDataProvider>().language, 'Result')
-                    : 'Result',
-                icondata: Icons.score,
-                onClick: () =>
-                    Navigator.of(containerContext).pushNamedAndRemoveUntil(
-                  ResultScreen.RouteName,
-                  (_) {
-                    return false;
-                  },
-                ),
-              ),
-              tileElement(
-                theTitle: Translation.translate(
-                            context.watch<UserDataProvider>().language,
-                            'Setting') !=
-                        null
-                    ? Translation.translate(
-                        context.watch<UserDataProvider>().language, 'Setting')
-                    : 'Setting',
-                icondata: Icons.settings,
-                onClick: () =>
-                    Navigator.of(containerContext).pushNamedAndRemoveUntil(
-                  SettingsScreen.RouteName,
-                  (_) {
-                    return false;
-                  },
-                ),
-              ),
-              tileElement(
-                theTitle: Translation.translate(
-                            context.watch<UserDataProvider>().language,
-                            'About Us') !=
-                        null
-                    ? Translation.translate(
-                        context.watch<UserDataProvider>().language, 'About Us')
-                    : 'About Us',
-                icondata: Icons.people_outline,
-                onClick: () =>
-                    Navigator.of(containerContext).pushNamedAndRemoveUntil(
-                  AboutScreen.RouteName,
-                  (_) {
-                    return false;
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 1,
-              ),
               Container(
-                  height: 100,
-                  // underline: Container(
-                  //   height: 2,
-                  //   color: Colors.deepPurpleAccent,
-                  // ),
-                  child: Column(children: [
-                    Text(
-                      // Translation.translate(
-                      Translation.translate(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.elliptical(120, 30)),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 40,
+                    ),
+                    tileElement(
+                      theTitle: Translation.translate(
                                   context.watch<UserDataProvider>().language,
-                                  "Question And Answer For Driving Trainees ") !=
+                                  "Category") ==
+                              null
+                          ? "Category"
+                          : Translation.translate(
+                              context.watch<UserDataProvider>().language,
+                              "Category"),
+                      icondata: Icons.category,
+                      onClick: () => Navigator.of(containerContext)
+                          .pushNamedAndRemoveUntil(
+                        CategoryScreen.RouteName,
+                        (_) {
+                          return false;
+                        },
+                      ),
+                    ),
+                    tileElement(
+                      theTitle: Translation.translate(
+                                  context.watch<UserDataProvider>().language,
+                                  'Questions') !=
                               null
                           ? Translation.translate(
                               context.watch<UserDataProvider>().language,
-                              "Question And Answer For Driving Trainees ")
-                          : "Question And Answer For Driving Trainees ",
+                              'Questions')
+                          : 'Questions',
+                      icondata: Icons.question_answer,
+                      onClick: () => () async {
+                        context.watch<UserDataProvider>().userdata.initialize();
+                        Category category;
+                        Group group;
+                        final databaseManager = DatabaseManager.getInstance();
+                        int categoryID =
+                            context.watch<UserDataProvider>().userdata.category;
+                        int groupID =
+                            context.watch<UserDataProvider>().userdata.group;
+                        if (categoryID != null && groupID != null) {
+                          category = DatabaseManager.categories[categoryID - 1];
+                          await databaseManager.GetGroupByID(groupID)
+                              .then((grou) {
+                            group = grou;
+                          });
+                        }
+                        return Navigator.of(context).pushNamedAndRemoveUntil(
+                          QuestionScreen.RouteName,
+                          (_) {
+                            return false;
+                          },
+                          arguments: {
+                            "userdata":
+                                context.watch<UserDataProvider>().userdata,
+                            "lang":
+                                context.watch<UserDataProvider>().userdata.Lang,
+                            "category": category,
+                            "group": group,
+                          },
+                        );
+                      }(),
                     ),
-                    Text(
-                      "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
-                    )
-                  ]))
+                    tileElement(
+                      theTitle: Translation.translate(
+                                  context.watch<UserDataProvider>().language,
+                                  'Result') !=
+                              null
+                          ? Translation.translate(
+                              context.watch<UserDataProvider>().language,
+                              'Result')
+                          : 'Result',
+                      icondata: Icons.score,
+                      onClick: () => Navigator.of(containerContext)
+                          .pushNamedAndRemoveUntil(
+                        ResultScreen.RouteName,
+                        (_) {
+                          return false;
+                        },
+                      ),
+                    ),
+                    tileElement(
+                      theTitle: Translation.translate(
+                                  context.watch<UserDataProvider>().language,
+                                  'Setting') !=
+                              null
+                          ? Translation.translate(
+                              context.watch<UserDataProvider>().language,
+                              'Setting')
+                          : 'Setting',
+                      icondata: Icons.settings,
+                      onClick: () => Navigator.of(containerContext)
+                          .pushNamedAndRemoveUntil(
+                        SettingsScreen.RouteName,
+                        (_) {
+                          return false;
+                        },
+                      ),
+                    ),
+                    tileElement(
+                      theTitle: Translation.translate(
+                                  context.watch<UserDataProvider>().language,
+                                  'About Us') !=
+                              null
+                          ? Translation.translate(
+                              context.watch<UserDataProvider>().language,
+                              'About Us')
+                          : 'About Us',
+                      icondata: Icons.people_outline,
+                      onClick: () => Navigator.of(containerContext)
+                          .pushNamedAndRemoveUntil(
+                        AboutScreen.RouteName,
+                        (_) {
+                          return false;
+                        },
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.elliptical(400, 100),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 100,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            // Translation.translate(
+                            Translation.translate(
+                                context.watch<UserDataProvider>().language,
+                                "Question And Answer For Driving Trainees "),
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+                          Text("ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

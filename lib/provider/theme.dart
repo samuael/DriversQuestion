@@ -59,11 +59,18 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     this.userdata = userdata;
   }
 
+  ThemeProvider() {
+    this.userdata = UserData.getInstance();
+    this.userdata.initialize();
+    this.themeIndex = this.userdata.themeIndex;
+  }
+
   ThemeData theTheme;
   int themeIndex = 0;
   ThemeData get theme => theTheme;
 
   void setTheme(int index) {
+    print("The New Theme Index is : $themeIndex");
     this.themeIndex = index;
     this.theTheme = themes[this.themeIndex];
     this.userdata.SetThmeIndex(this.themeIndex);
