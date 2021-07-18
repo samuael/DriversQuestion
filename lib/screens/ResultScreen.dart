@@ -35,6 +35,7 @@ class _ResultScreenState extends State<ResultScreen> {
   TodaysDataHolder mahder;
 
   List<GradeResult> gradeResults = [];
+  bool motorSelected = false, otherSelected = false, iconSelected = false;
 
   @override
   void initState() {
@@ -221,6 +222,7 @@ class _ResultScreenState extends State<ResultScreen> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ),
@@ -231,199 +233,240 @@ class _ResultScreenState extends State<ResultScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                height: 70,
-                width: double.infinity,
-                child: Card(
-                  elevation: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Text(
-                        (Translation.translate(this.lang, " Category  ") != null
-                                ? Translation.translate(this.lang, "Category")
-                                : "Category") +
-                            "  : " +
-                            (Translation.translate(
-                                        this.lang, this.categories[0].Name) !=
-                                    null
-                                ? Translation.translate(
-                                    this.lang, this.categories[0].Name)
-                                : this.categories[0].Name),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white54,
-                        ),
-                        child: Text(
-                          (Translation.translate(this.lang, "Total") != null
-                                  ? Translation.translate(this.lang, "Total")
-                                  : "Total") +
-                              " : $motorTotalAnswered / $motorTotalAsked",
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    this.motorSelected = !this.motorSelected;
+                  });
+                },
+                child: Container(
+                  height: 70,
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          (Translation.translate(this.lang, " Category  ")) +
+                              "  : " +
+                              (Translation.translate(
+                                          this.lang, this.categories[0].Name) !=
+                                      null
+                                  ? Translation.translate(
+                                      this.lang, this.categories[0].Name)
+                                  : this.categories[0].Name),
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
-                            fontSize: 17,
                             color: Colors.black,
                           ),
                         ),
-                      )
-                    ],
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white54,
+                              ),
+                              child: Text(
+                                (Translation.translate(this.lang, "Total") !=
+                                            null
+                                        ? Translation.translate(
+                                            this.lang, "Total")
+                                        : "Total") +
+                                    " : $motorTotalAnswered / $motorTotalAsked",
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Icon(
+                              motorSelected
+                                  ? Icons.arrow_forward_ios
+                                  : Icons.arrow_downward,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               ...(this.motorResults.map((gradeResult) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black12,
-                      ),
-                    ),
-                  ),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.motorcycle,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    title: Text(
-                      (Translation.translate(this.lang, "Test") != null
-                              ? Translation.translate(this.lang, "Test")
-                              : "Test") +
-                          " : ${++motorTestCounter}",
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.body1.color,
-                      ),
-                    ),
-                    subtitle: Text(
-                      "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.body1.color,
-                      ),
-                    ),
-                    trailing: InkWell(
-                      onTap: () => resetMe(
-                        gradeResult.ID,
-                        gradeResult.Categoryid,
-                        gradeResult.Groupid,
-                        context,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(10),
+                return motorSelected
+                    ? SizedBox()
+                    : Container(
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black12,
+                            ),
                           ),
                         ),
-                        child: Icon(
-                          Icons.restore,
-                          color: Colors.red,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.motorcycle,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          title: Text(
+                            (Translation.translate(this.lang, "Test") != null
+                                    ? Translation.translate(this.lang, "Test")
+                                    : "Test") +
+                                " : ${++motorTestCounter}",
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.body1.color,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).textTheme.body1.color,
+                            ),
+                          ),
+                          trailing: InkWell(
+                            onTap: () => resetMe(
+                              gradeResult.ID,
+                              gradeResult.Categoryid,
+                              gradeResult.Groupid,
+                              context,
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.restore,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                );
+                      );
               }).toList()),
-              Container(
-                height: 70,
-                width: double.infinity,
-                child: Card(
-                  elevation: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Text(
-                        (Translation.translate(this.lang, " Category  ") != null
-                                ? Translation.translate(this.lang, "Category")
-                                : "Category") +
-                            "  : " +
-                            (Translation.translate(
-                                        this.lang, this.categories[1].Name) !=
-                                    null
-                                ? Translation.translate(
-                                    this.lang, this.categories[1].Name)
-                                : this.categories[1].Name),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white54,
-                        ),
-                        child: Text(
-                          (Translation.translate(this.lang, "Total") != null
-                                  ? Translation.translate(this.lang, "Total")
-                                  : "Total") +
-                              " : $otherTotalAnswered / $otherTotalAsked",
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    otherSelected = !otherSelected;
+                  });
+                },
+                child: Container(
+                  height: 70,
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          (Translation.translate(this.lang, " Category  ") !=
+                                      null
+                                  ? Translation.translate(this.lang, "Category")
+                                  : "Category") +
+                              "  : " +
+                              (Translation.translate(
+                                          this.lang, this.categories[1].Name) !=
+                                      null
+                                  ? Translation.translate(
+                                      this.lang, this.categories[1].Name)
+                                  : this.categories[1].Name),
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
-                            fontSize: 17,
                             color: Colors.black,
                           ),
                         ),
-                      )
-                    ],
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white54,
+                              ),
+                              child: Text(
+                                (Translation.translate(this.lang, "Total") !=
+                                            null
+                                        ? Translation.translate(
+                                            this.lang, "Total")
+                                        : "Total") +
+                                    " : $otherTotalAnswered / $otherTotalAsked",
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Icon(
+                              otherSelected
+                                  ? Icons.arrow_forward_ios
+                                  : Icons.arrow_downward,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               ...(this.othersResults.map((gradeResult) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black12,
-                      ),
-                    ),
-                  ),
-                  child: ListTile(
-                    leading: Icon(Icons.local_car_wash,
-                        color: Theme.of(context).primaryColor),
-                    title: Text(
-                      (Translation.translate(this.lang, "Test") != null
-                              ? Translation.translate(this.lang, "Test")
-                              : "Test") +
-                          " : ${++othersTestCounter}",
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.body1.color,
-                      ),
-                    ),
-                    subtitle: Text(
-                      "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.body1.color,
-                      ),
-                    ),
-                    trailing: InkWell(
-                      onTap: () => resetMe(
-                        gradeResult.ID,
-                        gradeResult.Categoryid,
-                        gradeResult.Groupid,
-                        context,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(10),
+                return otherSelected
+                    ? SizedBox()
+                    : Container(
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black12,
+                            ),
                           ),
                         ),
-                        child: Icon(
-                          Icons.restore,
-                          color: Colors.red,
+                        child: ListTile(
+                          leading: Icon(Icons.local_car_wash,
+                              color: Theme.of(context).primaryColor),
+                          title: Text(
+                            (Translation.translate(this.lang, "Test") != null
+                                    ? Translation.translate(this.lang, "Test")
+                                    : "Test") +
+                                " : ${++othersTestCounter}",
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.body1.color,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).textTheme.body1.color,
+                            ),
+                          ),
+                          trailing: InkWell(
+                            onTap: () => resetMe(
+                              gradeResult.ID,
+                              gradeResult.Categoryid,
+                              gradeResult.Groupid,
+                              context,
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.restore,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                );
+                      );
               }).toList()),
               InkWell(
                 onTap: () => resetAll(),
@@ -436,10 +479,12 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
                     margin: EdgeInsets.all(10),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.all(Radius.elliptical(30, 30)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(

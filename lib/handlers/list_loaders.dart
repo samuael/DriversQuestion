@@ -1,13 +1,83 @@
 /* -- File Loaders */
 /* This class loads the instruction from the xlsx file and return a list of list of dynamic data types*/
-import 'dart:ffi';
-
 import '../libs.dart';
 import 'package:flutter/services.dart' show ByteData, rootBundle;
 import 'package:excel/excel.dart';
 
 /// ListLoader function to load list<list<dynamic>> from the files.xlsx file.
 class ListLoader {
+  /// loadNonIndexedXlsx function returns
+  /// list of list of dynamic varaibale which contains
+  /// title , id , ... answers
+  static Future<List<List<dynamic>>> loadNonIndexedXlsx(
+      String path, String sheetName) async {
+    List<List<String>> mainList = [];
+    ByteData data = await rootBundle.load(path);
+    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    var excel = Excel.decodeBytes(bytes);
+    bool validRow =
+        false; // this is going to be true if the row has three three or more valid columns
+    for (var row in excel.tables[sheetName].rows) {
+      int counter = 0;
+      List<String> singleRowAsAList = [];
+      int ind = 0;
+
+      row.removeWhere((value) {
+        if (value == null || "$value" == "" || "$value" == "null") {
+          return true;
+        }
+        return false;
+      });
+      int index = 0;
+      bool valid = row.length >= 3 ? true : false;
+      // shuffling the question after getting the correct question result and set it as answer Index
+      if (!valid) break;
+      int ansIndex = 0;
+      String ans = row[1];
+      List<String> answers = row.getRange(0, row.length).toList();
+      answers = Shuffle(answers);
+      for (int v = 0; v < answers.length; v++) {
+        if (answers[v] == ans) {
+          ansIndex = v;
+          break;
+        }
+      }
+      final List<String> newRow = [row[0], "$index", ...answers];
+      if (newRow.length >= 4 && valid) {
+        mainList.add(newRow);
+      }
+    }
+    return mainList;
+  }
+
+  /* loadIndexedQuestions 
+  List<Question> : questions 
+  */
+  static Future<List<Question>> loadNonIndexedQuestions(
+      String path, String sheetName, int category, int group) async {
+    List<List<dynamic>> loads =
+        await ListLoader.loadNonIndexedXlsx(path, sheetName);
+    List<Question> questions = [];
+    for (List<dynamic> quest in loads) {
+      try {
+        Question question = new Question(
+          Categoryid: category,
+          Groupid: group,
+          Body: "${quest[0]}",
+          Answers: quest.getRange(2, quest.length).toList(),
+          Answerindex: quest[1] as int,
+          qtype: 0,
+          questionImage:
+              "", // sinece i am sure about the correctness of the integer
+        );
+        questions.add(question);
+      } catch (e, a) {
+        continue;
+      }
+    }
+    return questions;
+  }
+
   /// loadXlx  loads list of list of dynamic from xlsx input file
   /// Text : string
   /// Answer_number : int
@@ -33,7 +103,7 @@ class ListLoader {
       });
       int index = 0;
       bool valid = false;
-      if (row.length > 4) {
+      if (row.length >= 4) {
         try {
           index = int.tryParse("${row[1]}");
           if (index != null && index > 0 && index <= (row.length - 2)) {
@@ -111,7 +181,7 @@ class ListLoader {
 
       int index = 0;
       bool valid = false;
-      if (row.length > 4) {
+      if (row.length >= 4) {
         try {
           index = int.tryParse("${row[1]}");
           if (index != null && index > 0 && index <= (row.length - 2)) {
@@ -127,9 +197,14 @@ class ListLoader {
       for (var f = 0; f < row.length; f++) {
         if (f == 1)
           newRow.add(index);
-        else if (f >= 2)
-          newRow.add("${row[f]}.png");
-        else
+        else if (f >= 2) {
+          try {
+            int no = int.parse("${row[f]}");
+            newRow.add("$no.JPG");
+          } catch (e, a) {
+            newRow.add("${row[f]}");
+          }
+        } else
           newRow.add("${row[0]}");
       }
       if (newRow.length >= 4 && valid) {
@@ -208,7 +283,7 @@ class ListLoader {
       final List<dynamic> newRow = [];
       for (var f = 0; f < row.length; f++) {
         if (f == 2)
-          newRow.add("${row[f]}.png");
+          newRow.add("${'${row[f]}'.trim()}.JPG");
         else if (f == 1)
           newRow.add(index);
         else

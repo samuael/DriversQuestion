@@ -6,6 +6,7 @@ class SelectTheme extends StatelessWidget {
   SelectTheme({Key key}) : super(key: key);
 
   UserDataProvider userDataProvider;
+  ThemeProvider themeProvider;
   final List<String> themeImages = [
     "assets/images/defaultTheme.png",
     "assets/images/blueBlack.png",
@@ -17,6 +18,7 @@ class SelectTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
+    this.themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.66,
@@ -48,7 +50,9 @@ class SelectTheme extends StatelessWidget {
   }
 
   void changeTheme(BuildContext contaext, int index) {
-    this.userDataProvider.setThemeIndex(index);
+    Provider.of<UserDataProvider>(contaext, listen: false).setThemeIndex(index);
+    this.themeProvider.setTheme(index);
+    UserData.getInstance().SetThmeIndex(index);
     ProgressMessageDialog.show(contaext, "Updating Theme ...");
   }
 }

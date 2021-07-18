@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   boxTextstyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Color(0XFFbbbbbb),
+                    color: Theme.of(context).primaryColor,
                   ),
                   boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
                   boxHeight: 45,
@@ -171,12 +171,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               visibleTheme ? SelectTheme() : SizedBox(),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    visibleUsernameEntry = !visibleUsernameEntry;
-                    usernameIcon = visibleUsernameEntry
-                        ? Icons.arrow_drop_down_circle_outlined
-                        : Icons.arrow_forward_ios;
-                  },);
+                  setState(
+                    () {
+                      visibleUsernameEntry = !visibleUsernameEntry;
+                      usernameIcon = Icons.arrow_drop_down_circle_outlined;
+                    },
+                  );
                 },
                 child: ListTile(
                   title: Text(

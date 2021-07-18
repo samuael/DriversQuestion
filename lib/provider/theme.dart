@@ -21,16 +21,17 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
           color: Colors.white,
         ),
       ),
-      canvasColor: Colors.black26,
+      canvasColor: Colors.white70,
     ),
     ThemeData(
       primarySwatch: Colors.brown,
+      // backgroundColor: Colors.white24,
       textTheme: TextTheme(
         body1: TextStyle(
-          color: Colors.white,
+          color: Colors.brown,
         ),
       ),
-      canvasColor: Colors.black26,
+      canvasColor: Colors.white70,
     ),
     ThemeData(
       primarySwatch: Colors.teal,
@@ -69,11 +70,11 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   int themeIndex = 0;
   ThemeData get theme => theTheme;
 
-  void setTheme(int index) {
+  void setTheme(int index) async {
     print("The New Theme Index is : $themeIndex");
     this.themeIndex = index;
     this.theTheme = themes[this.themeIndex];
-    this.userdata.SetThmeIndex(this.themeIndex);
+    await this.userdata.SetThmeIndex(this.themeIndex);
     notifyListeners();
   }
 }

@@ -145,14 +145,14 @@ class _SplashAppState extends State<SplashApp> {
   Widget build(BuildContext context) {
     _initializeAsyncDependencies(context);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: context.watch<ThemeProvider>().theTheme,
-      home: _buildBody(),
-    );
-  }
+    //   return MaterialApp(
+    //     debugShowCheckedModeBanner: false,
+    //     theme: context.watch<ThemeProvider>().theTheme,
+    //     home: _buildBody(),
+    //   );
+    // }
 
-  Widget _buildBody() {
+    // Widget _buildBody() {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       // appBar : AppBar(

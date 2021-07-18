@@ -15,10 +15,22 @@ void main() {
     () => runApp(
       MultiProvider(
         providers: [
-          Provider<Questions>(create: (_) => Questions()),
-          Provider<ActiveQuestion>(create: (_) => ActiveQuestion()),
-          Provider<ThemeProvider>(create: (_) => ThemeProvider()),
-          Provider<UserDataProvider>(create: (_) => UserDataProvider(ud)),
+          ChangeNotifierProvider<Questions>(
+            create: (_) => Questions(),
+            lazy: false,
+          ),
+          ChangeNotifierProvider<ActiveQuestion>(
+            create: (_) => ActiveQuestion(),
+            lazy: false,
+          ),
+          ChangeNotifierProvider<ThemeProvider>(
+            create: (_) => ThemeProvider(),
+            lazy: false,
+          ),
+          ChangeNotifierProvider<UserDataProvider>(
+            create: (_) => UserDataProvider(ud),
+            lazy: false,
+          ),
         ],
         child: MainApp(),
       ),
@@ -31,46 +43,44 @@ class MainApp extends StatelessWidget {
   // themeProvider
   ThemeProvider themeProvider;
 
-  UserData Userdata = UserData.getInstance();
   @override
   Widget build(BuildContext context) {
+    UserData.getInstance();
     // UserData.getInstance().initialize();
     themeIndex = UserData.getInstance().themeIndex;
-    return Consumer<UserDataProvider>(
-      builder: (context, themeProvider, _) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Drivers Question',
-          theme: ThemeProvider.themes[themeProvider.themeIndex],
-          initialRoute: "/",
-          routes: {
-            "/": (BuildContext context) {
-              return SplashApp();
-            },
-            RegistrationScreen.RouteName: (BuildContext context) {
-              return RegistrationScreen(
-                key: UniqueKey(),
-              );
-            },
-            CategoryScreen.RouteName: (BuildContext context) {
-              return CategoryScreen.getInstance();
-            },
-            SettingsScreen.RouteName: (BuildContext context) {
-              return SettingsScreen.GetInstance();
-            },
-            QuestionScreen.RouteName: (BuildContext context) {
-              return QuestionScreen.getInstance();
-            },
-            ResultScreen.RouteName: (BuildContext context) {
-              return ResultScreen.getInstance();
-            },
-            AboutScreen.RouteName: (BuildContext context) {
-              return AboutScreen();
-            }
-          },
-        );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Drivers Question',
+      theme: context.watch<ThemeProvider>().theTheme,
+      initialRoute: "/",
+      routes: {
+        "/": (BuildContext contaex1) {
+          return SplashApp();
+        },
+        RegistrationScreen.RouteName: (BuildContext contaex2) {
+          return RegistrationScreen(
+            key: UniqueKey(),
+          );
+        },
+        CategoryScreen.RouteName: (BuildContext contaex3) {
+          return CategoryScreen.getInstance();
+        },
+        SettingsScreen.RouteName: (BuildContext contaex4) {
+          return SettingsScreen.GetInstance();
+        },
+        QuestionScreen.RouteName: (BuildContext contaex5) {
+          return QuestionScreen.getInstance();
+        },
+        ResultScreen.RouteName: (BuildContext contaex6) {
+          return ResultScreen.getInstance();
+        },
+        AboutScreen.RouteName: (BuildContext contaex7) {
+          return AboutScreen();
+        }
       },
     );
+    //   },
+    // );
     //  )) },
     // );
   }

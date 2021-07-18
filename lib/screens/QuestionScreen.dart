@@ -423,18 +423,10 @@ class _QuestionScreenState extends State<QuestionScreen>
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          Translation.translate(
-                    lang,
-                    "Question Page",
-                  ) !=
-                  null
-              ? Translation.translate(
-                  lang,
-                  "Question Page",
-                )
-              : "Question Page",
-        ),
+        title: Text(Translation.translate(
+          lang,
+          "Question Page",
+        )),
         key: UniqueKey(),
         centerTitle: true,
         elevation: 0,

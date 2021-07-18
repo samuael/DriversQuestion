@@ -268,12 +268,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         /// getting motor questions
                         List<Question> motorQuestions = [];
+                        motorQuestions.addAll(
+                            await ListLoader.loadNonIndexedQuestions(
+                                "assets/file.xlsx", "Motor", 0, 0));
                         motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "motor", 0, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "motor", 0, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "motor", 0, 0));
+                            "assets/file.xlsx", "MotorIndexed", 0, 0));
                         // shuffling questions and giving an ID for each of them at the
                         // same time giving a group to them
                         for (int a = 0; a < motorQuestions.length; a++) {
@@ -285,12 +284,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         /// getting others questions
                         List<Question> othersQuestions = [];
+                        motorQuestions.addAll(
+                            await ListLoader.loadNonIndexedQuestions(
+                                "assets/file.xlsx", "Others", 0, 0));
                         motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "motor", 0, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "motor", 0, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "motor", 0, 0));
+                            "assets/file.xlsx", "OthersIndexed", 0, 0));
                         // shuffling questions and giving an ID for each of them at the
                         // same time giving a group to them
                         for (int a = 0; a < othersQuestions.length; a++) {
@@ -301,12 +299,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         /// getting icons questions
                         List<Question> iconsQuestions = [];
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "icons1", 2, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "icons", 2, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "icons", 2, 0));
+                        motorQuestions.addAll(await ListLoader.loadITAQuestions(
+                            "assets/file.xlsx", "sign_question", 2, 0));
+                        motorQuestions.addAll(await ListLoader.loadTIAQuestions(
+                            "assets/file.xlsx", "sing_answer", 2, 0));
                         // shuffling questions and giving an ID for each of them at the
                         // same time giving a group to them
                         for (int a = 0; a < iconsQuestions.length; a++) {
@@ -315,9 +311,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         }
                         motorQuestions.addAll(othersQuestions);
                         motorQuestions.addAll(iconsQuestions);
-
-                        DatabaseManager.getInstance().insertAll(motorQuestions);
-
+                        await DatabaseManager.getInstance()
+                            .insertAll(motorQuestions);
                         // --
                       }(),
                       color: Theme.of(context).primaryColor,

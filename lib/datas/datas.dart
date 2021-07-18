@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../libs.dart';
+export "static_data_store.dart";
 
 final List<String> LETTERS = [
   "A",

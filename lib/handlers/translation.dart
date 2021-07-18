@@ -95,6 +95,7 @@ class Translation {
     "select category": "ምድብ ምረጥ",
     "your are not allowed to access questions\nchoose a group first":
         "ጥያቄዎችን ለመፈተን አይችሉም \n መጀመሪያ የጥያቄ ቡድን ይመረጡ",
+    "total": "ድምር",
     "test": "ፈተና",
     "test number": "ፈተና ቁጥር",
     "the": "የ",

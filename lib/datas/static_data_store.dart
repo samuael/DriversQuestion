@@ -1,0 +1,9 @@
+import '../libs.dart';
+
+// StaticDataStore ...
+class StaticDataStore {
+  // StaticDataStore ...
+  static ThemeProvider themeProvider;
+  // StaticDataStore ...
+  static UserDataProvider userDataProvider;
+}
