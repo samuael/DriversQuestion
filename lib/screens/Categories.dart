@@ -112,7 +112,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
       });
       once = false;
     }
-
+    // context.watch<SelectedCategoryProvider>().selectedIndex;
+    this.selectedIndex =
+        context.watch<SelectedCategoryProvider>().selectedIndex;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -133,9 +135,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         onTap: (int index) {
           setState(() {
             this.selectedIndex = index;
-            if (index == 2) this.selectedIndex = index - 1;
+            context.read<SelectedCategoryProvider>().setIndex(index);
           });
-          // print("selected Index is : $selectedIndex");
         },
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Colors.white,
@@ -166,9 +167,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Icons.image,
               // color: Colors.white,
             ),
-            title: Text(Translation.translate(lang, "Icons") != null
-                ? Translation.translate(lang, "Icons")
-                : "Icons"),
+            title: Text(
+              Translation.translate(lang, "Icons") != null
+                  ? Translation.translate(lang, "Icons")
+                  : "Icons",
+            ),
           ),
         ],
       ),
@@ -199,16 +202,30 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           onTap: () {
                             setState(() {
                               this.selectedIndex = 0;
+                              context
+                                  .watch<SelectedCategoryProvider>()
+                                  .setIndex(0);
                             });
                           },
                           child: Card(
-                            elevation: this.selectedIndex == 0 ? 10 : 0,
+                            elevation: context
+                                        .watch<SelectedCategoryProvider>()
+                                        .selectedIndex ==
+                                    0
+                                ? 10
+                                : 0,
                             child: CategorySmallItem(
                                 category: this.categories[0],
-                                background: this.selectedIndex == 0
+                                background: context
+                                            .watch<SelectedCategoryProvider>()
+                                            .selectedIndex ==
+                                        0
                                     ? Colors.white
                                     : Theme.of(context).primaryColor,
-                                color: this.selectedIndex == 0
+                                color: context
+                                            .watch<SelectedCategoryProvider>()
+                                            .selectedIndex ==
+                                        0
                                     ? Theme.of(context).primaryColor
                                     : Colors.white),
                           ),
@@ -220,16 +237,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           onTap: () {
                             setState(() {
                               this.selectedIndex = 1;
+                              context
+                                  .read<SelectedCategoryProvider>()
+                                  .setIndex(1);
                             });
                           },
                           child: Card(
                             elevation: this.selectedIndex == 1 ? 10 : 0,
                             child: CategorySmallItem(
                                 category: this.categories[1],
-                                background: this.selectedIndex == 1
+                                background: context
+                                            .watch<SelectedCategoryProvider>()
+                                            .selectedIndex ==
+                                        1
                                     ? Colors.white
                                     : Theme.of(context).primaryColor,
-                                color: this.selectedIndex == 1
+                                color: context
+                                            .watch<SelectedCategoryProvider>()
+                                            .selectedIndex ==
+                                        1
                                     ? Theme.of(context).primaryColor
                                     : Colors.white),
                           ),
@@ -241,16 +267,30 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           onTap: () {
                             setState(() {
                               this.selectedIndex = 2;
+                              context
+                                  .read<SelectedCategoryProvider>()
+                                  .setIndex(2);
                             });
                           },
                           child: Card(
-                            elevation: this.selectedIndex == 2 ? 10 : 0,
+                            elevation: context
+                                        .watch<SelectedCategoryProvider>()
+                                        .selectedIndex ==
+                                    2
+                                ? 10
+                                : 0,
                             child: CategorySmallItem(
                                 category: this.categories[2],
-                                background: this.selectedIndex == 2
+                                background: context
+                                            .watch<SelectedCategoryProvider>()
+                                            .selectedIndex ==
+                                        2
                                     ? Colors.white
                                     : Theme.of(context).primaryColor,
-                                color: this.selectedIndex == 2
+                                color: context
+                                            .watch<SelectedCategoryProvider>()
+                                            .selectedIndex ==
+                                        2
                                     ? Theme.of(context).primaryColor
                                     : Colors.white),
                           ),
@@ -264,7 +304,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           Expanded(
             flex: 3,
-            child: this.categoryitems[selectedIndex],
+            child: this.categoryitems[
+                context.watch<SelectedCategoryProvider>().selectedIndex],
           ),
         ],
       ),

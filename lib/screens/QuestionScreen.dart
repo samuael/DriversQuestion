@@ -69,6 +69,7 @@ class _QuestionScreenState extends State<QuestionScreen>
           this.next = true;
         });
       } else {
+        print("Inside Else Statement .. ");
         if (databaseManager == null) {
           this.databaseManager = DatabaseManager.getInstance();
         }

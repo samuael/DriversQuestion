@@ -197,9 +197,11 @@ class DatabaseManager {
         ids += ",$el";
       }
     }
+    print(
+        "Querying Questions : Category ID : ${graderesult.Categoryid}  Group id : ${graderesult.Groupid}");
     await database
         .rawQuery(
-      "SELECT id , answers , body , answerindex , categoryid , groupid FROM questions WHERE id NOT IN ($ids) AND groupid=$group AND categoryid=$category  LIMIT 1",
+      "SELECT id , answers , body , answerindex , categoryid ,question_image , type,  groupid FROM questions WHERE id NOT IN ($ids) AND groupid=$group AND categoryid=$category  LIMIT 1",
     )
         .then((rows) {
       if (rows.length > 0) {
@@ -211,12 +213,16 @@ class DatabaseManager {
           ID: (rows[0]["id"]) as int,
           Categoryid: category,
           Groupid: group,
-          Body: rows[0]["body"] as String,
+          Body: "${rows[0]["body"]}",
           Answers: answers,
           Answerindex: rows[0]["answerindex"] as int,
+          questionImage: rows[0]["question_image"],
+          qtype: int.parse("${rows[0]["type"]}".trim()),
         );
       }
     });
+    print(
+        "The Question is : ${question.Body} ${question.ID}   ${question.Answers}");
     return question;
   }
 
@@ -433,7 +439,8 @@ class DatabaseManager {
         graderResult.Groupid = value[0]["groupid"];
         graderResult.AskedCount = value[0]["askedcount"] as int;
         graderResult.Questions = questionsID;
-        graderResult.ID = value[0]["id"] as int;
+        print(" The Grade Result ID is : ${value[0]["id"]}");
+        graderResult.ID = int.parse(("${value[0]["id"]}".trim()));
       } else {
         graderResult = GradeResult(
           Categoryid: categoryid,
@@ -450,6 +457,8 @@ class DatabaseManager {
       graderResult.ID = count;
       await saveGradeResult(graderResult);
     }
+    print(
+        "Result :  ${graderResult.ID} ${graderResult.Categoryid}  ${graderResult.Groupid}");
     return graderResult;
   }
 

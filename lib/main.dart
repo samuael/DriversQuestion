@@ -15,8 +15,13 @@ void main() {
     () => runApp(
       MultiProvider(
         providers: [
+          // SelectedCategoryProvider
           ChangeNotifierProvider<Questions>(
             create: (_) => Questions(),
+            lazy: false,
+          ),
+          ChangeNotifierProvider<SelectedCategoryProvider>(
+            create: (_) => SelectedCategoryProvider(),
             lazy: false,
           ),
           ChangeNotifierProvider<ActiveQuestion>(
