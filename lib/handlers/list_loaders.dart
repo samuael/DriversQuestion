@@ -28,21 +28,26 @@ class ListLoader {
         }
         return false;
       });
-      int index = 0;
       bool valid = row.length >= 3 ? true : false;
       // shuffling the question after getting the correct question result and set it as answer Index
-      if (!valid) break;
+      if (!valid) continue;
       int ansIndex = 0;
-      String ans = row[1];
-      List<String> answers = row.getRange(0, row.length).toList();
+      String ans = "${row[1]}";
+      List<dynamic> anss = row.getRange(1, row.length).toList();
+      List<String> answers = [];
+      for (dynamic ans in anss) {
+        answers.add("${ans}");
+      }
+      // print(answers);
+      if (answers == null || answers.length < 2) continue;
       answers = Shuffle(answers);
       for (int v = 0; v < answers.length; v++) {
-        if (answers[v] == ans) {
+        if ("${answers[v]}" == ans) {
           ansIndex = v;
           break;
         }
       }
-      final List<String> newRow = [row[0], "$index", ...answers];
+      final List<String> newRow = [row[0], "$ansIndex", ...answers];
       if (newRow.length >= 4 && valid) {
         mainList.add(newRow);
       }
@@ -60,19 +65,20 @@ class ListLoader {
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
+        int ansindex = int.parse(quest[1]);
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
           Body: "${quest[0]}",
-          Answers: quest.getRange(2, quest.length).toList(),
-          Answerindex: quest[1] as int,
+          Answers: quest.getRange(2, quest.length).cast<String>().toList(),
+          Answerindex: ansindex,
           qtype: 0,
           questionImage:
               "", // sinece i am sure about the correctness of the integer
         );
         questions.add(question);
       } catch (e, a) {
-        continue;
+        print(e.toString());
       }
     }
     return questions;
@@ -132,24 +138,28 @@ class ListLoader {
   static Future<List<Question>> loadQuestions(
       String path, String sheetName, int category, int group) async {
     List<List<dynamic>> loads = await ListLoader.loadXlsx(path, sheetName);
+    print("   Load Questions ${loads.length}");
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
+        int ansIndex = int.parse(quest[1]);
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
           Body: "${quest[0]}",
           Answers: quest.getRange(2, quest.length).toList(),
-          Answerindex: quest[1] as int,
+          Answerindex: ansIndex,
           qtype: 0,
           questionImage:
               "", // sinece i am sure about the correctness of the integer
         );
         questions.add(question);
       } catch (e, a) {
+        print("THE ERROR IS : ${e.toString()}");
         continue;
       }
     }
+    print("Real Questions Length ${questions.length}");
     return questions;
   }
 
@@ -223,12 +233,13 @@ class ListLoader {
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
+        int ansIndex = int.parse(quest[1]);
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
           Body: "${quest[0]}",
           Answers: quest.getRange(2, quest.length).toList(),
-          Answerindex: quest[1] as int,
+          Answerindex: ansIndex,
           qtype: 1, //  0000000001
           questionImage: "",
         );
@@ -306,12 +317,13 @@ class ListLoader {
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
+        int ansIndex = int.parse(quest[1]);
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
           Body: "${quest[0]}",
           Answers: quest.getRange(3, quest.length).toList(),
-          Answerindex: quest[1] as int,
+          Answerindex: ansIndex,
           qtype: 2,
           questionImage:
               "${quest[2]}", // sinece i am sure about the correctness of the integer

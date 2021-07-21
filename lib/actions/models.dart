@@ -177,18 +177,17 @@ class GradeResult {
         ids += "`$el";
       }
     }
-    print("inside to map method te ids variable $ids ");
     return ids;
   }
 
   Map<String, dynamic> toMap() {
     return {
+      "id": this.ID,
       "categoryid": this.Categoryid,
       "groupid": this.Groupid,
       "askedcount": this.AskedCount,
       "answeredcount": this.AnsweredCount,
-      "id": this.ID,
-      "askedquestions": this.join(),
+      "askedquestions": this.Questions == null ? "" : this.join(),
     };
   }
 }

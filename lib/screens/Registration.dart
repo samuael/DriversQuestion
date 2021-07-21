@@ -263,56 +263,288 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     constraints: const BoxConstraints(maxWidth: 500),
                     child: RaisedButton(
                       onPressed: () => () async {
+                        setState(() {
+                          this.loading = true;
+                          this.messageColor = Colors.green;
+                          this.message =
+                              Translation.translate(this.lang, "Loading") +
+                                  " ... ";
+                        });
+                        this.username = nameController.text;
+                        if (username == null || username == "") {
+                          this.username = "Unknown";
+                          this.Userdata = UserData.getInstance();
+                          this.Userdata.SetUsername(this.username);
+                        }
                         // select questions from the list_loaders and put that
-                        // list of question to the sql database .
+                        // list of question to the sql database.
+
+                        // groups holding list of groups.
+                        List<Group> groups = [];
+                        // gradeResults holding the gradeResults for each tests
+                        List<GradeResult> gradeResults = [];
 
                         /// getting motor questions
                         List<Question> motorQuestions = [];
                         motorQuestions.addAll(
                             await ListLoader.loadNonIndexedQuestions(
-                                "assets/file.xlsx", "Motor", 0, 0));
+                                "assets/file.xlsx", "Motor", 1, 0));
                         motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "MotorIndexed", 0, 0));
+                            "assets/file.xlsx", "MotorIndexed", 1, 0));
                         // shuffling questions and giving an ID for each of them at the
                         // same time giving a group to them
-                        for (int a = 0; a < motorQuestions.length; a++) {
+                        print(
+                            "Length Of Motor Questions Found ${motorQuestions.length}");
+                        int groupsID = 0;
+                        int groupCount = 1;
+                        int count = 0;
+
+                        int a = 0;
+                        do {
                           motorQuestions[a].ID = a;
-                          motorQuestions[a].Groupid = (a / 100).floor() + 1;
+                          motorQuestions[a].Groupid = (a / 100).floor();
+                          if (motorQuestions[a].Groupid > (groupCount - 1)) {
+                            Group group = Group(
+                              ID: groupsID,
+                              Categoryid: 1,
+                              GroupNumber: groupCount,
+                              QuestionsCount: count,
+                            );
+                            GradeResult gradeResult = GradeResult(
+                              ID: groupsID,
+                              Categoryid: 1,
+                              Groupid: group.ID,
+                              AnsweredCount: 0,
+                              AskedCount: 0,
+                              Questions: [],
+                            );
+                            groupsID++;
+                            groupCount++;
+                            groups.add(group);
+                            gradeResults.add(gradeResult);
+                            count = 0;
+                          }
+                          count++;
+                          a++;
+                        } while (a < motorQuestions.length);
+                        if (count % 100 > 0) {
+                          Group group = Group(
+                            ID: groupsID,
+                            Categoryid: 1,
+                            GroupNumber: groupCount,
+                            QuestionsCount: count,
+                          );
+                          GradeResult gradeResult = GradeResult(
+                            ID: groupsID,
+                            Categoryid: 1,
+                            Groupid: group.ID,
+                            AnsweredCount: 0,
+                            AskedCount: 0,
+                            Questions: [],
+                          );
+                          groupsID++;
+                          groupCount++;
+                          groups.add(group);
+                          gradeResults.add(gradeResult);
+                          count = 0;
                         }
 
                         int othersInit = motorQuestions.length;
 
                         /// getting others questions
                         List<Question> othersQuestions = [];
-                        motorQuestions.addAll(
+                        othersQuestions.addAll(
                             await ListLoader.loadNonIndexedQuestions(
-                                "assets/file.xlsx", "Others", 0, 0));
-                        motorQuestions.addAll(await ListLoader.loadQuestions(
-                            "assets/file.xlsx", "OthersIndexed", 0, 0));
+                                "assets/file.xlsx", "Others", 2, 0));
+                        othersQuestions.addAll(await ListLoader.loadQuestions(
+                            "assets/file.xlsx", "OthersIndexed", 2, 0));
                         // shuffling questions and giving an ID for each of them at the
                         // same time giving a group to them
-                        for (int a = 0; a < othersQuestions.length; a++) {
-                          motorQuestions[a].ID = othersInit + a;
-                          motorQuestions[a].Groupid = (a / 100).floor() + 1;
+                        int ogroupCount = 1, ocount = 0;
+
+                        int b = 0;
+                        do {
+                          othersQuestions[b].ID = othersInit + b;
+                          othersQuestions[b].Groupid = (b / 100).floor();
+                          if (othersQuestions[b].Groupid > (ogroupCount - 1)) {
+                            Group group = Group(
+                                ID: groupsID,
+                                Categoryid: 2,
+                                GroupNumber: ogroupCount,
+                                QuestionsCount: ocount);
+                            GradeResult gradeResult = GradeResult(
+                              ID: groupsID,
+                              Categoryid: 2,
+                              Groupid: group.ID,
+                              AnsweredCount: 0,
+                              AskedCount: 0,
+                              Questions: [],
+                            );
+                            groupsID++;
+                            ogroupCount++;
+                            groups.add(group);
+                            gradeResults.add(gradeResult);
+                            ocount = 0;
+                          }
+                          ocount++;
+                          b++;
+                        } while (b < othersQuestions.length);
+                        if (ocount % 100 > 0) {
+                          Group group = Group(
+                              ID: groupsID,
+                              Categoryid: 2,
+                              GroupNumber: ogroupCount,
+                              QuestionsCount: ocount);
+                          GradeResult gradeResult = GradeResult(
+                            ID: groupsID,
+                            Categoryid: 2,
+                            Groupid: group.ID,
+                            AnsweredCount: 0,
+                            AskedCount: 0,
+                            Questions: [],
+                          );
+                          groupsID++;
+                          ogroupCount++;
+                          groups.add(group);
+                          gradeResults.add(gradeResult);
+                          ocount = 0;
                         }
+
                         int iconsInit = othersQuestions.length + othersInit;
 
                         /// getting icons questions
                         List<Question> iconsQuestions = [];
-                        motorQuestions.addAll(await ListLoader.loadITAQuestions(
-                            "assets/file.xlsx", "sign_question", 2, 0));
-                        motorQuestions.addAll(await ListLoader.loadTIAQuestions(
-                            "assets/file.xlsx", "sing_answer", 2, 0));
+                        iconsQuestions.addAll(await ListLoader.loadITAQuestions(
+                            "assets/file.xlsx", "sign_question", 3, 0));
+                        iconsQuestions.addAll(await ListLoader.loadTIAQuestions(
+                            "assets/file.xlsx", "sing_answer", 3, 0));
                         // shuffling questions and giving an ID for each of them at the
                         // same time giving a group to them
-                        for (int a = 0; a < iconsQuestions.length; a++) {
-                          motorQuestions[a].ID = iconsInit + a;
-                          motorQuestions[a].Groupid = (a / 100).floor() + 1;
+                        int igroupCount = 1, icount = 0;
+
+                        int c = 0;
+                        do {
+                          iconsQuestions[c].ID = iconsInit + c;
+                          iconsQuestions[c].Groupid = (c / 100).floor();
+                          if (iconsQuestions[c].Groupid > (igroupCount - 1)) {
+                            Group group = Group(
+                              ID: groupsID,
+                              Categoryid: 3,
+                              GroupNumber: igroupCount,
+                              QuestionsCount: icount,
+                            );
+                            GradeResult gradeResult = GradeResult(
+                              ID: groupsID,
+                              Categoryid: 3,
+                              Groupid: group.ID,
+                              AnsweredCount: 0,
+                              AskedCount: 0,
+                              Questions: [],
+                            );
+                            groupsID++;
+                            igroupCount++;
+                            groups.add(group);
+                            gradeResults.add(gradeResult);
+                            icount = 0;
+                          }
+                          icount++;
+                          c++;
+                        } while (c < iconsQuestions.length);
+                        if (icount % 100 > 0) {
+                          Group group = Group(
+                            ID: groupsID,
+                            Categoryid: 3,
+                            GroupNumber: igroupCount,
+                            QuestionsCount: icount,
+                          );
+                          GradeResult gradeResult = GradeResult(
+                            ID: groupsID,
+                            Categoryid: 3,
+                            Groupid: group.ID,
+                            AnsweredCount: 0,
+                            AskedCount: 0,
+                            Questions: [],
+                          );
+                          groupsID++;
+                          igroupCount++;
+                          groups.add(group);
+                          gradeResults.add(gradeResult);
+                          icount = 0;
                         }
+
+                        /// TODO : ---
                         motorQuestions.addAll(othersQuestions);
                         motorQuestions.addAll(iconsQuestions);
+                        success = true;
                         await DatabaseManager.getInstance()
-                            .insertAll(motorQuestions);
+                            .InsertQuestions(motorQuestions)
+                            .then((int insertedCount) {
+                          if (motorQuestions.length != insertedCount) {
+                            setState(() {
+                              message = "ERROR Inserting Questions ... ";
+                              success = false;
+                              loading = false;
+                            });
+                          } else {
+                            setState(() {
+                              message =
+                                  "Succesfully Added ${motorQuestions.length} Questions ... ";
+                              loading = false;
+                              success = true;
+                              message = " succesful ";
+                            });
+                          }
+                        });
+                        if (!success) return;
+                        await DatabaseManager.getInstance()
+                            .InsertGradeResults(gradeResults)
+                            .then((int vals) {
+                          if (vals != gradeResults.length) {
+                            print(
+                                " Inserted Grade Results Count $vals :: ${gradeResults.length}");
+                            setState(() {
+                              message =
+                                  "ERROR while Inserting the GradeResults .. ";
+                              messageColor = Colors.red;
+                              loading = false;
+                              success = false;
+                            });
+                          }
+                          success |= false;
+                        });
+                        if (!success) return;
+                        await DatabaseManager.getInstance()
+                            .InsertGroups(groups)
+                            .then((int groupsInserts) {
+                          if (groupsInserts != groups.length) {
+                            setState(() {
+                              this.message = Translation.translate(this.lang,
+                                  "Internal Code Error. \nPlease Try Again....");
+                              this.messageColor = Colors.red;
+                              this.loading = false;
+                              this.success = false;
+                            });
+                            success = success | false;
+                            if (success) {
+                              message = " Succesfuly Loaded ";
+                              loading = false;
+                            }
+                          }
+                        });
+                        // setState(() {
+                        //   this.success = true;
+                        // });
+                        Userdata.SetUsername(username);
+                        if (!this.success) {
+                          return;
+                        }
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            CategoryScreen.RouteName, (_) {
+                          return false;
+                        }, arguments: {
+                          'username': username,
+                          "locald": Userdata,
+                        });
                         // --
                       }(),
                       color: Theme.of(context).primaryColor,
@@ -361,4 +593,5 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
 List<String> Shuffle(List<String> answers) {
   answers.shuffle(math.Random.secure());
+  return (answers == null || answers.length == 0) ? [] : answers;
 }

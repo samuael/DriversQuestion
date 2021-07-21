@@ -28,10 +28,14 @@ class _ResultScreenState extends State<ResultScreen> {
   UserData userData;
   int motorTotalAsked = 0;
   int otherTotalAsked = 0;
+  int iconTotalAsked = 0;
   int motorTotalAnswered = 0;
   int otherTotalAnswered = 0;
+  int iconsTotalAnswered = 0;
   List<GradeResult> motorResults = [];
   List<GradeResult> othersResults = [];
+  List<GradeResult> iconsResults = [];
+
   TodaysDataHolder mahder;
 
   List<GradeResult> gradeResults = [];
@@ -60,10 +64,14 @@ class _ResultScreenState extends State<ResultScreen> {
           this.motorResults.add(gradeResult);
           this.motorTotalAnswered += gradeResult.AnsweredCount;
           this.motorTotalAsked += gradeResult.AskedCount;
-        } else {
+        } else if (gradeResult.Categoryid == 2) {
           this.othersResults.add(gradeResult);
           this.otherTotalAnswered += gradeResult.AnsweredCount;
           this.otherTotalAsked += gradeResult.AskedCount;
+        } else {
+          this.iconsResults.add(gradeResult);
+          this.iconsTotalAnswered += gradeResult.AnsweredCount;
+          this.iconTotalAsked += gradeResult.AskedCount;
         }
       }
       setState(() {
@@ -73,9 +81,15 @@ class _ResultScreenState extends State<ResultScreen> {
         this.otherTotalAnswered = this.otherTotalAnswered;
         this.otherTotalAsked = this.otherTotalAsked;
 
+        // updating motor results ...
         this.motorResults = this.motorResults;
         this.motorTotalAnswered = this.motorTotalAnswered;
         this.motorTotalAsked = this.motorTotalAsked;
+
+        // updating the icons questions results
+        this.iconsResults = this.iconsResults;
+        this.iconsTotalAnswered = this.iconsTotalAnswered;
+        this.iconTotalAsked = this.iconTotalAsked;
       });
     });
   }
@@ -130,6 +144,24 @@ class _ResultScreenState extends State<ResultScreen> {
                 for (var gr in this.motorResults) {
                   this.motorTotalAnswered += gr.AnsweredCount;
                   this.motorTotalAsked += gr.AskedCount;
+                }
+              });
+            }
+          }
+        } else if (gradeResult.Categoryid == 3) {
+          for (var k = 0; k < this.iconsResults.length; k++) {
+            final gres = this.iconsResults[k];
+            if (gradeResult.ID == gres.ID &&
+                gradeResult.Categoryid == gres.Categoryid &&
+                gradeResult.Groupid == gres.Groupid) {
+              setState(() {
+                this.iconsResults[k] = gradeResult;
+                this.iconsTotalAnswered = 0;
+                this.iconTotalAsked = 0;
+
+                for (var gr in this.iconsResults) {
+                  this.iconsTotalAnswered += gr.AnsweredCount;
+                  this.iconTotalAsked += gr.AskedCount;
                 }
               });
             }
@@ -200,6 +232,7 @@ class _ResultScreenState extends State<ResultScreen> {
     // initialize();
     int motorTestCounter = 0;
     int othersTestCounter = 0;
+    int iconsTestCounter = 0;
     return Scaffold(
       drawer: NavigationDrawer(
         containerContext: context,
@@ -285,8 +318,8 @@ class _ResultScreenState extends State<ResultScreen> {
                             SizedBox(width: 20),
                             Icon(
                               motorSelected
-                                  ? Icons.arrow_forward_ios
-                                  : Icons.arrow_downward,
+                                  ? Icons.arrow_downward
+                                  : Icons.arrow_forward_ios,
                             ),
                           ],
                         ),
@@ -296,7 +329,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
               ),
               ...(this.motorResults.map((gradeResult) {
-                return motorSelected
+                return !motorSelected
                     ? SizedBox()
                     : Container(
                         decoration: BoxDecoration(
@@ -405,8 +438,8 @@ class _ResultScreenState extends State<ResultScreen> {
                             SizedBox(width: 20),
                             Icon(
                               otherSelected
-                                  ? Icons.arrow_forward_ios
-                                  : Icons.arrow_downward,
+                                  ? Icons.arrow_downward
+                                  : Icons.arrow_forward_ios,
                             ),
                           ],
                         ),
@@ -415,8 +448,129 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ),
               ),
-              ...(this.othersResults.map((gradeResult) {
-                return otherSelected
+              ...(this.othersResults.map(
+                (gradeResult) {
+                  return !otherSelected
+                      ? SizedBox()
+                      : Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.black12,
+                              ),
+                            ),
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.local_car_wash,
+                                color: Theme.of(context).primaryColor),
+                            title: Text(
+                              (Translation.translate(this.lang, "Test") != null
+                                      ? Translation.translate(this.lang, "Test")
+                                      : "Test") +
+                                  " : ${++othersTestCounter}",
+                              style: TextStyle(
+                                color: Theme.of(context).textTheme.body1.color,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).textTheme.body1.color,
+                              ),
+                            ),
+                            trailing: InkWell(
+                              onTap: () => resetMe(
+                                gradeResult.ID,
+                                gradeResult.Categoryid,
+                                gradeResult.Groupid,
+                                context,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.restore,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                },
+              ).toList()),
+
+// ICONS Results showing area
+//
+//
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    this.iconSelected = !this.iconSelected;
+                  });
+                },
+                child: Container(
+                  height: 70,
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          (Translation.translate(this.lang, " Category  ")) +
+                              "  : " +
+                              (Translation.translate(
+                                          this.lang, this.categories[2].Name) !=
+                                      null
+                                  ? Translation.translate(
+                                      this.lang, this.categories[2].Name)
+                                  : this.categories[2].Name),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white54,
+                              ),
+                              child: Text(
+                                (Translation.translate(this.lang, "Total") !=
+                                            null
+                                        ? Translation.translate(
+                                            this.lang, "Total")
+                                        : "Total") +
+                                    " : $iconsTotalAnswered / $iconTotalAsked",
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Icon(
+                              iconSelected
+                                  ? Icons.arrow_downward
+                                  : Icons.arrow_forward_ios,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              ...(this.iconsResults.map((gradeResult) {
+                return !iconSelected
                     ? SizedBox()
                     : Container(
                         decoration: BoxDecoration(
@@ -427,13 +581,15 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                         child: ListTile(
-                          leading: Icon(Icons.local_car_wash,
-                              color: Theme.of(context).primaryColor),
+                          leading: Icon(
+                            Icons.image,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           title: Text(
                             (Translation.translate(this.lang, "Test") != null
                                     ? Translation.translate(this.lang, "Test")
                                     : "Test") +
-                                " : ${++othersTestCounter}",
+                                " : ${++iconsTestCounter}",
                             style: TextStyle(
                               color: Theme.of(context).textTheme.body1.color,
                             ),
@@ -468,6 +624,11 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                       );
               }).toList()),
+
+//
+//
+// END -----------------
+
               InkWell(
                 onTap: () => resetAll(),
                 hoverColor: Color(0XFF006699),

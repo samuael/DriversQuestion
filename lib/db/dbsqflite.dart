@@ -48,7 +48,7 @@ class DatabaseManager {
             "drivers.db",
             // Version
           ),
-          version: 1, onCreate: (Database database, int version) async {
+          version: 2, onCreate: (Database database, int version) async {
         await database.execute('''CREATE TABLE questions (
             id INTEGER PRIMARYKEY AUTO INCREMENT NOT NULL,
             categoryid INTEGER,
@@ -61,10 +61,11 @@ class DatabaseManager {
             )''');
         // await database.execute(
         //     "CREATE TABLE category ( id INTEGER AUTO INCREMENT PRIMARY KEY ,name TEXT NOT NULL )");
+        /* */
         await database.execute(
-            "CREATE TABLE graderesult (id INTEGER PRIMARYKEY AUTO INCREMENT,categoryid INTEGER NOT NULL , groupid INTEGER NOT NULL, askedcount INTEGER  ,answeredcount INTEGER  , askedquestions TEXT )");
+            "CREATE TABLE graderesult(id INTEGER PRIMARYKEY AUTO INCREMENT,categoryid INTEGER NOT NULL , groupid INTEGER NOT NULL, askedcount INTEGER  ,answeredcount INTEGER  , askedquestions TEXT )");
         await database.execute(
-            "CREATE TABLE groups (  id INTEGER PRIMARYKEY AUTO INCREMENT NOT NULL , group_no INTEGER NOT NULL ,categoryid INTEGER NOT NULL , questionscount INTEGER )");
+            "CREATE TABLE groups (  id INTEGER PRIMARYKEY AUTO INCREMENT, group_no INTEGER NOT NULL ,categoryid INTEGER NOT NULL , questionscount INTEGER )");
       });
     }
   }
@@ -292,11 +293,14 @@ class DatabaseManager {
     int counter = 0;
     await OpenDatabase();
     for (var gres in gradeResults) {
-      database.insert("graderesult", gres.toMap()).then((index) {
-        if (index > 0) {
-          counter++;
-        }
-      });
+      try {
+        // print(
+        // "${gres.ID}, ${gres.AnsweredCount}, ${gres.AskedCount}, ${gres.Categoryid}, ${gres.Groupid} ");
+        int val = await database.insert("graderesult", gres.toMap());
+        if (val != 0) counter++;
+      } catch (e, a) {
+        print("Database Grade Results Table Insert Error ${e.toString()}");
+      }
     }
     return counter;
   }

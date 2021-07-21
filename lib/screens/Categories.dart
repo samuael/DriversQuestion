@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:loop_page_view/loop_page_view.dart';
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
 import '../libs.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   UserData userdata;
   bool motors = false;
   bool others = false;
+  bool icons = false;
   List<Category> categories;
   DatabaseManager databaseManager;
   String lang;
@@ -39,8 +41,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
     }
     databaseManager = DatabaseManager.getInstance();
     this.categories = DatabaseManager.categories;
+    // populating list of groups in the list of categories.
     this.categories[0].populateGroups(databaseManager);
     this.categories[1].populateGroups(databaseManager);
+    this.categories[2].populateGroups(databaseManager);
+
     this.userdata = UserData.getInstance();
     this.userdata.GetLanguage().then((lang) {
       this.lang = lang;
@@ -51,15 +56,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
     this
         .categoryitems
         .add(CategoryItem(category: this.categories[1], lang: userdata.Lang));
+    // setting the last and the new Category Reference so that list of groups and
+    // gradeResults will be populated depending on that.
+    this
+        .categoryitems
+        .add(CategoryItem(category: this.categories[2], lang: userdata.Lang));
     super.initState();
   }
 
+  UserDataProvider userdataProvider;
   @override
   Widget build(BuildContext context) {
     if (userdata == null) {
       userdata = UserData.getInstance();
       userdata.initialize();
     }
+    // user data Provider holding the data of users.
+    userdataProvider = Provider.of<UserDataProvider>(context, listen: false);
     if (once) {
       this.categories[0].populateGroups(databaseManager).then((value) {
         setState(() {
@@ -82,6 +95,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
           } else {
             this.categoryitems.add(CategoryItem(
                 category: this.categories[1], lang: userdata.Lang));
+          }
+        });
+      });
+      this.categories[2].populateGroups(databaseManager).then((value) {
+        setState(() {
+          this.categories[2].groups = value;
+          if (this.categoryitems[2] != null) {
+            this.categoryitems[2] =
+                CategoryItem(category: this.categories[2], lang: userdata.Lang);
+          } else {
+            this.categoryitems.add(CategoryItem(
+                category: this.categories[2], lang: userdata.Lang));
           }
         });
       });
@@ -215,7 +240,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              this.selectedIndex = 1;
+                              this.selectedIndex = 2;
                             });
                           },
                           child: Card(
@@ -225,7 +250,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 background: this.selectedIndex == 2
                                     ? Colors.white
                                     : Theme.of(context).primaryColor,
-                                color: this.selectedIndex == 1
+                                color: this.selectedIndex == 2
                                     ? Theme.of(context).primaryColor
                                     : Colors.white),
                           ),
