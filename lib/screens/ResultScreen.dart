@@ -117,8 +117,11 @@ class _ResultScreenState extends State<ResultScreen> {
       success = succes;
     });
     if (!success) {
-      showPopup(this.lang, "Internal Error ",
-          "Internal ERROR while Reseting Result ! Please Try Again.", context);
+      showPopup(
+          this.lang,
+          "Internal Error ",
+          ["Internal ERROR while Reseting Result ! Please Try Again."],
+          context);
       return;
     }
     await databaseManager

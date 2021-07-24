@@ -28,7 +28,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String username;
 
   /// Theme Related Datas
-  bool visibleTheme = false;
+  bool visibleTheme = true;
   IconData themeIcon = Icons.arrow_forward_ios;
   //username changing related actions
   bool visibleUsernameEntry = true;
@@ -169,31 +169,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               visibleTheme ? SelectTheme() : SizedBox(),
-              GestureDetector(
-                onTap: () {
-                  setState(
-                    () {
-                      visibleUsernameEntry = !visibleUsernameEntry;
-                      usernameIcon = Icons.arrow_drop_down_circle_outlined;
-                    },
-                  );
-                },
-                child: ListTile(
-                  title: Text(
-                    Translation.translate(
-                        this.userdataProvider.language, "Change Username"),
-                  ),
-                  trailing: Icon(usernameIcon),
-                ),
-              ),
-              ChangeUsername(),
+              // GestureDetector(
+              //   onTap: () {
+              //     setState(
+              //       () {
+              //         visibleUsernameEntry = !visibleUsernameEntry;
+              //         usernameIcon = Icons.arrow_drop_down_circle_outlined;
+              //       },
+              //     );
+              //   },
+              //   child: ListTile(
+              //     title: Text(
+              //       Translation.translate(
+              //           this.userdataProvider.language, "Change Username"),
+              //     ),
+              //     trailing: Icon(usernameIcon),
+              //   ),
+              // ),
+              // ChangeUsername(),
               Container(
+                height: MediaQuery.of(context).size.height * 0.6,
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.elliptical(200, 50),
                     )),
-                height: 200,
+                // height: 200,
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

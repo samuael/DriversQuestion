@@ -42,7 +42,9 @@ class Question {
       "body": this.Body,
       "answerindex": this.Answerindex,
       "answers": this.Answers.join("`"),
-      "question_image": this.questionImage,
+      "question_image": this.questionImage == "" || this.questionImage == null
+          ? ""
+          : this.questionImage,
       "type": this.qtype,
     };
   }

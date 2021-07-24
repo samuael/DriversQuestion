@@ -67,7 +67,7 @@ class AboutScreen extends StatelessWidget {
                         BorderRadius.only(topLeft: Radius.elliptical(200, 50))),
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "Saddle Dam Drivers Training Institute \n ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
+                  "Shambel Dam Drivers Training Institute \nሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -103,29 +103,29 @@ class AboutScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 300,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.elliptical(200, 50))),
-                child: new ListView.builder(
-                  itemCount: imageNames.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      // onTap: ()=>changeTheme(context  , index),
-                      child: Container(
-                        // height: 120,
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        width: 200,
-                        child: Image.asset("${imageNames[index]}"),
-                      ),
-                    );
-                  },
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   height: 300,
+              //   decoration: BoxDecoration(
+              //       color: Theme.of(context).canvasColor,
+              //       borderRadius:
+              //           BorderRadius.only(topLeft: Radius.elliptical(200, 50))),
+              //   child: new ListView.builder(
+              //     itemCount: imageNames.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return InkWell(
+              //         // onTap: ()=>changeTheme(context  , index),
+              //         child: Container(
+              //           // height: 120,
+              //           margin: EdgeInsets.symmetric(horizontal: 5),
+              //           width: 200,
+              //           child: Image.asset("${imageNames[index]}"),
+              //         ),
+              //       );
+              //     },
+              //     scrollDirection: Axis.horizontal,
+              //   ),
+              // ),
 
               Container(
                 decoration: BoxDecoration(
@@ -161,11 +161,11 @@ class AboutScreen extends StatelessWidget {
                   Translation.translate(
                               this.lang,
                               // "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge." ) !=
-                              "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.") !=
+                              "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge.") !=
                           null
                       ? Translation.translate(this.lang,
-                          "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.")
-                      : "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge.",
+                          "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge.")
+                      : "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge.",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     color: Theme.of(context).textTheme.body1.color,
@@ -257,11 +257,11 @@ class AboutScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   Translation.translate(this.lang,
-                              "Hawasa : Ethiopia  , Atotet : Wolde Amanuael Road infront of Hayole School") !=
+                              "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia") !=
                           null
                       ? Translation.translate(this.lang,
-                          "Hawasa : Ethiopia  , Atotet : Wolde Amanuael Road infront of Hayole School")
-                      : "Hawasa : Ethiopia  , Atotet : Wolde Amanuael Road infront of Hayole School",
+                          "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia")
+                      : "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
@@ -285,7 +285,7 @@ class AboutScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  ...phonesHawassa.map((phone) {
+                  ...phones.map((phone) {
                     return Container(
                       padding: EdgeInsets.all(10),
                       // margin: EdgeInsets.symmetric(vertical: 3),

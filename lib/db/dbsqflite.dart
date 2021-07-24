@@ -56,7 +56,7 @@ class DatabaseManager {
             body TEXT ,
             answers TEXT,
             answerindex INTEGER ,
-            question_image INTEGER DEFAULT "",
+            question_image TEXT DEFAULT "",
             type  INTERGER DEFAULT 0
             )''');
         // await database.execute(
@@ -205,10 +205,17 @@ class DatabaseManager {
     )
         .then((rows) {
       if (rows.length > 0) {
-        List<String> answers = (rows[0]["answers"] as String).split("`");
+        List<String> answers = ("${rows[0]["answers"]}").split("`");
         if (answers.length <= 1) {
           return null;
+        } else {
+          answers.forEach((element) {
+            element.trim();
+            print(element);
+          });
         }
+        print(
+            "${rows[0]["question_image"]}   Qtype : ${"${rows[0]["type"]}".trim()}");
         question = Question(
           ID: (rows[0]["id"]) as int,
           Categoryid: category,
@@ -216,7 +223,7 @@ class DatabaseManager {
           Body: "${rows[0]["body"]}",
           Answers: answers,
           Answerindex: rows[0]["answerindex"] as int,
-          questionImage: rows[0]["question_image"],
+          questionImage: "${rows[0]["question_image"]}".trim(),
           qtype: int.parse("${rows[0]["type"]}".trim()),
         );
       }

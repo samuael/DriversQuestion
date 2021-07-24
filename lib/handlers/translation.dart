@@ -79,8 +79,10 @@ class Translation {
         " ሀዋሳ ኢትዬጽያ አቶቴ ፡ ወልድ አማኑኤል መንገድ ከሀዮሌ ት/ት ቤት ፊት ለፊት",
     "gebriel area , o4 kebele  , assosa , benishangul gumz ,ethiopia":
         "ገብርኤል ሰፈር ፡ 04 ቀበሌ ፡አሶሳ ፡ ቤንሻንጉል ጉምዝ ፡ ኢትዮጽያ",
-    "saddle dam drivers training institute \nwe thrive to create intelligent and expert drivers and to create traffic accident free world.\n come and visit us you shall have a better knowledge.":
-        "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም \n ብቁና የላቁ አሽከርካሪዎችን ማፍራት ከ ትራፊክ አደጋ የፀዳ የተሽከርካርሪ አለም ለመፍጠር እንተጋለን ።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
+    "saddle dam drivers training institute \nwe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n come and visit us you shall have a better knowledge.":
+        "ሳድል ዳም የአሽከርካሪዎች ማሰልጠኛ ተቋም \n ብቁና የላቁ አሽከርካሪዎችን በማፍራት ከትራፊክ አደጋ የፀዳ የተሽከርካሪ ቀጠና ለመፍጠር እንተጋለን።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
+    "shambel drivers training institute \nwe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n come and visit us you shall have a better knowledge.":
+        "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም \n ብቁና የላቁ አሽከርካሪዎችን በማፍራት ከትራፊክ አደጋ የፀዳ የተሽከርካሪ ቀጠና ለመፍጠር እንተጋለን።\n ይምጡና ይጎብኙን የተሻለ እውቀት ከእኛ ጋር ያገኛሉ ።",
     "a": "ሀ",
     "b": "ለ",
     "c": "ሐ",
@@ -113,6 +115,19 @@ class Translation {
     "change theme": "ቲም ቀይር",
     "english": "እንግሊዝኛ",
     "amharic": "አማርኛ",
+    "welcome!": "እንኳን ደህና መጡ።",
+    "initialize questions by pressing the start button":
+        "የ \'ጅምር\' ማዘዣውን በመጫን ጥያቄዎችን ያስጅምሩ።",
+    "loading questions may take time please be patient!":
+        "የመጫን ሂደት ጊዜ ሊውስድ ስለሚችል እባክዎ በትእግስት ይጠብቁ",
+    "no more question!": "ፈተናው እልቋል!",
+    "you have done all the questions of this test!": "የዚህን ፈተና ጥያቄዎች  ጨርሰዋል።\n",
+    "your score is": "ውጤትዎ",
+    "to re-take this test,\nreset the result of this test in the grade result page!":
+        "\nድጋሚ ለመፈተን ውጤቱን ከውጤት ገፅ ይሰርዙ።",
+    // "motor": "ሞተር",
+    // "others": "",
+    // "icons": "ምልክቶች",
   };
 
   static String translate(String lang, String sentence) {

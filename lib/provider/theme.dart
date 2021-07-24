@@ -18,7 +18,7 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
       primarySwatch: Colors.blue,
       textTheme: TextTheme(
         body1: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
       canvasColor: Colors.white70,

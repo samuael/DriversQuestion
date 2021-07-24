@@ -69,10 +69,8 @@ class _QuestionItemState extends State<QuestionItem> {
         } else if (val >= 0) {
           answerToBackgroundColor[answer] = Colors.red;
           answerToTextColor[answer] = Colors.white;
-
           answerToBackgroundColor[indexToanswer[val]] = Color(0XAA00CC00);
           answerToTextColor[indexToanswer[val]] = Colors.white;
-
           stage = QStage.NotCorrect;
         } else {
           stage = QStage.ERROR;
@@ -124,23 +122,33 @@ class _QuestionItemState extends State<QuestionItem> {
                   topRight: Radius.circular(20),
                 ),
                 child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black38,
+                    width: double.infinity,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black38,
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    "(${widget.questionNumber}). " + this.question.Body,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      //  fontFamily: FontFamily.,
-                      fontWeight: FontWeight.bold,
-                      // fontSize: 18,
-                    ),
-                  ),
-                ),
+                    child: Column(
+                      children: [
+                        Text(
+                          "(${widget.questionNumber}). " + this.question.Body,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            //  fontFamily: FontFamily.,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            // fontSize: 18,
+                          ),
+                        ),
+                        this.question.qtype == 2
+                            ? Container(
+                                child: Image.asset(
+                                    "assets/questionIcons/${this.question.questionImage}"),
+                              )
+                            : SizedBox(),
+                      ],
+                    )),
               ),
               ...this.question.Answers.map((ans) {
                 this.answerToIndex[ans] = counter;
@@ -162,13 +170,22 @@ class _QuestionItemState extends State<QuestionItem> {
                           ? Translation.translate(lang, datas.LETTERS[counter])
                           : datas.LETTERS[counter]),
                     ),
-                    title: Text(
-                      ans,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: answerToTextColor[ans],
-                      ),
-                    ),
+                    title: this.question.qtype == 1
+                        ?
+                        // if the questin type is having non image answers then list the images as Image asset inside a list tile
+                        Container(
+                            height: 45,
+                            child: Image.asset("assets/questionIcons/$ans.JPG"),
+                          )
+                        :
+                        // else just show the text inside this.
+                        Text(
+                            ans,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: answerToTextColor[ans],
+                            ),
+                          ),
                   ),
                   // color: Colors.white,
                   decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../libs.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -17,8 +18,10 @@ class CategoryItem extends StatelessWidget {
     final userdata = UserData.getInstance();
     userdata.SetCategory(categoryID);
     userdata.SetGroup(groupID);
+
     userdata.initialize();
     Group group;
+    //here filling the categoiry with the groups which are found in the provider.
     for (var grp in category.groups) {
       if (grp.ID == groupID) {
         group = grp;
@@ -27,6 +30,8 @@ class CategoryItem extends StatelessWidget {
     if (group == null) {
       return;
     }
+    Provider.of<ActiveQuestionInfo>(context, listen: false)
+        .setQuestionsInfo(category, group);
     Navigator.of(context).pushNamedAndRemoveUntil(
       QuestionScreen.RouteName,
       (context) {
@@ -47,7 +52,6 @@ class CategoryItem extends StatelessWidget {
       child: Column(children: [
         Container(
           // height: 200,
-
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.only(
@@ -55,28 +59,9 @@ class CategoryItem extends StatelessWidget {
               bottomRight: Radius.circular(20),
             ),
             child: Container(
-              // decoration: BoxDecoration(
-              //   color: Colors.black,
-              //   border: Border.all(
-              //     color: Color(0XFF006699),
-              //   ),
-              // ),
               padding: EdgeInsets.all(5),
               child: Column(
                 children: <Widget>[
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.only(
-                  //     bottomLeft: Radius.circular(20),
-                  //     bottomRight: Radius.circular(20),
-                  //   ),
-                  //   child: Image.asset(
-                  //     category.imageDir,
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
                   ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
@@ -143,8 +128,17 @@ class CategoryItem extends StatelessWidget {
                       topRight: Radius.circular(20),
                     ),
                     child: Column(
-                      children: this.category.groups != null
-                          ? (this.category.groups.map((Group group) {
+                      children: context
+                                  .watch<GroupProvider>()
+                                  .groups[this.category.ID - 1]
+                                  .length >
+                              0
+                          ? (context
+                              .watch<GroupProvider>()
+                              .groups[this.category.ID - 1]
+                              .map((Group group) {
+                              print(
+                                  "The Category ID is : ${this.category.ID - 1}");
                               return Container(
                                   decoration: BoxDecoration(
                                     border: Border(
@@ -157,7 +151,7 @@ class CategoryItem extends StatelessWidget {
                                     onTap: () {
                                       goToQuestions(
                                         group.ID,
-                                        category.ID,
+                                        group.Categoryid,
                                         context,
                                       );
                                     },

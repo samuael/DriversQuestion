@@ -24,6 +24,10 @@ void main() {
             create: (_) => SelectedCategoryProvider(),
             lazy: false,
           ),
+          ChangeNotifierProvider<GroupProvider>(
+            create: (_) => GroupProvider(),
+            lazy: false,
+          ),
           ChangeNotifierProvider<ActiveQuestion>(
             create: (_) => ActiveQuestion(),
             lazy: false,
@@ -34,6 +38,11 @@ void main() {
           ),
           ChangeNotifierProvider<UserDataProvider>(
             create: (_) => UserDataProvider(ud),
+            lazy: false,
+          ),
+          // ActiveQuestionInfo
+          ChangeNotifierProvider<ActiveQuestionInfo>(
+            create: (_) => ActiveQuestionInfo(),
             lazy: false,
           ),
         ],

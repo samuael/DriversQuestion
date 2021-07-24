@@ -65,13 +65,16 @@ class NavigationDrawer extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person),
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
                         Text(
-                          context.watch<UserDataProvider>().username.length > 10
+                          context.watch<UserDataProvider>().username.length > 15
                               ? context
                                   .watch<UserDataProvider>()
                                   .username
-                                  .substring(0, 10)
+                                  .substring(0, 15)
                               : context.watch<UserDataProvider>().username,
                           style: TextStyle(
                             color: Colors.black,
@@ -128,34 +131,36 @@ class NavigationDrawer extends StatelessWidget {
                           : 'Questions',
                       icondata: Icons.question_answer,
                       onClick: () => () async {
-                        context.watch<UserDataProvider>().userdata.initialize();
-                        Category category;
-                        Group group;
-                        final databaseManager = DatabaseManager.getInstance();
-                        int categoryID =
-                            context.watch<UserDataProvider>().userdata.category;
-                        int groupID =
-                            context.watch<UserDataProvider>().userdata.group;
-                        if (categoryID != null && groupID != null) {
-                          category = DatabaseManager.categories[categoryID - 1];
-                          await databaseManager.GetGroupByID(groupID)
-                              .then((grou) {
-                            group = grou;
-                          });
-                        }
-                        return Navigator.of(context).pushNamedAndRemoveUntil(
+                        // context.watch<UserDataProvider>().userdata.initialize();
+                        // Category category;
+                        // Group group;
+                        // final databaseManager = DatabaseManager.getInstance();
+                        // int categoryID =
+                        //     context.watch<UserDataProvider>().userdata.category;
+                        // int groupID =
+                        //     context.watch<UserDataProvider>().userdata.group;
+                        // if (categoryID != null && groupID != null) {
+                        //   category = DatabaseManager.categories[categoryID - 1];
+                        //   await databaseManager.GetGroupByID(groupID)
+                        //       .then((grou) {
+                        //     group = grou;
+                        //   });
+                        // }
+                        // Provider.of<ActiveQuestionInfo>(context, listen: false)
+                        //     .setQuestionsInfo(category, group);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
                           QuestionScreen.RouteName,
                           (_) {
                             return false;
                           },
-                          arguments: {
-                            "userdata":
-                                context.watch<UserDataProvider>().userdata,
-                            "lang":
-                                context.watch<UserDataProvider>().userdata.Lang,
-                            "category": category,
-                            "group": group,
-                          },
+                          // arguments: {
+                          //   "userdata":
+                          //       context.watch<UserDataProvider>().userdata,
+                          //   "lang":
+                          //       context.watch<UserDataProvider>().userdata.Lang,
+                          //   "category": category,
+                          //   "group": group,
+                          // },
                         );
                       }(),
                     ),

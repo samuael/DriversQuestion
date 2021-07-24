@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../libs.dart';
 
 void showPopup(
-    String lang, String title, String content, BuildContext context) {
+    String lang, String title, List<String> content, BuildContext context) {
   showDialog(
     context: context,
     builder: (conta) {
@@ -37,9 +37,16 @@ void showPopup(
         contentPadding: EdgeInsets.all(20),
         titlePadding: EdgeInsets.all(10),
         content: Text(
-          Translation.translate(lang, content) != null
-              ? Translation.translate(lang, content)
-              : content,
+          () {
+            String finalVal = '';
+            for (String val in content) {
+              finalVal += Translation.translate(lang, val) != null
+                  ? Translation.translate(lang, val)
+                  // ignore: unnecessary_statements
+                  : val;
+            }
+            return finalVal;
+          }(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,

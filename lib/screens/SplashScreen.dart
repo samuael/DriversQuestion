@@ -125,14 +125,6 @@ class _SplashAppState extends State<SplashApp> {
   }
 
   Future<void> _initializeAsyncDependencies(BuildContext context) async {
-    // print("......................................................................  It Is Calling Me    ....................................................................................");
-    // setState((){
-    //   loadCsvData().then( (listo){
-    //     print("........................................................I Goot Called ............................ ....");
-    //     lists = listo;
-    //   }  );
-    // });
-    // print(lists);
     UserData.getInstance().initialize();
     Future.delayed(
       Duration(milliseconds: 3000),
@@ -144,22 +136,8 @@ class _SplashAppState extends State<SplashApp> {
   @override
   Widget build(BuildContext context) {
     _initializeAsyncDependencies(context);
-
-    //   return MaterialApp(
-    //     debugShowCheckedModeBanner: false,
-    //     theme: context.watch<ThemeProvider>().theTheme,
-    //     home: _buildBody(),
-    //   );
-    // }
-
-    // Widget _buildBody() {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      // appBar : AppBar(
-      //   title : Text(
-      //     " Drivers Exercise " ,
-      //   ) ,
-      // ),
       body: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
@@ -204,7 +182,7 @@ class _SplashAppState extends State<SplashApp> {
                         ),
                         child: Center(
                           child: Image.asset(
-                            "assets/images/onewTwo.jpeg",
+                            "assets/images/logo.png",
                             fit: BoxFit.cover,
                           ),
                         ),

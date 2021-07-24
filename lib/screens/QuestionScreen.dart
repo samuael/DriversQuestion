@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../libs.dart';
+import 'package:provider/provider.dart';
 
 class QuestionScreen extends StatefulWidget {
   static const RouteName = "/questions/";
@@ -55,6 +56,19 @@ class _QuestionScreenState extends State<QuestionScreen>
   }
 
   void nextQuestion() {
+    if (gradeResult.AskedCount == group.QuestionsCount) {
+      showPopup(
+          this.lang,
+          "No More Question!",
+          [
+            '''You have done all the questions of this test!''',
+            '''\nYour Score is''',
+            '''  ${gradeResult.AnsweredCount}/${gradeResult.AskedCount}\n''',
+            '''To re-take this test,\nReset the result of this test in the grade Result Page!'''
+          ],
+          context);
+      return;
+    }
     if (next && this.gradeResult != null) {
       if (index < questions.length - 1) {
         setState(() {
@@ -386,17 +400,29 @@ class _QuestionScreenState extends State<QuestionScreen>
     final Map<String, Object> arguments =
         ModalRoute.of(context).settings.arguments as Map<String, Object>;
 
-    /// if the route is coming from the Category page then the data will be saved in the Shared Preferences
-    // and if the Route is Coming from main Page First Page
-    // then the First page will get the group and the category from the shared Preferences and
-    // will call the question page
-    // if there is no category and group id saved in the
-    // shared preferences then  the first page to be
-    // shown will be the category page
-    this.userdata = arguments["userdata"] as UserData;
-    this.lang = arguments["lang"] as String;
-    this.category = arguments["category"] as Category;
-    this.group = arguments["group"] as Group;
+    // /// if the route is coming from the Category page then the data will be saved in the Shared Preferences
+    // // and if the Route is Coming from main Page First Page
+    // // then the First page will get the group and the category from the shared Preferences and
+    // // will call the question page
+    // // if there is no category and group id saved in the
+    // // shared preferences then  the first page to be
+    // // shown will be the category page
+    if (arguments != null) {
+      this.userdata = arguments["userdata"] as UserData;
+      this.lang = arguments["lang"] as String;
+      this.category = arguments["category"] as Category;
+      this.group = arguments["group"] as Group;
+    }
+    if (this.userdata == null ||
+        this.lang == null ||
+        this.category == null ||
+        this.group == null) {
+      this.category = context.watch<ActiveQuestionInfo>().category;
+      this.group = context.watch<ActiveQuestionInfo>().group;
+      this.lang = context.watch<UserDataProvider>().language;
+      this.userdata = context.watch<UserDataProvider>().userdata;
+    }
+
     if (group == null || category == null) {
       this.goToCategoriesPage = true;
     } else {

@@ -2,6 +2,8 @@
 
 import 'package:DriversMobile/actions/actions.dart';
 import 'package:flutter/material.dart';
+import '../libs.dart';
+import 'package:provider/provider.dart';
 
 class CategorySmallItem extends StatelessWidget {
   final Category category;
@@ -30,7 +32,8 @@ class CategorySmallItem extends StatelessWidget {
             color: this.color,
           ),
           Text(
-            category.Name,
+            Translation.translate(
+                context.watch<UserDataProvider>().language, category.Name),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic,

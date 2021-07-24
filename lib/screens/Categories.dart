@@ -1,5 +1,4 @@
 import 'package:flutter/rendering.dart';
-import 'package:loop_page_view/loop_page_view.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import '../libs.dart';
@@ -42,9 +41,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
     databaseManager = DatabaseManager.getInstance();
     this.categories = DatabaseManager.categories;
     // populating list of groups in the list of categories.
-    this.categories[0].populateGroups(databaseManager);
-    this.categories[1].populateGroups(databaseManager);
-    this.categories[2].populateGroups(databaseManager);
+    // this.categories[0].populateGroups(databaseManager);
+    // this.categories[1].populateGroups(databaseManager);
+    // this.categories[2].populateGroups(databaseManager);
 
     this.userdata = UserData.getInstance();
     this.userdata.GetLanguage().then((lang) {
@@ -74,42 +73,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
     // user data Provider holding the data of users.
     userdataProvider = Provider.of<UserDataProvider>(context, listen: false);
     if (once) {
-      this.categories[0].populateGroups(databaseManager).then((value) {
-        setState(() {
-          this.categories[0].groups = value;
-          if (this.categoryitems[0] != null) {
-            this.categoryitems[0] =
-                CategoryItem(category: this.categories[0], lang: userdata.Lang);
-          } else {
-            this.categoryitems.add(CategoryItem(
-                category: this.categories[0], lang: userdata.Lang));
-          }
-        });
-      });
-      this.categories[1].populateGroups(databaseManager).then((value) {
-        setState(() {
-          this.categories[1].groups = value;
-          if (this.categoryitems[1] != null) {
-            this.categoryitems[1] =
-                CategoryItem(category: this.categories[1], lang: userdata.Lang);
-          } else {
-            this.categoryitems.add(CategoryItem(
-                category: this.categories[1], lang: userdata.Lang));
-          }
-        });
-      });
-      this.categories[2].populateGroups(databaseManager).then((value) {
-        setState(() {
-          this.categories[2].groups = value;
-          if (this.categoryitems[2] != null) {
-            this.categoryitems[2] =
-                CategoryItem(category: this.categories[2], lang: userdata.Lang);
-          } else {
-            this.categoryitems.add(CategoryItem(
-                category: this.categories[2], lang: userdata.Lang));
-          }
-        });
-      });
+      print("runnign...");
+      context.read<GroupProvider>().fetchGroups();
       once = false;
     }
     // context.watch<SelectedCategoryProvider>().selectedIndex;
@@ -141,7 +106,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black87,
-        currentIndex: selectedIndex,
+        currentIndex: context.watch<SelectedCategoryProvider>().selectedIndex,
         items: [
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
@@ -203,7 +168,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             setState(() {
                               this.selectedIndex = 0;
                               context
-                                  .watch<SelectedCategoryProvider>()
+                                  .read<SelectedCategoryProvider>()
                                   .setIndex(0);
                             });
                           },

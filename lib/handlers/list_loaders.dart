@@ -142,7 +142,7 @@ class ListLoader {
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
-        int ansIndex = int.parse(quest[1]);
+        int ansIndex = int.parse(quest[1]) - 1;
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
@@ -155,11 +155,9 @@ class ListLoader {
         );
         questions.add(question);
       } catch (e, a) {
-        print("THE ERROR IS : ${e.toString()}");
         continue;
       }
     }
-    print("Real Questions Length ${questions.length}");
     return questions;
   }
 
@@ -233,7 +231,7 @@ class ListLoader {
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
-        int ansIndex = int.parse(quest[1]);
+        int ansIndex = int.parse(quest[1]) - 1;
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
@@ -317,7 +315,7 @@ class ListLoader {
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {
-        int ansIndex = int.parse(quest[1]);
+        int ansIndex = int.parse(quest[1]) - 1;
         Question question = new Question(
           Categoryid: category,
           Groupid: group,
@@ -326,7 +324,7 @@ class ListLoader {
           Answerindex: ansIndex,
           qtype: 2,
           questionImage:
-              "${quest[2]}", // sinece i am sure about the correctness of the integer
+              "${quest[2]}.JPG", // sinece i am sure about the correctness of the integer
         );
         questions.add(question);
       } catch (e, a) {

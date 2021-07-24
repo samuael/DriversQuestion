@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import '../libs.dart';
 
@@ -50,8 +51,10 @@ class SelectTheme extends StatelessWidget {
   }
 
   void changeTheme(BuildContext contaext, int index) {
-    Provider.of<UserDataProvider>(contaext, listen: false).setThemeIndex(index);
-    this.themeProvider.setTheme(index);
+    // Provider.of<UserDataProvider>(contaext, listen: false).setThemeIndex(index);
+    // this.themeProvider.setTheme(index);
+    contaext.read<UserDataProvider>().setThemeIndex(index);
+    contaext.read<ThemeProvider>().setTheme(index);
     UserData.getInstance().SetThmeIndex(index);
     ProgressMessageDialog.show(contaext, "Updating Theme ...");
   }
