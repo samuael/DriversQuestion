@@ -176,8 +176,6 @@ class _ResultScreenState extends State<ResultScreen> {
                 gradeResult.Categoryid == gres.Categoryid &&
                 gradeResult.Groupid == gres.Groupid) {
               setState(() {
-                print("The k is $k");
-                this.othersResults[k] = gradeResult;
                 this.otherTotalAnswered = 0;
                 this.otherTotalAsked = 0;
 
@@ -243,11 +241,10 @@ class _ResultScreenState extends State<ResultScreen> {
       ),
       appBar: AppBar(
         elevation: 0,
-        // backgroundColor: Theme.of(context).canvasColor,
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
           decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
+            // color: Theme.of(context).canvasColor,
             borderRadius: BorderRadius.only(
               topRight: Radius.elliptical(200, 120),
               topLeft: Radius.elliptical(200, 120),
@@ -258,7 +255,7 @@ class _ResultScreenState extends State<ResultScreen> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic,
-              color: Theme.of(context).primaryColor,
+              color: Colors.white,
             ),
           ),
         ),
@@ -284,14 +281,10 @@ class _ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text(
-                          (Translation.translate(this.lang, " Category  ")) +
+                          Translation.translate(this.lang, " Category  ") +
                               "  : " +
-                              (Translation.translate(
-                                          this.lang, this.categories[0].Name) !=
-                                      null
-                                  ? Translation.translate(
-                                      this.lang, this.categories[0].Name)
-                                  : this.categories[0].Name),
+                              Translation.translate(
+                                  this.lang, this.categories[0].Name),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
@@ -305,11 +298,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 color: Colors.white54,
                               ),
                               child: Text(
-                                (Translation.translate(this.lang, "Total") !=
-                                            null
-                                        ? Translation.translate(
-                                            this.lang, "Total")
-                                        : "Total") +
+                                Translation.translate(this.lang, "Total") +
                                     " : $motorTotalAnswered / $motorTotalAsked",
                                 style: TextStyle(
                                   fontStyle: FontStyle.italic,
@@ -348,19 +337,19 @@ class _ResultScreenState extends State<ResultScreen> {
                             color: Theme.of(context).primaryColor,
                           ),
                           title: Text(
-                            (Translation.translate(this.lang, "Test") != null
-                                    ? Translation.translate(this.lang, "Test")
-                                    : "Test") +
+                            Translation.translate(this.lang, "Test") +
                                 " : ${++motorTestCounter}",
                             style: TextStyle(
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium.color,
                             ),
                           ),
                           subtitle: Text(
                             "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium.color,
                             ),
                           ),
                           trailing: InkWell(
@@ -401,17 +390,10 @@ class _ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text(
-                          (Translation.translate(this.lang, " Category  ") !=
-                                      null
-                                  ? Translation.translate(this.lang, "Category")
-                                  : "Category") +
+                          Translation.translate(this.lang, " Category  ") +
                               "  : " +
-                              (Translation.translate(
-                                          this.lang, this.categories[1].Name) !=
-                                      null
-                                  ? Translation.translate(
-                                      this.lang, this.categories[1].Name)
-                                  : this.categories[1].Name),
+                              Translation.translate(
+                                  this.lang, this.categories[1].Name),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
@@ -425,11 +407,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 color: Colors.white54,
                               ),
                               child: Text(
-                                (Translation.translate(this.lang, "Total") !=
-                                            null
-                                        ? Translation.translate(
-                                            this.lang, "Total")
-                                        : "Total") +
+                                Translation.translate(this.lang, "Total") +
                                     " : $otherTotalAnswered / $otherTotalAsked",
                                 style: TextStyle(
                                   fontStyle: FontStyle.italic,
@@ -467,19 +445,23 @@ class _ResultScreenState extends State<ResultScreen> {
                             leading: Icon(Icons.local_car_wash,
                                 color: Theme.of(context).primaryColor),
                             title: Text(
-                              (Translation.translate(this.lang, "Test") != null
-                                      ? Translation.translate(this.lang, "Test")
-                                      : "Test") +
+                              Translation.translate(this.lang, "Test") +
                                   " : ${++othersTestCounter}",
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.body1.color,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    .color,
                               ),
                             ),
                             subtitle: Text(
                               "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).textTheme.body1.color,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    .color,
                               ),
                             ),
                             trailing: InkWell(
@@ -506,10 +488,6 @@ class _ResultScreenState extends State<ResultScreen> {
                         );
                 },
               ).toList()),
-
-// ICONS Results showing area
-//
-//
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -525,14 +503,10 @@ class _ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text(
-                          (Translation.translate(this.lang, " Category  ")) +
+                          Translation.translate(this.lang, " Category  ") +
                               "  : " +
-                              (Translation.translate(
-                                          this.lang, this.categories[2].Name) !=
-                                      null
-                                  ? Translation.translate(
-                                      this.lang, this.categories[2].Name)
-                                  : this.categories[2].Name),
+                              Translation.translate(
+                                  this.lang, this.categories[2].Name),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
@@ -546,11 +520,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 color: Colors.white54,
                               ),
                               child: Text(
-                                (Translation.translate(this.lang, "Total") !=
-                                            null
-                                        ? Translation.translate(
-                                            this.lang, "Total")
-                                        : "Total") +
+                                Translation.translate(this.lang, "Total") +
                                     " : $iconsTotalAnswered / $iconTotalAsked",
                                 style: TextStyle(
                                   fontStyle: FontStyle.italic,
@@ -589,19 +559,19 @@ class _ResultScreenState extends State<ResultScreen> {
                             color: Theme.of(context).primaryColor,
                           ),
                           title: Text(
-                            (Translation.translate(this.lang, "Test") != null
-                                    ? Translation.translate(this.lang, "Test")
-                                    : "Test") +
+                            Translation.translate(this.lang, "Test") +
                                 " : ${++iconsTestCounter}",
                             style: TextStyle(
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium.color,
                             ),
                           ),
                           subtitle: Text(
                             "${gradeResult.AnsweredCount}/${gradeResult.AskedCount}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium.color,
                             ),
                           ),
                           trailing: InkWell(
@@ -627,11 +597,6 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                       );
               }).toList()),
-
-//
-//
-// END -----------------
-
               InkWell(
                 onTap: () => resetAll(),
                 hoverColor: Color(0XFF006699),
@@ -657,11 +622,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          Translation.translate(this.lang, "Reset Results") !=
-                                  null
-                              ? Translation.translate(
-                                  this.lang, "Reset Results")
-                              : "Reset Results",
+                          Translation.translate(this.lang, "Reset Results"),
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

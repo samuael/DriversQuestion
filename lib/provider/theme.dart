@@ -1,23 +1,38 @@
-import 'package:DriversMobile/libs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import "../../libs.dart";
 
-//
+const MaterialColor myRed = MaterialColor(
+  0xffC70039,
+  <int, Color>{
+    50: Color(0xffC70039),
+    100: Color(0xffC70039),
+    200: Color(0xffC70039),
+    300: Color(0xffC70039),
+    400: Color(0xffC70039),
+    500: Color(0xffC70039),
+    600: Color(0xffC70039),
+    700: Color(0xffC70039),
+    800: Color(0xffC70039),
+    900: Color(0xffC70039),
+  },
+);
+
 class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   static List<ThemeData> themes = [
     ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: myRed, //Color(0xffC70039),
       textTheme: TextTheme(
-        body1: TextStyle(
+        bodyMedium: TextStyle(
           color: Colors.black,
         ),
       ),
       canvasColor: Colors.white,
     ),
     ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: myRed,
       textTheme: TextTheme(
-        body1: TextStyle(
+        bodyMedium: TextStyle(
           color: Colors.black,
         ),
       ),
@@ -27,7 +42,7 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
       primarySwatch: Colors.brown,
       // backgroundColor: Colors.white24,
       textTheme: TextTheme(
-        body1: TextStyle(
+        bodyMedium: TextStyle(
           color: Colors.brown,
         ),
       ),
@@ -36,7 +51,7 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     ThemeData(
       primarySwatch: Colors.teal,
       textTheme: TextTheme(
-        body1: TextStyle(
+        bodyMedium: TextStyle(
           color: Colors.black,
         ),
       ),
@@ -45,7 +60,7 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
     ThemeData(
       primarySwatch: Colors.orange,
       textTheme: TextTheme(
-        body1: TextStyle(
+        bodyMedium: TextStyle(
           color: Colors.black,
         ),
       ),
@@ -54,7 +69,6 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ];
   UserData userdata;
   ThemeProvider.withUserData({UserData userdata}) {
-    print("The Provided Theme Index is : ${userdata.themeIndex} ");
     this.themeIndex = userdata.themeIndex;
     this.theTheme = themes[this.themeIndex];
     this.userdata = userdata;
@@ -71,7 +85,6 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ThemeData get theme => theTheme;
 
   void setTheme(int index) async {
-    print("The New Theme Index is : $themeIndex");
     this.themeIndex = index;
     this.theTheme = themes[this.themeIndex];
     await this.userdata.SetThmeIndex(this.themeIndex);

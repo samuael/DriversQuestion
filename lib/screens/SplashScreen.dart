@@ -52,7 +52,6 @@ Future<void> gotoQuestions(
   Category category;
   final databaseManager = DatabaseManager.getInstance();
   category = DatabaseManager.categories[categoryID - 1];
-  print("Group ID In Splash Screen IS L $groupID");
   await databaseManager.GetGroupByID(groupID).then((group) {
     groupo = group;
   });
@@ -67,10 +66,6 @@ Future<void> gotoQuestions(
       "locald": userdata,
     });
   }
-  print("Category ID : $categoryID");
-  print("Group ID : $groupID");
-  print("Userdata  : $userdata");
-  print("Lang ID : ${userdata.Lang}");
   Navigator.of(context).pushNamedAndRemoveUntil(
     QuestionScreen.RouteName,
     (_) {
@@ -118,7 +113,6 @@ class _SplashAppState extends State<SplashApp> {
       }
       setState(() {
         this.tickerValue = duration.inSeconds * 0.02;
-        print(this.tickerValue);
       });
     });
     ticker.start();
@@ -173,7 +167,7 @@ class _SplashAppState extends State<SplashApp> {
                     ),
                   ),
                   child: Stack(
-                    overflow: Overflow.clip,
+                    // overflow: Overflow.clip,
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.all(20),

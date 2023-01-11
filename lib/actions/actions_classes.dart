@@ -8,9 +8,7 @@ void showPopup(
     builder: (conta) {
       return AlertDialog(
         title: Text(
-          Translation.translate(lang, title) != null
-              ? Translation.translate(lang, title)
-              : title,
+          Translation.translate(lang, title),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -19,12 +17,10 @@ void showPopup(
         ),
         elevation: 25,
         actions: <Widget>[
-          FlatButton(
+          ElevatedButton(
               onPressed: () => Navigator.pop(conta),
               child: Text(
-                Translation.translate(lang, "Ok") != null
-                    ? Translation.translate(lang, "Ok")
-                    : "Ok",
+                Translation.translate(lang, "Ok"),
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   backgroundColor: Theme.of(context).primaryColor,
@@ -40,10 +36,7 @@ void showPopup(
           () {
             String finalVal = '';
             for (String val in content) {
-              finalVal += Translation.translate(lang, val) != null
-                  ? Translation.translate(lang, val)
-                  // ignore: unnecessary_statements
-                  : val;
+              finalVal += Translation.translate(lang, val);
             }
             return finalVal;
           }(),
@@ -64,24 +57,23 @@ void ShowResult(String lang, GradeResult gradeResult, BuildContext context) {
     context: context,
     builder: (conta) {
       return AlertDialog(
-        title: Text(
-          Translation.translate(lang, "Grade Result") != null
-              ? Translation.translate(lang, "Grade Result")
-              : "Grade Result",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        title: Container(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Text(
+            Translation.translate(lang, "Grade Result"),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
         elevation: 25,
         actions: <Widget>[
-          FlatButton(
+          OutlinedButton(
               onPressed: () => Navigator.pop(conta),
               child: Text(
-                Translation.translate(lang, "Ok") != null
-                    ? Translation.translate(lang, "Ok")
-                    : "Ok",
+                Translation.translate(lang, "Ok"),
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   backgroundColor: Theme.of(context).primaryColor,
@@ -94,66 +86,56 @@ void ShowResult(String lang, GradeResult gradeResult, BuildContext context) {
         contentPadding: EdgeInsets.all(20),
         titlePadding: EdgeInsets.all(10),
         content: Container(
+            height: MediaQuery.of(context).size.height * 0.25,
             child: Column(
-          children: [
-            Text(
-              (Translation.translate(lang, "Category ") != null
-                      ? Translation.translate(lang, "Category")
-                      : "Category ") +
-                  " : " +
-                  (Translation.translate(
-                              lang,
-                              DatabaseManager
-                                  .categories[gradeResult.Categoryid - 1]
-                                  .Name) !=
-                          null
-                      ? Translation.translate(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  Translation.translate(lang, "Category ") +
+                      " : " +
+                      Translation.translate(
                           lang,
                           DatabaseManager
-                              .categories[gradeResult.Categoryid - 1].Name)
-                      : DatabaseManager
-                          .categories[gradeResult.Categoryid - 1].Name),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            Text(
-              (Translation.translate(lang, "Group ") != null
-                      ? Translation.translate(lang, "Group")
-                      : "Group") +
-                  " : " +
-                  "${gradeResult.Groupid}",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Colors.white,
+                              .categories[gradeResult.Categoryid - 1].Name),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-              ),
-              child: Text(
-                "${gradeResult.AnsweredCount} /${gradeResult.AskedCount}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 30,
+                Text(
+                  Translation.translate(lang, "Group ") +
+                      " : " +
+                      "${gradeResult.Groupid}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-              ),
-            )
-          ],
-        )),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.symmetric(
+                    vertical: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.white,
+                    ),
+                  ),
+                  child: Text(
+                    "${gradeResult.AnsweredCount} /${gradeResult.AskedCount}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 30,
+                    ),
+                  ),
+                )
+              ],
+            )),
       );
     },
     barrierDismissible: true,

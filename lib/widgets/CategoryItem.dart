@@ -78,34 +78,16 @@ class CategoryItem extends StatelessWidget {
                       child: Card(
                         color: Theme.of(context).primaryColor,
                         child: Text(
-                          (Translation.translate(this.lang, "The") != null
-                                  ? Translation.translate(this.lang, "The")
-                                  : "The") +
+                          Translation.translate(this.lang, "The") +
                               " " +
-                              (Translation.translate(lang, category.Name) !=
-                                      null
-                                  ? Translation.translate(lang, category.Name)
-                                  : category.Name) +
+                              Translation.translate(lang, category.Name) +
                               " " +
                               (category.ID == 1
-                                  ? (Translation.translate(
-                                              this.lang, "Cycle") !=
-                                          null
-                                      ? Translation.translate(
-                                          this.lang, "Cycle")
-                                      : "Cycle")
-                                  : (Translation.translate(
-                                              this.lang, "Vehicles") !=
-                                          null
-                                      ? Translation.translate(
-                                          this.lang, "Vehicles")
-                                      : "Vehicles")) +
+                                  ? Translation.translate(this.lang, "Cycle")
+                                  : Translation.translate(
+                                      this.lang, "Vehicles")) +
                               " " +
-                              (Translation.translate(this.lang, "Questions") !=
-                                      null
-                                  ? Translation.translate(
-                                      this.lang, "Questions")
-                                  : "Questions"),
+                              Translation.translate(this.lang, "Questions"),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             // fontFamily: FontFamily.Apple_Symbols.toString(),
@@ -119,9 +101,6 @@ class CategoryItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  //
-                  // The List Of Groups Are To Be Listed below here
-                  //
                   ClipRRect(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -137,8 +116,6 @@ class CategoryItem extends StatelessWidget {
                               .watch<GroupProvider>()
                               .groups[this.category.ID - 1]
                               .map((Group group) {
-                              print(
-                                  "The Category ID is : ${this.category.ID - 1}");
                               return Container(
                                   decoration: BoxDecoration(
                                     border: Border(
@@ -161,12 +138,8 @@ class CategoryItem extends StatelessWidget {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     title: Text(
-                                      (Translation.translate(
-                                                      lang, "Test Number ") !=
-                                                  null
-                                              ? Translation.translate(
-                                                  lang, "Test Number ")
-                                              : "Test Number ") +
+                                      Translation.translate(
+                                              lang, "Test Number ") +
                                           " : " +
                                           "${group.GroupNumber}",
                                       style: TextStyle(
@@ -175,14 +148,7 @@ class CategoryItem extends StatelessWidget {
                                       ),
                                     ),
                                     subtitle: Text(
-                                      "${group.QuestionsCount} ${Translation.translate(lang, " Questions ") != null ? Translation.translate(lang, " Questions ") : " Questions "}",
-                                      // +
-                                      //             Translation.translate(
-                                      //                 lang, " Questions "
-                                      //                 ) != null
-                                      //     ? Translation.translate(lang, " Questions " , )
-                                      //     : " Questions ").toUpperCase(),
-
+                                      "${group.QuestionsCount} ${Translation.translate(lang, " Questions ")}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontStyle: FontStyle.italic,

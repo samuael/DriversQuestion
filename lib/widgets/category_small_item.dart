@@ -1,6 +1,3 @@
-// import 'dart:html';
-
-import 'package:DriversMobile/actions/actions.dart';
 import 'package:flutter/material.dart';
 import '../libs.dart';
 import 'package:provider/provider.dart';
@@ -18,17 +15,15 @@ class CategorySmallItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(5),
       width: MediaQuery.of(context).size.width * 0.28,
-      // margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(20),
         shape: BoxShape.rectangle,
       ),
       child: Column(
         children: [
           Icon(
             category.icon,
-            size: 50,
+            size: MediaQuery.of(context).size.width * 0.25,
             color: this.color,
           ),
           Text(
@@ -37,6 +32,7 @@ class CategorySmallItem extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic,
+              fontSize: 20,
             ),
           ),
         ],

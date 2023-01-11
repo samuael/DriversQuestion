@@ -56,9 +56,7 @@ class _QuestionItemState extends State<QuestionItem> {
   }
 
   Future<void> handlerAnswer(String answer) async {
-    print("Status : ${stage.toString()}");
     if (stage == QStage.NotAnswered) {
-      // print(stage.toString());
       await widget
           .answerQuestion(widget.question.ID, answerToIndex[answer])
           .then((val) {
@@ -164,11 +162,8 @@ class _QuestionItemState extends State<QuestionItem> {
                     onTap: () => handlerAnswer(ans),
                     selected: false,
                     leading: CircleAvatar(
-                      child: Text(Translation.translate(
-                                  lang, datas.LETTERS[counter]) !=
-                              null
-                          ? Translation.translate(lang, datas.LETTERS[counter])
-                          : datas.LETTERS[counter]),
+                      child: Text(
+                          Translation.translate(lang, datas.LETTERS[counter])),
                     ),
                     title: this.question.qtype == 1
                         ?

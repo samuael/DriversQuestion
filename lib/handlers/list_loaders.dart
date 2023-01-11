@@ -38,7 +38,6 @@ class ListLoader {
       for (dynamic ans in anss) {
         answers.add("${ans}");
       }
-      // print(answers);
       if (answers == null || answers.length < 2) continue;
       answers = Shuffle(answers);
       for (int v = 0; v < answers.length; v++) {
@@ -77,9 +76,7 @@ class ListLoader {
               "", // sinece i am sure about the correctness of the integer
         );
         questions.add(question);
-      } catch (e, a) {
-        print(e.toString());
-      }
+      } catch (e, a) {}
     }
     return questions;
   }
@@ -138,7 +135,6 @@ class ListLoader {
   static Future<List<Question>> loadQuestions(
       String path, String sheetName, int category, int group) async {
     List<List<dynamic>> loads = await ListLoader.loadXlsx(path, sheetName);
-    print("   Load Questions ${loads.length}");
     List<Question> questions = [];
     for (List<dynamic> quest in loads) {
       try {

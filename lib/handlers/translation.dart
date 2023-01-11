@@ -1,6 +1,4 @@
-import 'package:DriversMobile/handlers/sharedPreference.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import '../../libs.dart';
 
 class Translation {
   static const languages = ["Eng", "Amh"];

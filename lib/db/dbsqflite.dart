@@ -177,14 +177,11 @@ class DatabaseManager {
   Future<Question> getQuestion(int category, int group) async {
     await OpenDatabase();
     Question question;
-    // print("Grooup : $group   : Category : $category ");
 
     GradeResult graderesult = await getGradeResult(group, category);
     if (graderesult == null) {
       graderesult = GradeResult(Categoryid: category, Groupid: group);
     }
-    print(
-        "Grade Result  ID :${graderesult.ID}  / Questions: ${graderesult.Questions}");
     String ids = "";
     if (graderesult.Questions.length > 0) {
       ids = "${graderesult.Questions[0]}";
@@ -197,8 +194,6 @@ class DatabaseManager {
         ids += ",$el";
       }
     }
-    print(
-        "Querying Questions : Category ID : ${graderesult.Categoryid}  Group id : ${graderesult.Groupid}");
     await database
         .rawQuery(
       "SELECT id , answers , body , answerindex , categoryid ,question_image , type,  groupid FROM questions WHERE id NOT IN ($ids) AND groupid=$group AND categoryid=$category  LIMIT 1",
@@ -211,11 +206,8 @@ class DatabaseManager {
         } else {
           answers.forEach((element) {
             element.trim();
-            print(element);
           });
         }
-        print(
-            "${rows[0]["question_image"]}   Qtype : ${"${rows[0]["type"]}".trim()}");
         question = Question(
           ID: (rows[0]["id"]) as int,
           Categoryid: category,
@@ -228,14 +220,11 @@ class DatabaseManager {
         );
       }
     });
-    print(
-        "The Question is : ${question.Body} ${question.ID}   ${question.Answers}");
     return question;
   }
 
   Future<Question> getQuestionByID(int questionID) async {
     await OpenDatabase();
-    // print("The Question IDDD : $questionID");
     Question quest;
     await database
         .query(
@@ -307,13 +296,9 @@ class DatabaseManager {
     await OpenDatabase();
     for (var gres in gradeResults) {
       try {
-        // print(
-        // "${gres.ID}, ${gres.AnsweredCount}, ${gres.AskedCount}, ${gres.Categoryid}, ${gres.Groupid} ");
         int val = await database.insert("graderesult", gres.toMap());
         if (val != 0) counter++;
-      } catch (e, a) {
-        print("Database Grade Results Table Insert Error ${e.toString()}");
-      }
+      } catch (e, a) {}
     }
     return counter;
   }
@@ -351,9 +336,7 @@ class DatabaseManager {
     await UpdateGradeResult(tobe).then((inde) {
       inde = changed;
     });
-    if (changed <= 0) {
-      // print("Not Succesful nigga ");
-    }
+    if (changed <= 0) {}
     GradeResult gradeResult;
     await OpenDatabase();
     await database
@@ -380,14 +363,11 @@ class DatabaseManager {
         Questions: questionids,
       );
     });
-    print("Before Returning the GradeResult ${gradeResult.toMap()}");
     return gradeResult;
   }
 
   Future<int> UpdateGradeResult(GradeResult gradeResult) async {
     int counter = 0;
-    print(
-        "Grade Result ID : ${gradeResult.ID}  and Questions : ${gradeResult.Questions}");
     await OpenDatabase();
     database.update(
       "graderesult",
@@ -412,7 +392,6 @@ class DatabaseManager {
         .then((rows) {
       for (var row in rows) {
         final questionIDs = (row["askedquestions"] as String).split("`");
-        print("Questions of the Grade Result $questionIDs");
         GradeResult gradeResult = GradeResult(
           ID: row["id"] as int,
           Categoryid: row["categoryid"] as int,
@@ -435,18 +414,15 @@ class DatabaseManager {
         where: "categoryid=? and groupid=?",
         whereArgs: [categoryid, groupid]).then((value) {
       if (value.length > 0) {
-        print(value);
         final questionsID = (value[0]["askedquestions"] as String != null
                 ? value[0]["askedquestions"] as String
                 : "")
             .split("`");
-        print("Question grade Results  $questionsID");
         graderResult.Categoryid = value[0]["categoryid"] as int;
         graderResult.AnsweredCount = value[0]["answeredcount"] as int;
         graderResult.Groupid = value[0]["groupid"];
         graderResult.AskedCount = value[0]["askedcount"] as int;
         graderResult.Questions = questionsID;
-        print(" The Grade Result ID is : ${value[0]["id"]}");
         graderResult.ID = int.parse(("${value[0]["id"]}".trim()));
       } else {
         graderResult = GradeResult(
@@ -464,8 +440,6 @@ class DatabaseManager {
       graderResult.ID = count;
       await saveGradeResult(graderResult);
     }
-    print(
-        "Result :  ${graderResult.ID} ${graderResult.Categoryid}  ${graderResult.Groupid}");
     return graderResult;
   }
 

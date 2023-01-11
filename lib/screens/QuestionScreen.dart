@@ -83,7 +83,6 @@ class _QuestionScreenState extends State<QuestionScreen>
           this.next = true;
         });
       } else {
-        print("Inside Else Statement .. ");
         if (databaseManager == null) {
           this.databaseManager = DatabaseManager.getInstance();
         }
@@ -112,9 +111,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         builder: (conta) {
           return AlertDialog(
             title: Text(
-              Translation.translate(this.lang, "Wait a second ... ") != null
-                  ? Translation.translate(this.lang, "Wait a second ... ")
-                  : "Wait a second ... ",
+              Translation.translate(this.lang, "Wait a second ... "),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -123,12 +120,10 @@ class _QuestionScreenState extends State<QuestionScreen>
             ),
             elevation: 25,
             actions: <Widget>[
-              FlatButton(
+              OutlinedButton(
                   onPressed: () => Navigator.pop(conta),
                   child: Text(
-                    Translation.translate(this.lang, "Ok") != null
-                        ? Translation.translate(this.lang, "Ok")
-                        : "Ok",
+                    Translation.translate(this.lang, "Ok"),
                     style: TextStyle(
                       backgroundColor: Theme.of(context).primaryColor,
                       color: Colors.white,
@@ -140,18 +135,10 @@ class _QuestionScreenState extends State<QuestionScreen>
             titlePadding: EdgeInsets.all(10),
             content: Text(
               this.gradeResult == null
-                  ? (Translation.translate(this.lang,
-                              "your are not allowed to access questions\nchoose a group first") !=
-                          null
-                      ? Translation.translate(this.lang,
-                          "your are not allowed to access questions\nchoose a group first")
-                      : "your are not allowed to access questions\nchoose a group first")
-                  : (Translation.translate(
-                              this.lang, "First ! Answer this question") !=
-                          null
-                      ? Translation.translate(
-                          this.lang, "First ! Answer this question")
-                      : "First ! Answer this question"),
+                  ? Translation.translate(this.lang,
+                      "your are not allowed to access questions\nchoose a group first")
+                  : Translation.translate(
+                      this.lang, "First ! Answer this question"),
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -189,7 +176,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       setState(() {
         if (answerIndex == answerIn) {
           final was = gradeResult.Questions.indexOf("$questionID");
-          print("Heree  :  ${gradeResult.Questions}");
           if (was < 0) {
             this.gradeResult.Questions.add("$questionID");
             this.gradeResult.AnsweredCount++;
@@ -241,24 +227,23 @@ class _QuestionScreenState extends State<QuestionScreen>
           context: context,
           builder: (conta) {
             return AlertDialog(
-              title: Text(
-                Translation.translate(this.lang, "Wait wait ... ") != null
-                    ? Translation.translate(this.lang, "Wait wait ... ")
-                    : "Wait wait ... ",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              title: Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  Translation.translate(this.lang, "Wait wait ... "),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               elevation: 25,
               actions: <Widget>[
-                FlatButton(
+                OutlinedButton(
                     onPressed: () => Navigator.pop(conta),
                     child: Text(
-                      Translation.translate(this.lang, "Ok") != null
-                          ? Translation.translate(this.lang, "Ok")
-                          : "Ok",
+                      Translation.translate(this.lang, "Ok"),
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         backgroundColor: Theme.of(context).primaryColor,
@@ -272,11 +257,7 @@ class _QuestionScreenState extends State<QuestionScreen>
               titlePadding: EdgeInsets.all(10),
               content: Text(
                 Translation.translate(
-                            this.lang, "No Other Question to preview") !=
-                        null
-                    ? Translation.translate(
-                        this.lang, "No Other Question to preview")
-                    : "No Other Question to preview",
+                    this.lang, "No Other Question to preview"),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -318,17 +299,15 @@ class _QuestionScreenState extends State<QuestionScreen>
         ),
         child: Card(
           elevation: 6,
-          child: FlatButton(
-            padding: EdgeInsets.all(40),
-            color: Theme.of(context).primaryColor,
+          child: ElevatedButton(
+            // padding: EdgeInsets.all(40),
+            // color: Theme.of(context).primaryColor,
             onPressed: () => goToCategoreis(context),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  Translation.translate(lang, "Go To Categories") != null
-                      ? Translation.translate(lang, "Go To Categories")
-                      : "Go To Categories ",
+                  Translation.translate(lang, "Go To Categories"),
                   style: TextStyle(
                     backgroundColor: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
@@ -350,48 +329,29 @@ class _QuestionScreenState extends State<QuestionScreen>
   }
 
   Widget starterWidget() {
-    return Container(
-      height: 200,
-      width: 300,
-      decoration: BoxDecoration(),
-      child: Center(
-          child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-        child: Card(
-          elevation: 6,
-          child: FlatButton(
-            padding: EdgeInsets.all(40),
-            color: Theme.of(context).primaryColor,
-            onPressed: nextQuestion,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  Translation.translate(lang, "Start") != null
-                      ? Translation.translate(lang, "Start")
-                      : "Start",
-                  style: TextStyle(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Container(
+            // height: 200,
+            // width: 300,
+            padding: EdgeInsets.all(15),
+            child: OutlinedButton(
+              onPressed: nextQuestion,
+              child: Text(
+                Translation.translate(lang, "Start"),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 20,
+                  color: Theme.of(context).primaryColor,
                 ),
-                Icon(
-                  Icons.play_circle_outline,
-                  color: Colors.white,
-                ),
-              ],
+              ),
             ),
           ),
         ),
-      )),
+      ],
     );
   }
 
@@ -426,8 +386,6 @@ class _QuestionScreenState extends State<QuestionScreen>
     if (group == null || category == null) {
       this.goToCategoriesPage = true;
     } else {
-      print(
-          "Instantiating the Category and the  Group Id Values ...  Category ${category.ID}  Group ID : ${group.ID}");
       this.userdata.SetCategory(category.ID);
       this.userdata.SetGroup(group.ID);
       this.userdata.initialize();
@@ -470,9 +428,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                 child: Row(
                   children: [
                     Text(
-                      Translation.translate(this.lang, "Categories") != null
-                          ? Translation.translate(this.lang, "Categories")
-                          : "Categories",
+                      Translation.translate(this.lang, "Categories"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 10,
@@ -521,7 +477,6 @@ class _QuestionScreenState extends State<QuestionScreen>
               }
             }
           });
-          // print("selected Index is : $selectedIndex");
         },
         backgroundColor: Theme.of(context).primaryColor,
         selectedItemColor: Colors.black26,
@@ -534,31 +489,19 @@ class _QuestionScreenState extends State<QuestionScreen>
               Icons.skip_previous,
               color: prev ? Colors.white : Colors.black26,
             ),
-            title: Text(
-              Translation.translate(lang, "Previous") != null
-                  ? Translation.translate(lang, "Previous")
-                  : "Previous",
-              style: TextStyle(
-                color: prev ? Colors.white : Colors.black26,
-              ),
-            ),
+            label: Translation.translate(lang, "Previous"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.assessment,
                 color: result ? Colors.white : Colors.black26),
-            title: Text(Translation.translate(lang, "Result") != null
-                ? Translation.translate(lang, "Result")
-                : "Result"),
+            label: Translation.translate(lang, "Result"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.skip_next,
-              color: next ? Colors.white : Colors.black26,
-            ),
-            title: Text(Translation.translate(lang, "Next") != null
-                ? Translation.translate(lang, "Next")
-                : "Next"),
-          ),
+              icon: Icon(
+                Icons.skip_next,
+                color: next ? Colors.white : Colors.black26,
+              ),
+              label: Translation.translate(lang, "Next")),
         ],
       ),
       /*
@@ -601,25 +544,12 @@ class _QuestionScreenState extends State<QuestionScreen>
                                   height: 10,
                                 ),
                                 Text(
-                                  (Translation.translate(lang, "Category ") !=
-                                              null
-                                          ? Translation.translate(
-                                              lang, "Category ")
-                                          : "Category ") +
+                                  Translation.translate(lang, "Category ") +
                                       " : " +
                                       (goToCategoriesPage
-                                          ? (Translation.translate(
-                                                      lang, "Unset") !=
-                                                  null
-                                              ? Translation.translate(
-                                                  lang, "Unset")
-                                              : "Unset")
-                                          : (Translation.translate(lang,
-                                                      this.category.Name) !=
-                                                  null
-                                              ? Translation.translate(
-                                                  lang, this.category.Name)
-                                              : this.category.Name)),
+                                          ? Translation.translate(lang, "Unset")
+                                          : Translation.translate(
+                                              lang, this.category.Name)),
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
@@ -627,12 +557,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                   ),
                                 ),
                                 Text(
-                                  (Translation.translate(
-                                                  lang, "Test Number ") !=
-                                              null
-                                          ? Translation.translate(
-                                              lang, "Test Number ")
-                                          : "Test Number  ") +
+                                  Translation.translate(lang, "Test Number ") +
                                       " : " +
                                       (goToCategoriesPage
                                           ? "?"

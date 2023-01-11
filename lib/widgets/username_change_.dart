@@ -60,11 +60,7 @@ class ChangeUsernameState extends State<ChangeUsername> {
           children: <Widget>[
             Text(
               Translation.translate(
-                          this.userdataProvider.language, usernameText) !=
-                      null
-                  ? Translation.translate(
-                      this.userdataProvider.language, usernameText)
-                  : usernameText,
+                  this.userdataProvider.language, usernameText),
               style: TextStyle(
                 color: usernameTextColor,
                 fontWeight: FontWeight.bold,
@@ -93,32 +89,22 @@ class ChangeUsernameState extends State<ChangeUsername> {
                 // keyboardType: TextInputType.passwords,
                 maxLines: 1,
                 placeholder: Translation.translate(
-                            context.watch<UserDataProvider>().language,
-                            ' Username ') !=
-                        null
-                    ? Translation.translate(
-                        context.watch<UserDataProvider>().language,
-                        ' Username ')
-                    : " Username ",
+                    context.watch<UserDataProvider>().language, ' Username '),
               ),
             ),
-            RaisedButton(
-              textColor: Colors.white,
-              padding: EdgeInsets.all(5),
-              color: Theme.of(context).primaryColor,
-              splashColor: Colors.white24,
+            ElevatedButton(
+              // textColor: Colors.white,
+              // padding: EdgeInsets.all(5),
+              // color: Theme.of(context).primaryColor,
+              // splashColor: Colors.white24,
               onPressed: changeUsername,
               child: Text(
-                  Translation.translate(
-                              context.watch<UserDataProvider>().language,
-                              "Submit") !=
-                          null
-                      ? Translation.translate(
-                          context.watch<UserDataProvider>().language, "Submit")
-                      : "Submit",
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
+                Translation.translate(
+                    context.watch<UserDataProvider>().language, "Submit"),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

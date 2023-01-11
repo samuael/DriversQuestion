@@ -1,8 +1,5 @@
 // Question handler
-import 'dart:ffi';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import "../libs.dart";
 
 class Question {
@@ -165,9 +162,7 @@ class GradeResult {
             ids += "$val";
             count++;
           }
-        } catch (s, e) {
-          print("error character $el");
-        }
+        } catch (s, e) {}
         continue;
       }
       bool valid = false;

@@ -15,7 +15,6 @@ void main() {
     () => runApp(
       MultiProvider(
         providers: [
-          // SelectedCategoryProvider
           ChangeNotifierProvider<Questions>(
             create: (_) => Questions(),
             lazy: false,
@@ -40,7 +39,6 @@ void main() {
             create: (_) => UserDataProvider(ud),
             lazy: false,
           ),
-          // ActiveQuestionInfo
           ChangeNotifierProvider<ActiveQuestionInfo>(
             create: (_) => ActiveQuestionInfo(),
             lazy: false,
@@ -54,13 +52,11 @@ void main() {
 
 class MainApp extends StatelessWidget {
   int themeIndex = 0;
-  // themeProvider
   ThemeProvider themeProvider;
 
   @override
   Widget build(BuildContext context) {
     UserData.getInstance();
-    // UserData.getInstance().initialize();
     themeIndex = UserData.getInstance().themeIndex;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -93,9 +89,5 @@ class MainApp extends StatelessWidget {
         }
       },
     );
-    //   },
-    // );
-    //  )) },
-    // );
   }
 }

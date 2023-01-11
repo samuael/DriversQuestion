@@ -1,11 +1,5 @@
-// import 'package:DriversMobile/handlers/list_loaders.dart';
-import 'package:DriversMobile/handlers/list_loaders.dart';
 import "package:flutter/material.dart";
-import 'package:flutter/cupertino.dart';
 import "dart:math" as math;
-// import "dart:async";
-// import 'package:flutter/services.dart' show ByteData, rootBundle;
-import 'package:excel/excel.dart';
 import '../libs.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -46,9 +40,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     databaseManager = DatabaseManager.getInstance();
-    databaseManager.OpenDatabase().then((_) {
-      print("Database is Ready ...");
-    });
+    databaseManager.OpenDatabase().then((_) {});
 
     this.Userdata = UserData.getInstance();
     this.Userdata.initialize();
@@ -84,61 +76,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         // centerTitle: true,
         elevation: 0,
         title: Text(
-            Translation.translate(lang, 'Registration') != null
-                ? Translation.translate(lang, 'Registration')
-                : 'Registration',
-            // views[selectedIndex]['title'] as String,
-            // Translation.translate("Registration") ,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            )),
-        // actions: [
-        //   Container(
-        //     // width: double.infinity,
-        //     color: Colors.white,
-        //     child: DropdownButton<String>(
-        //       hint: Text(
-        //         Translation.translate(lang, "Select Language"),
-        //         style: TextStyle(
-        //           fontFamily:
-        //               FontFamily.Abadi_MT_Condensed_Extra_Bold.toString(),
-        //           fontWeight: FontWeight.bold,
-        //           fontStyle: FontStyle.italic,
-        //           fontSize: 20,
-        //         ),
-        //       ),
-        //       // value: lang,
-        //       onChanged: (String language) {
-        //         setState(() {
-        //           this.lang = language;
-        //           Userdata.SetLanguage(this.lang);
-        //           Userdata.initialize();
-        //         });
-        //       },
-        //       items: Translation.languages.map((String language) {
-        //         return DropdownMenuItem<String>(
-        //           value: language,
-        //           child: Row(
-        //             children: <Widget>[
-        //               Icon(Icons.language),
-        //               SizedBox(
-        //                 width: 10,
-        //               ),
-        //               Text(
-        //                 Translation.translate(
-        //                   this.lang,
-        //                   language.toUpperCase(),
-        //                 ),
-        //                 style: TextStyle(color: Colors.black),
-        //               ),
-        //             ],
-        //           ),
-        //         );
-        //       }).toList(),
-        //     ),
-        //   )
-        // ],
+          Translation.translate(lang, 'Registration'),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Container(
         child: Column(children: [
@@ -266,40 +209,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             fontWeight: FontWeight.bold,
                           )),
                     ),
-                    // Container(
-                    //   // height: 40,
-                    //   padding: EdgeInsets.only(
-                    //     bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-                    //   ),
-                    //   constraints: const BoxConstraints(maxWidth: 500),
-                    //   margin: const EdgeInsets.symmetric(
-                    //       horizontal: 20, vertical: 10),
-                    //   child: CupertinoTextField(
-                    //     autofocus: true,
-                    //     padding: const EdgeInsets.symmetric(
-                    //         horizontal: 16, vertical: 10),
-                    //     decoration: BoxDecoration(
-                    //         border: Border.all(color: Colors.blue),
-                    //         color: Colors.white,
-                    //         borderRadius:
-                    //             const BorderRadius.all(Radius.circular(10))),
-                    //     controller: nameController,
-                    //     keyboardType: TextInputType.text,
-                    //     maxLines: 1,
-                    //     placeholder: Translation.translate(
-                    //                 this.lang, 'eg. Name : muhammed') !=
-                    //             null
-                    //         ? Translation.translate(
-                    //             this.lang, 'eg. Name : muhammed')
-                    //         : 'eg. Name : muhammed',
-                    //   ),
-                    // ),
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       constraints: const BoxConstraints(maxWidth: 500),
                       child: this.loading
-                          ? FlatButton(
+                          ? ElevatedButton(
                               child: Text(
                               Translation.translate(this.lang, "Loading") +
                                   "...",
@@ -309,7 +224,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 fontStyle: FontStyle.italic,
                               ),
                             ))
-                          : RaisedButton(
+                          : ElevatedButton(
                               onPressed: () => () async {
                                 if (this.loading) return;
                                 setState(() {
@@ -516,8 +431,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     .InsertGradeResults(gradeResults)
                                     .then((int vals) {
                                   if (vals != gradeResults.length) {
-                                    print(
-                                        " Inserted Grade Results Count $vals :: ${gradeResults.length}");
                                     setState(() {
                                       message =
                                           "ERROR while Inserting the GradeResults .. ";
@@ -564,10 +477,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 });
                                 // --
                               }(),
-                              color: Colors.white,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(14))),
+                              // color: Colors.white,
+                              // shape: const RoundedRectangleBorder(
+                              //     borderRadius:
+                              //         BorderRadius.all(Radius.circular(14))),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
@@ -576,12 +489,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
-                                      Translation.translate(
-                                                  this.lang, 'Start') !=
-                                              null
-                                          ? Translation.translate(
-                                              this.lang, 'Start')
-                                          : "Start",
+                                      Translation.translate(this.lang, 'Start'),
                                       style: TextStyle(
                                           color:
                                               Theme.of(context).primaryColor),

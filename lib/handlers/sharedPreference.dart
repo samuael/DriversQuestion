@@ -26,10 +26,8 @@ class UserData {
     success = await pref.setInt("theme", themeIndex);
     if (success) {
       this.themeIndex = themeIndex;
-      print("SUCCESFULY WRITEN THE THEME CHANGE !");
       return this.themeIndex;
     }
-    print("ERROR WHILE SAVING THE THEME CHANGE");
     return 0;
   }
 

@@ -45,9 +45,7 @@ class AboutScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          Translation.translate(lang, "About Us") != null
-              ? Translation.translate(lang, "About Us")
-              : "About Us",
+          Translation.translate(lang, "About Us"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -139,14 +137,11 @@ class AboutScreen extends StatelessWidget {
                       child: Icon(
                     Icons.description,
                   )),
-                  title: Text(
-                      Translation.translate(this.lang, "Description") != null
-                          ? Translation.translate(this.lang, "Description")
-                          : " Description",
+                  title: Text(Translation.translate(this.lang, "Description"),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: Theme.of(context).textTheme.body1.color,
+                          color: Theme.of(context).textTheme.bodyMedium.color,
                           fontFeatures: [
                             FontFeature.oldstyleFigures(),
                           ])),
@@ -159,94 +154,26 @@ class AboutScreen extends StatelessWidget {
                 ),
                 child: Text(
                   Translation.translate(
-                              this.lang,
-                              // "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge." ) !=
-                              "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge.") !=
-                          null
-                      ? Translation.translate(this.lang,
-                          "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge.")
-                      : "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge.",
+                      this.lang,
+                      // "Saddle Dam Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free world.\n Come and Visit Us you shall have a better knowledge." ) !=
+                      "Shambel Drivers Training Institute \nWe thrive to create intelligent and expert drivers and to create traffic accident free surrounding.\n Come and Visit Us you shall have a better knowledge."),
                   textAlign: TextAlign.justify,
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.body1.color,
+                    color: Theme.of(context).textTheme.bodyMedium.color,
                   ),
                 ),
               ),
-              // ListTile(
-              //   title: Text(
-              //       Translation.translate(this.lang, "Address") != null
-              //           ? Translation.translate(this.lang, "Address")
-              //           : "Address",
-              //       style: TextStyle(
-              //         fontSize: 18,
-              //         fontWeight: FontWeight.bold,
-              //         color:Theme.of(context).textTheme.body1.color,
-              //       )),
-              //   leading: CircleAvatar(
-              //     child: Icon(Icons.add_location),
-              //   ),
-              // ),
-              // Container(
-              //   padding: EdgeInsets.all(10),
-              //   margin: EdgeInsets.symmetric(horizontal: 10),
-              //   child: Text(
-              //     Translation.translate(this.lang,
-              //                 "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ") !=
-              //             null
-              //         ? Translation.translate(this.lang,
-              //             "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ")
-              //         : "Gebriel Area , o4 Kebele  , Assosa , Benishangul Gumz ,Ethiopia ",
-              //     textAlign: TextAlign.justify,
-              //     style: TextStyle(
-              //       fontStyle: FontStyle.italic,
-              //     ),
-              //   ),
-              // ),
-              // ListTile(
-              //   leading: CircleAvatar(
-              //       child: Icon(
-              //     Icons.phone,
-              //   )),
-              //   title: Text(
-              //     Translation.translate(this.lang, "Phones") != null
-              //         ? Translation.translate(this.lang, "Phones")
-              //         : "Phones",
-              //     style: TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       color:Theme.of(context).textTheme.body1.color,
-              //     ),
-              //   ),
-              // ),
-              // Column(
-              //   children: [
-              //     ...phones.map((phone) {
-              //       return Container(
-              //         padding: EdgeInsets.all(10),
-              //         // margin: EdgeInsets.symmetric(vertical: 3),
-              //         width: double.infinity,
-              //         child: Text(
-              //             phone,
-              //             textAlign: TextAlign.center,
-              //           ),
-              //       );
-              //     }).toList(),
-              //   ],
-              // ) ,
-
               Container(
                 color: Theme.of(context).primaryColor,
                 child: SizedBox(),
               ),
 
               ListTile(
-                title: Text(
-                    Translation.translate(this.lang, "Address") != null
-                        ? Translation.translate(this.lang, "Address")
-                        : "Address",
+                title: Text(Translation.translate(this.lang, "Address"),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.body1.color,
+                      color: Theme.of(context).textTheme.bodyMedium.color,
                     )),
                 leading: CircleAvatar(
                   child: Icon(Icons.add_location),
@@ -257,11 +184,7 @@ class AboutScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   Translation.translate(this.lang,
-                              "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia") !=
-                          null
-                      ? Translation.translate(this.lang,
-                          "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia")
-                      : "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia",
+                      "Gebriel Area , o4 kebele  , Assosa , Benishangul Gumz ,Ethiopia"),
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
@@ -274,12 +197,10 @@ class AboutScreen extends StatelessWidget {
                   Icons.phone,
                 )),
                 title: Text(
-                  Translation.translate(this.lang, "Phones") != null
-                      ? Translation.translate(this.lang, "Phones")
-                      : "Phones",
+                  Translation.translate(this.lang, "Phones"),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.body1.color,
+                    color: Theme.of(context).textTheme.bodyMedium.color,
                   ),
                 ),
               ),
@@ -303,17 +224,11 @@ class AboutScreen extends StatelessWidget {
                   leading: CircleAvatar(child: Icon(Icons.code)),
                   title: Text(
                     Translation.translate(
-                              this.lang,
-                              "Email",
-                            ) !=
-                            null
-                        ? Translation.translate(
-                            this.lang,
-                            "Email",
-                          )
-                        : "Email",
+                      this.lang,
+                      "Email",
+                    ),
                     style: TextStyle(
-                      color: Theme.of(context).textTheme.body1.color,
+                      color: Theme.of(context).textTheme.bodyMedium.color,
                     ),
                   )),
               Container(
@@ -332,17 +247,11 @@ class AboutScreen extends StatelessWidget {
                   leading: CircleAvatar(child: Icon(Icons.code)),
                   title: Text(
                     Translation.translate(
-                              this.lang,
-                              "App Developer",
-                            ) !=
-                            null
-                        ? Translation.translate(
-                            this.lang,
-                            "App Developer",
-                          )
-                        : "App Developer",
+                      this.lang,
+                      "App Developer",
+                    ),
                     style: TextStyle(
-                      color: Theme.of(context).textTheme.body1.color,
+                      color: Theme.of(context).textTheme.bodyMedium.color,
                     ),
                   )),
 
@@ -353,45 +262,38 @@ class AboutScreen extends StatelessWidget {
                     child: ListTile(
                       // leading : Image.asset("assets/images/samuael.jpg"),
                       title: Text(
-                        Translation.translate(this.lang, "Samuael Adnew") !=
-                                null
-                            ? Translation.translate(this.lang, "Samuael Adnew")
-                            : "Samuael Adnew",
+                        Translation.translate(this.lang, "Samuael Adnew"),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.body1.color,
+                          color: Theme.of(context).textTheme.bodyMedium.color,
                         ),
                       ),
                       subtitle: Column(
                         children: [
                           Text(
-                            (Translation.translate(this.lang, "Phone") != null
-                                    ? Translation.translate(this.lang, "Phone")
-                                    : "Phone") +
+                            Translation.translate(this.lang, "Phone") +
                                 " : " +
                                 "0992078204",
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium.color,
                             ),
                           ),
                           Text(
-                            (Translation.translate(this.lang, "Email") != null
-                                    ? Translation.translate(this.lang, "Email")
-                                    : "Email") +
+                            Translation.translate(this.lang, "Email") +
                                 " : " +
                                 "samuaeladnew.zebir@gmail.com\n\t" +
-                                (Translation.translate(this.lang, "Or ") != null
-                                    ? Translation.translate(this.lang, "Or ")
-                                    : "Or") +
+                                Translation.translate(this.lang, "Or ") +
                                 "\n\t"
                                     "samuaeladnew@gmail.com",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium.color,
                             ),
                           ),
                         ],

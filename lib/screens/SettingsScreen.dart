@@ -70,8 +70,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     this.userdata = userdataProvider.userdata;
     this.selectedLanguage =
         userdataProvider.language.toLowerCase() == "eng" ? 0 : 1;
-    print("The Selected Language is : $selectedLanguage");
-    //------
     return Scaffold(
       drawer: NavigationDrawer(
         containerContext: context,
@@ -92,12 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       topRight: Radius.elliptical(200, 200),
                       topLeft: Radius.elliptical(200, 200))),
               child: Text(
-                  Translation.translate(
-                              userDataProvider.language, "Settings") ==
-                          null
-                      ? "Settings"
-                      : Translation.translate(
-                          userDataProvider.language, "Settings"),
+                  Translation.translate(userDataProvider.language, "Settings"),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
@@ -169,24 +162,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               visibleTheme ? SelectTheme() : SizedBox(),
-              // GestureDetector(
-              //   onTap: () {
-              //     setState(
-              //       () {
-              //         visibleUsernameEntry = !visibleUsernameEntry;
-              //         usernameIcon = Icons.arrow_drop_down_circle_outlined;
-              //       },
-              //     );
-              //   },
-              //   child: ListTile(
-              //     title: Text(
-              //       Translation.translate(
-              //           this.userdataProvider.language, "Change Username"),
-              //     ),
-              //     trailing: Icon(usernameIcon),
-              //   ),
-              // ),
-              // ChangeUsername(),
               Container(
                 height: MediaQuery.of(context).size.height * 0.6,
                 decoration: BoxDecoration(

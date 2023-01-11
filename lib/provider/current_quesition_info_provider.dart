@@ -1,6 +1,4 @@
-import 'package:DriversMobile/db/dbsqflite.dart';
-
-import '../libs.dart' show Category, Group;
+import '../libs.dart' show DatabaseManager, Category, Group;
 import 'package:flutter/foundation.dart' show DiagnosticableTreeMixin;
 import 'package:flutter/material.dart';
 
