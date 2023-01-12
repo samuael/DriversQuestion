@@ -27,7 +27,7 @@ class ThemeProvider with ChangeNotifier, DiagnosticableTreeMixin {
           color: Colors.black,
         ),
       ),
-      canvasColor: Colors.white,
+      canvasColor: Colors.black38,
     ),
     ThemeData(
       primarySwatch: myRed,

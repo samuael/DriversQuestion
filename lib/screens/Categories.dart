@@ -119,83 +119,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Expanded(
-            //   flex: 1,
-            // child:
             Stack(
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 0.03,
                   color: Theme.of(context).primaryColor,
                 ),
                 Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.elliptical(10, 10),
-                            topRight: Radius.elliptical(10, 10))),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                      width: MediaQuery.of(context).size.height,
-                    )
-                    // ListView(
-                    //   scrollDirection: Axis.horizontal,
-                    //   children: [
-                    // ...[0, 1, 2].map<Expanded>((int ind) {
-                    //   return Expanded(
-                    //     flex: 1,
-                    //     child: GestureDetector(
-                    //       onTap: () {
-                    //         setState(() {
-                    //           this.selectedIndex = ind;
-                    //           context
-                    //               .read<SelectedCategoryProvider>()
-                    //               .setIndex(ind);
-                    //         });
-                    //       },
-                    //       child: ClipRRect(
-                    //         borderRadius: BorderRadius.circular(20),
-                    //         child: Card(
-                    //           elevation: context
-                    //                       .watch<SelectedCategoryProvider>()
-                    //                       .selectedIndex ==
-                    //                   ind
-                    //               ? 3
-                    //               : 0,
-                    //           child: CategorySmallItem(
-                    //               category: this.categories[ind],
-                    //               background: context
-                    //                           .watch<
-                    //                               SelectedCategoryProvider>()
-                    //                           .selectedIndex ==
-                    //                       ind
-                    //                   ? Theme.of(context).primaryColorLight
-                    //                   : Colors.white,
-                    //               color: context
-                    //                           .watch<
-                    //                               SelectedCategoryProvider>()
-                    //                           .selectedIndex ==
-                    //                       ind
-                    //                   ? Colors.white
-                    //                   : Theme.of(context).primaryColor),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   );
-                    // }).toList()
-                    //     ],
-                    //   ),
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.elliptical(10, 10),
+                          topRight: Radius.elliptical(10, 10))),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                ),
               ],
             ),
-            // ),
-            // Expanded(
-            //   flex: 3,
-            //   child:
             this.categoryitems[
                 context.watch<SelectedCategoryProvider>().selectedIndex],
-            // ),
           ],
         ),
       ),

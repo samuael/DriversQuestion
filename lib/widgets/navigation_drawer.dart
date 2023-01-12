@@ -38,59 +38,21 @@ class NavigationDrawer extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center
             children: [
-              // Card(
-              //   elevation: 3,
-              //   // height : 100,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.only(
-              //       bottomRight: Radius.elliptical(120, 40),
-              //     ),
-              //   ),
-              //   child: Column(
-              //     children: [
-              //       Container(
-              //         width: double.infinity,
-              //         padding: EdgeInsets.all(20),
-              //         child: Stack(
-              //           children: [
-              //             Image.asset(
-              //               "assets/images/logo.png",
-              //               fit: BoxFit.cover,
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Icon(
-              //             Icons.star,
-              //             color: Colors.yellow,
-              //           ),
-              //           Text(
-              //             context.watch<UserDataProvider>().username.length > 15
-              //                 ? context
-              //                     .watch<UserDataProvider>()
-              //                     .username
-              //                     .substring(0, 15)
-              //                 : context.watch<UserDataProvider>().username,
-              //             style: TextStyle(
-              //               color: Colors.black,
-              //               fontSize: 17,
-              //               fontWeight: FontWeight.bold,
-              //             ),
-              //             softWrap: true,
-              //             overflow: TextOverflow.fade,
-              //           ),
-              //         ],
-              //       )
-              //     ],
-              //   ),
-              // ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: MediaQuery.of(context).size.height * 0.21,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.sunny,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 width: double.infinity,

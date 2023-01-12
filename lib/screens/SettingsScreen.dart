@@ -1,7 +1,5 @@
 import '../libs.dart';
-import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:dropdown_below/dropdown_below.dart';
 
@@ -27,10 +25,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   UserData userdata;
   String username;
 
-  /// Theme Related Datas
   bool visibleTheme = true;
   IconData themeIcon = Icons.arrow_forward_ios;
-  //username changing related actions
   bool visibleUsernameEntry = true;
   IconData usernameIcon = Icons.arrow_forward_ios;
 
@@ -46,7 +42,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String languageSelectionHint = "Select Language";
 
   List<DropdownMenuItem> getMenuItems() {
-    /// language related selections
     return [
       DropdownMenuItem(
         value: 0,
@@ -63,7 +58,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // initialization of variables
     this.themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     this.userdataProvider =
         Provider.of<UserDataProvider>(context, listen: false);
@@ -79,112 +73,115 @@ class _SettingsScreenState extends State<SettingsScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
-        title: Consumer<UserDataProvider>(
-          builder: (context, userDataProvider, _) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.elliptical(200, 200),
-                      topLeft: Radius.elliptical(200, 200))),
-              child: Text(
-                  Translation.translate(userDataProvider.language, "Settings"),
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  )),
-            );
-          },
+        title: Text(
+          Translation.translate(userdataProvider.language, "Settings"),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
-      body: Container(
-        // color: Theme.of(context).primaryColor,
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
-              ListTile(
-                title: Text(Translation.translate(
-                    userdataProvider.language, "Select Language")),
-                subtitle: DropdownBelow(
-                  itemWidth: 200,
-                  itemTextstyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  boxTextstyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
-                  boxHeight: 45,
-                  boxWidth: 200,
-                  // hint: Text('Choose Language'),
-                  value: selectedLanguage,
-                  items: getMenuItems(),
-                  onChanged: (item) {
-                    setState(() {
-                      selectedLanguage = item;
-                      this.lang = item == 0 ? "eng" : "amh";
-                      userdataProvider.setLanguage(this.lang);
-                    });
-                  },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  color: Theme.of(context).primaryColor,
                 ),
-                trailing: Icon(Icons.language),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (visibleTheme) {
-                    setState(() {
-                      themeIcon = Icons.arrow_forward_ios;
-                      visibleTheme = false;
-                    });
-                    return;
-                  }
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.elliptical(10, 10),
+                          topRight: Radius.elliptical(10, 10))),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                ),
+              ],
+            ),
+            ListTile(
+              title: Text(Translation.translate(
+                  userdataProvider.language, "Select Language")),
+              subtitle: DropdownBelow(
+                itemWidth: 200,
+                itemTextstyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                boxTextstyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).primaryColor,
+                ),
+                boxPadding: EdgeInsets.fromLTRB(13, 12, 0, 12),
+                boxHeight: 45,
+                boxWidth: 200,
+                value: selectedLanguage,
+                items: getMenuItems(),
+                onChanged: (item) {
                   setState(() {
-                    themeIcon = Icons.arrow_drop_down_circle_outlined;
-                    visibleTheme = true;
+                    selectedLanguage = item;
+                    this.lang = item == 0 ? "eng" : "amh";
+                    userdataProvider.setLanguage(this.lang);
                   });
                 },
-                child: ListTile(
-                  title: Text(
-                    Translation.translate(
-                        this.userdataProvider.language, "Change Theme"),
-                  ),
-                  trailing: Icon(themeIcon),
+              ),
+              trailing: Icon(Icons.language),
+            ),
+            GestureDetector(
+              onTap: () {
+                if (visibleTheme) {
+                  setState(() {
+                    themeIcon = Icons.arrow_forward_ios;
+                    visibleTheme = false;
+                  });
+                  return;
+                }
+                setState(() {
+                  themeIcon = Icons.arrow_drop_down_circle_outlined;
+                  visibleTheme = true;
+                });
+              },
+              child: ListTile(
+                title: Text(
+                  Translation.translate(
+                      this.userdataProvider.language, "Change Theme"),
+                ),
+                trailing: Icon(themeIcon),
+              ),
+            ),
+            visibleTheme ? SelectTheme() : SizedBox(),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.elliptical(200, 50),
                 ),
               ),
-              visibleTheme ? SelectTheme() : SizedBox(),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.6,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.elliptical(200, 50),
-                    )),
-                // height: 200,
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም ",
-                      style: TextStyle(
-                        color: Theme.of(context).canvasColor,
-                      ),
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "ሻምበል የአሽከርካሪዎች ማሰልጠኛ ተቋም \n\nAddress: \nBenishangul Gumz/Assosa or\nSidama Region/Hawassa",
+                    style: TextStyle(
+                      color: Theme.of(context).canvasColor,
                     ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

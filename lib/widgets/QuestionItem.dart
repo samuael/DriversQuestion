@@ -122,27 +122,22 @@ class _QuestionItemState extends State<QuestionItem> {
                 child: Container(
                     width: double.infinity,
                     padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black38,
-                      ),
-                    ),
                     child: Column(
                       children: [
                         Text(
                           "(${widget.questionNumber}). " + this.question.Body,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
-                            //  fontFamily: FontFamily.,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            // fontSize: 18,
                           ),
                         ),
                         this.question.qtype == 2
                             ? Container(
                                 child: Image.asset(
-                                    "assets/questionIcons/${this.question.questionImage}"),
+                                  "assets/questionIcons/${this.question.questionImage}",
+                                  scale: 0.22,
+                                ),
                               )
                             : SizedBox(),
                       ],
@@ -182,7 +177,6 @@ class _QuestionItemState extends State<QuestionItem> {
                             ),
                           ),
                   ),
-                  // color: Colors.white,
                   decoration: BoxDecoration(
                     color: answerToBackgroundColor[ans],
                     borderRadius: BorderRadius.all(
